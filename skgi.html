@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Glory : SKGI Showdown 2026 | Official Registration Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Orbitron, Rajdhani, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            bg: '#06060b',
+                            card: '#0d0e17',
+                            cyan: '#00f3ff',
+                            pink: '#ff0055',
+                            orange: '#ff6b00',
+                            purple: '#b537f2',
+                            lime: '#00ff88',
+                            gold: '#ffd700'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff0055;
+            --neon-orange: #ff6b00;
+            --neon-purple: #b537f2;
+            --neon-lime: #00ff88;
+        }
+
+        body {
+            background-color: #06060b;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            selection-background-color: #00f3ff;
+            selection-color: #000;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #06060b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00f3ff, #b537f2, #ff0055);
+            border-radius: 9999px;
+        }
+
+        /* Cyber Grid Overlay */
+        .cyber-grid-bg {
+            background-size: 45px 45px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(181, 55, 242, 0.04) 1px, transparent 1px);
+        }
+
+        /* Neon Text Glows */
+        .glow-cyan {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 25px rgba(0, 243, 255, 0.35);
+        }
+        .glow-orange {
+            text-shadow: 0 0 10px rgba(255, 107, 0, 0.8), 0 0 25px rgba(255, 0, 85, 0.5);
+        }
+        .glow-lime {
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.7), 0 0 22px rgba(0, 255, 136, 0.4);
+        }
+        .glow-purple {
+            text-shadow: 0 0 10px rgba(181, 55, 242, 0.7), 0 0 25px rgba(181, 55, 242, 0.4);
+        }
+
+        /* Neon Box Borders & Glassmorphism */
+        .neon-card {
+            background: rgba(13, 14, 24, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 243, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .neon-card:hover {
+            border-color: rgba(0, 243, 255, 0.55);
+            box-shadow: 0 12px 40px 0 rgba(0, 243, 255, 0.14), inset 0 0 20px rgba(0, 243, 255, 0.08);
+        }
+
+        .neon-card-pink {
+            background: rgba(15, 11, 22, 0.82);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 0, 85, 0.28);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 0, 85, 0.05);
+            transition: all 0.3s ease;
+        }
+        .neon-card-pink:hover {
+            border-color: rgba(255, 107, 0, 0.65);
+            box-shadow: 0 12px 40px 0 rgba(255, 0, 85, 0.18);
+        }
+
+        .neon-card-lime {
+            background: rgba(10, 20, 18, 0.82);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 255, 136, 0.05);
+        }
+
+        /* Animated Gradient Border Wrapper */
+        .animated-border-box {
+            position: relative;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(120deg, #00f3ff, #b537f2, #ff0055, #ff6b00, #00ff88, #00f3ff);
+            background-size: 300% 300%;
+            animation: borderFlow 6s ease infinite;
+        }
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glitch Title Effect */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-text {
+            position: relative;
+            z-index: 2;
+        }
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.75;
+        }
+        .glitch-text::before {
+            color: #00f3ff;
+            z-index: -1;
+            animation: glitch-anim-1 3.5s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+            color: #ff0055;
+            z-index: -2;
+            animation: glitch-anim-2 2.8s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 {
+            0%, 88% { transform: translate(0); clip-path: inset(0 0 0 0); }
+            90% { transform: translate(-3px, 1px); clip-path: inset(15% 0 60% 0); }
+            92% { transform: translate(3px, -1px); clip-path: inset(70% 0 10% 0); }
+            94% { transform: translate(-2px, 2px); clip-path: inset(40% 0 40% 0); }
+            96%, 100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0%, 85% { transform: translate(0); clip-path: inset(0 0 0 0); }
+            87% { transform: translate(3px, -2px); clip-path: inset(55% 0 20% 0); }
+            91% { transform: translate(-3px, 2px); clip-path: inset(10% 0 75% 0); }
+            95%, 100% { transform: translate(0); clip-path: inset(0 0 0 0); }
+        }
+
+        /* Inputs Neon Focus */
+        .cyber-input {
+            background: rgba(8, 9, 16, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            color: #f8fafc;
+            transition: all 0.25s ease;
+        }
+        .cyber-input:focus {
+            outline: none;
+            border-color: #00f3ff;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.28), inset 0 0 8px rgba(0, 243, 255, 0.1);
+        }
+
+        /* Neon Buttons */
+        .btn-cyber-primary {
+            background: linear-gradient(90deg, #ff0055 0%, #ff6b00 50%, #ff0055 100%);
+            background-size: 200% auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.45);
+        }
+        .btn-cyber-primary:hover {
+            background-position: right center;
+            box-shadow: 0 0 30px rgba(255, 107, 0, 0.75);
+            transform: translateY(-2px);
+        }
+
+        .btn-cyber-cyan {
+            background: linear-gradient(90deg, #00f3ff 0%, #3b82f6 50%, #b537f2 100%);
+            background-size: 200% auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 18px rgba(0, 243, 255, 0.35);
+        }
+        .btn-cyber-cyan:hover {
+            background-position: right center;
+            box-shadow: 0 0 28px rgba(0, 243, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        /* QR Scanner Laser Line */
+        .qr-laser {
+            position: absolute;
+            left: 6%;
+            right: 6%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ff88, #00f3ff, #00ff88, transparent);
+            box-shadow: 0 0 12px #00ff88, 0 0 20px #00f3ff;
+            animation: scanLaser 2.4s ease-in-out infinite;
+        }
+        @keyframes scanLaser {
+            0% { top: 8%; opacity: 0.9; }
+            50% { top: 88%; opacity: 1; }
+            100% { top: 8%; opacity: 0.9; }
+        }
+
+        /* Marquee Ticker */
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marqueeScroll 28s linear infinite;
+        }
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-card {
+            animation: floatSlow 4.5s ease-in-out infinite;
+        }
+
+        /* Mobile-First Responsive Input & Touch Optimizations */
+        @media screen and (max-width: 640px) {
+            .cyber-input {
+                font-size: 16px !important; /* Prevents iOS/Android auto-zoom on focus */
+                min-height: 48px;
+            }
+            .touch-target {
+                min-height: 48px;
+            }
+        }
+
+        /* Official Paytm UPI Card Frame */
+        .paytm-qr-frame {
+            background: linear-gradient(180deg, #00baf2 0%, #00baf2 48%, #002970 48%, #002970 100%);
+            padding: 12px;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(0, 186, 242, 0.28), 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        /* Print Styles for VIP Squad Pass */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #tokenModalContent, #tokenModalContent * {
+                visibility: visible;
+            }
+            #tokenModalContent {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: #0b0c14 !important;
+                color: #fff !important;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans cyber-grid-bg antialiased selection:bg-cyber-cyan selection:text-black">
+
+    <!-- Animated Particle & Ember Background Canvas -->
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Ambient Glow Blobs -->
+    <div class="fixed -top-40 -left-40 w-96 h-96 bg-cyber-cyan/15 rounded-full blur-[130px] pointer-events-none z-0"></div>
+    <div class="fixed top-1/3 -right-40 w-96 h-96 bg-cyber-pink/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed -bottom-40 left-1/3 w-96 h-96 bg-cyber-purple/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <!-- Custom Toast Notification Container -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none px-2"></div>
+
+    <!-- ================= TOP LIVE TICKER & NAVBAR ================= -->
+    <header class="sticky top-0 z-40 border-b border-cyber-cyan/25 bg-[#06060b]/85 backdrop-blur-xl">
+        <!-- Neon Live Marquee Bar -->
+        <div class="bg-gradient-to-r from-cyber-pink/20 via-cyber-purple/20 to-cyber-cyan/20 border-b border-white/10 py-1.5 overflow-hidden text-xs font-mono tracking-wider">
+            <div class="marquee-track">
+                <div class="flex items-center space-x-8 px-4">
+                    <span class="text-cyber-lime font-bold"><i class="fa-solid fa-circle text-[8px] animate-ping mr-1.5"></i>ALL 36 SLOTS OPEN • ANYONE CAN JOIN!</span>
+                    <span class="text-slate-200"><i class="fa-solid fa-trophy text-cyber-gold mr-1.5"></i>THE GLORY : SKGI SHOWDOWN 2026 (1ST PRIZE: ₹2500 + TROPHY + GOLD MEDAL)</span>
+                    <span class="text-cyber-cyan"><i class="fa-solid fa-building-columns mr-1.5"></i>SHREE KRISHNA GROUP OF INSTITUTIONS, SITAPUR (DEPT. OF COMPUTER SCIENCE)</span>
+                    <span class="text-cyber-orange font-bold"><i class="fa-solid fa-fire mr-1.5"></i>ENTRY FEE: ₹400 FULL SQUAD | UPI ID: 7081244266@ptyes</span>
+                    <span class="text-pink-400"><i class="fa-solid fa-calendar-check mr-1.5"></i>EVENT DATE: 15 OCT 2026 (10:00 AM) | DEADLINE: 13 OCT 2026</span>
+                </div>
+                <div class="flex items-center space-x-8 px-4" aria-hidden="true">
+                    <span class="text-cyber-lime font-bold"><i class="fa-solid fa-circle text-[8px] animate-ping mr-1.5"></i>ALL 36 SLOTS OPEN • ANYONE CAN JOIN!</span>
+                    <span class="text-slate-200"><i class="fa-solid fa-trophy text-cyber-gold mr-1.5"></i>THE GLORY : SKGI SHOWDOWN 2026 (1ST PRIZE: ₹2500 + TROPHY + GOLD MEDAL)</span>
+                    <span class="text-cyber-cyan"><i class="fa-solid fa-building-columns mr-1.5"></i>SHREE KRISHNA GROUP OF INSTITUTIONS, SITAPUR (DEPT. OF COMPUTER SCIENCE)</span>
+                    <span class="text-cyber-orange font-bold"><i class="fa-solid fa-fire mr-1.5"></i>ENTRY FEE: ₹400 FULL SQUAD | UPI ID: 7081244266@ptyes</span>
+                    <span class="text-pink-400"><i class="fa-solid fa-calendar-check mr-1.5"></i>EVENT DATE: 15 OCT 2026 (10:00 AM) | DEADLINE: 13 OCT 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 sm:gap-3 group">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-cyber-cyan via-cyber-purple to-cyber-pink p-[2px] shadow-lg shadow-cyber-cyan/20 shrink-0">
+                    <div class="w-full h-full bg-[#06060b] rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-crosshairs text-cyber-cyan text-base sm:text-lg group-hover:rotate-90 transition-transform duration-300"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-orbitron font-black text-xs sm:text-base tracking-wider text-white flex items-center gap-1.5">
+                        THE GLORY <span class="text-[10px] sm:text-xs px-1.5 py-0.5 rounded bg-cyber-pink/20 border border-cyber-pink/50 text-cyber-pink font-mono">2026</span>
+                    </div>
+                    <div class="text-[10px] sm:text-[11px] font-rajdhani font-semibold tracking-widest text-cyber-cyan uppercase">
+                        SKGI Showdown • Sitapur
+                    </div>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-rajdhani font-bold tracking-wider uppercase">
+                <a href="#prizes" class="text-slate-300 hover:text-cyber-cyan transition-colors">Prizes</a>
+                <a href="#slotsSection" class="text-slate-300 hover:text-cyber-cyan transition-colors flex items-center gap-1.5">
+                    <span>Live Slots</span>
+                    <span id="navSlotBadge" class="px-2 py-0.5 text-xs rounded-full bg-cyber-lime/20 border border-cyber-lime/50 text-cyber-lime font-mono">36/36 LEFT</span>
+                </a>
+                <a href="#registerFormSection" class="text-slate-300 hover:text-cyber-pink transition-colors">Register Squad</a>
+                <a href="#registeredSquadsSection" class="text-slate-300 hover:text-cyber-purple transition-colors">Registered Squads</a>
+                <a href="#organizersSection" class="text-slate-300 hover:text-cyber-orange transition-colors">Contact Desk</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+                <button id="soundToggleBtn" onclick="toggleSound()" title="Toggle Cyber UI Sound Effects" class="p-2.5 rounded-xl bg-white/5 hover:bg-cyber-cyan/20 border border-white/10 hover:border-cyber-cyan/50 text-cyber-cyan transition-all">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+                <a href="#registerFormSection" class="btn-cyber-primary px-3.5 sm:px-4 py-2 rounded-xl font-orbitron font-bold text-xs sm:text-sm text-white tracking-wider uppercase flex items-center gap-1.5">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Register</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Quick Navigation Bar -->
+        <div class="flex md:hidden items-center justify-around border-t border-white/10 bg-[#080912]/95 py-2 px-2 text-[11px] font-orbitron font-bold uppercase tracking-wider">
+            <a href="#prizes" class="text-slate-300 hover:text-cyber-gold flex items-center gap-1 py-1 px-2">
+                <i class="fa-solid fa-trophy text-cyber-gold"></i> Prizes
+            </a>
+            <a href="#slotsSection" class="text-slate-300 hover:text-cyber-lime flex items-center gap-1 py-1 px-2">
+                <i class="fa-solid fa-table-cells text-cyber-lime"></i> 36 Slots
+            </a>
+            <a href="#registerFormSection" class="text-cyber-cyan flex items-center gap-1 py-1 px-2">
+                <i class="fa-solid fa-qrcode"></i> Pay & Join
+            </a>
+            <a href="#registeredSquadsSection" class="text-slate-300 hover:text-cyber-purple flex items-center gap-1 py-1 px-2">
+                <i class="fa-solid fa-users text-cyber-purple"></i> Squads
+            </a>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-24 space-y-12 sm:space-y-16">
+
+        <!-- 1. HERO & INSTITUTION WELCOME SECTION -->
+        <section class="relative pt-2 sm:pt-4">
+            <div class="text-center max-w-4xl mx-auto space-y-5 sm:space-y-6">
+                <!-- Institution & Open-to-All Pill Badges -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/40 text-cyber-cyan text-[11px] sm:text-sm font-rajdhani font-bold tracking-widest uppercase shadow-lg shadow-cyber-cyan/10">
+                        <i class="fa-solid fa-microchip animate-pulse"></i>
+                        <span>Department of Computer Science • Shree Krishna Group of Institutions, Sitapur</span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-cyber-lime/15 border border-cyber-lime text-cyber-lime text-[11px] sm:text-sm font-orbitron font-bold tracking-wider uppercase shadow-lg shadow-cyber-lime/15">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>Anyone Can Join • Open For All Squads!</span>
+                    </div>
+                </div>
+
+                <!-- Glitch Main Title -->
+                <div class="space-y-2 px-1">
+                    <div class="glitch-wrapper">
+                        <h1 class="glitch-text font-orbitron font-black text-2xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight uppercase text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-white to-cyber-pink leading-tight" data-text="THE GLORY : SKGI SHOWDOWN 2026">
+                            THE GLORY : SKGI SHOWDOWN 2026
+                        </h1>
+                    </div>
+                    <p class="font-orbitron font-bold text-sm sm:text-2xl text-cyber-orange glow-orange tracking-widest uppercase">
+                        <i class="fa-solid fa-gamepad mr-1.5"></i>Shree Krishna Group of Institutions, Sitapur • Registration Form
+                    </p>
+                </div>
+
+                <!-- Official Welcome Message Box -->
+                <div class="neon-card rounded-2xl p-5 sm:p-8 max-w-3xl mx-auto relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-cyber-cyan via-cyber-purple to-cyber-pink"></div>
+                    <div class="flex flex-col sm:flex-row items-center gap-4 text-left">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-cyber-cyan/20 to-cyber-purple/20 border border-cyber-cyan/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-shield-halved text-xl sm:text-2xl text-cyber-cyan"></i>
+                        </div>
+                        <div class="space-y-1.5 text-center sm:text-left">
+                            <div class="text-xs font-mono uppercase tracking-widest text-cyber-lime flex items-center justify-center sm:justify-start gap-2">
+                                <span class="w-2 h-2 rounded-full bg-cyber-lime animate-ping"></span>
+                                Official Welcome • Open Tournament (Anyone Can Join)
+                            </div>
+                            <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+                                "Welcome to <strong class="text-cyber-cyan font-bold">The Glory 2026</strong>, organized by <strong class="text-white font-bold">Shree Krishna Group of Institutions, Sitapur</strong>. We invite students and gamers to participate in the events and showcase their talent, creativity, and gaming skills. <strong class="text-cyber-lime">Anyone can join!</strong>"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Key Info Pills -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto pt-1">
+                    <div class="neon-card rounded-xl p-3 sm:p-3.5 text-center border-l-2 border-l-cyber-cyan">
+                        <div class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase">Event Date & Time</div>
+                        <div class="font-orbitron font-bold text-xs sm:text-base text-cyber-cyan mt-1">15 OCT 2026</div>
+                        <div class="text-[11px] sm:text-xs text-slate-300 font-rajdhani font-semibold">10:00 AM Onwards</div>
+                    </div>
+                    <div class="neon-card rounded-xl p-3 sm:p-3.5 text-center border-l-2 border-l-cyber-pink">
+                        <div class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase">Reg. Deadline</div>
+                        <div class="font-orbitron font-bold text-xs sm:text-base text-cyber-pink mt-1">13 OCT 2026</div>
+                        <div class="text-[11px] sm:text-xs text-slate-300 font-rajdhani font-semibold">Max 36 Teams</div>
+                    </div>
+                    <div class="neon-card rounded-xl p-3 sm:p-3.5 text-center border-l-2 border-l-cyber-lime">
+                        <div class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase">Entry Fee</div>
+                        <div class="font-orbitron font-bold text-xs sm:text-base text-cyber-lime mt-1">₹400 / SQUAD</div>
+                        <div class="text-[11px] sm:text-xs text-slate-300 font-rajdhani font-semibold">UPI: 7081244266@ptyes</div>
+                    </div>
+                    <div class="neon-card rounded-xl p-3 sm:p-3.5 text-center border-l-2 border-l-cyber-orange">
+                        <div class="text-[10px] sm:text-xs font-mono text-slate-400 uppercase">Eligibility</div>
+                        <div class="font-orbitron font-bold text-xs sm:text-base text-cyber-orange mt-1">OPEN TO ALL</div>
+                        <div class="text-[11px] sm:text-xs text-slate-300 font-rajdhani font-semibold">Anyone Can Join!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PRIZE POOL & REWARDS SHOWCASE -->
+        <section id="prizes" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-cyber-orange">Drop • Loot • Survive</span>
+                    <h2 class="font-orbitron font-black text-xl sm:text-3xl text-white uppercase tracking-wide mt-1">
+                        <i class="fa-solid fa-trophy text-cyber-gold mr-2"></i>Championship Prize Pool & Honors
+                    </h2>
+                </div>
+                <div class="px-3.5 py-1.5 rounded-xl bg-cyber-gold/10 border border-cyber-gold/40 text-cyber-gold font-orbitron font-bold text-xs sm:text-sm text-center">
+                    Total Cash Pool: ₹5,000 + Winner Trophy + Medals + Certificates
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <!-- 1st Place (WITH WINNER TROPHY + GOLD MEDAL + CERTIFICATE) -->
+                <div class="neon-card rounded-2xl p-6 relative overflow-hidden border-t-4 border-t-yellow-400 group float-card">
+                    <div class="absolute -right-8 -top-8 w-28 h-28 bg-yellow-400/15 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-yellow-400/20 border border-yellow-400/50 text-yellow-300 font-orbitron font-bold text-xs uppercase">
+                            1st Place • Champion
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-trophy text-3xl text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.8)]"></i>
+                        </div>
+                    </div>
+                    <div class="font-orbitron font-black text-4xl sm:text-5xl text-white tracking-tight my-2">
+                        ₹2,500
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/10 space-y-2 text-sm text-slate-200 font-rajdhani font-semibold">
+                        <div class="flex items-center gap-2 text-yellow-400 font-bold">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>Grand Championship Winner Trophy</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-yellow-300">
+                            <i class="fa-solid fa-medal"></i>
+                            <span>Gold Medal for Squad</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-cyber-cyan">
+                            <i class="fa-solid fa-certificate"></i>
+                            <span>Official Winner Certificate of Merit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2nd Place -->
+                <div class="neon-card rounded-2xl p-6 relative overflow-hidden border-t-4 border-t-slate-300 group">
+                    <div class="absolute -right-8 -top-8 w-28 h-28 bg-slate-300/15 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-slate-300/20 border border-slate-300/50 text-slate-200 font-orbitron font-bold text-xs uppercase">
+                            2nd Place • Runner-Up
+                        </span>
+                        <i class="fa-solid fa-medal text-3xl text-slate-200 drop-shadow-[0_0_12px_rgba(226,232,240,0.8)]"></i>
+                    </div>
+                    <div class="font-orbitron font-black text-4xl sm:text-5xl text-white tracking-tight my-2">
+                        ₹1,500
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/10 space-y-2 text-sm text-slate-200 font-rajdhani font-semibold">
+                        <div class="flex items-center gap-2 text-slate-200">
+                            <i class="fa-solid fa-medal"></i>
+                            <span>Silver Medal for Squad</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-cyber-cyan">
+                            <i class="fa-solid fa-certificate"></i>
+                            <span>Official Runner-Up Certificate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3rd Place -->
+                <div class="neon-card rounded-2xl p-6 relative overflow-hidden border-t-4 border-t-amber-600 group">
+                    <div class="absolute -right-8 -top-8 w-28 h-28 bg-amber-600/15 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-amber-600/20 border border-amber-500/50 text-amber-400 font-orbitron font-bold text-xs uppercase">
+                            3rd Place • 2nd Runner-Up
+                        </span>
+                        <i class="fa-solid fa-award text-3xl text-amber-500 drop-shadow-[0_0_12px_rgba(245,158,11,0.8)]"></i>
+                    </div>
+                    <div class="font-orbitron font-black text-4xl sm:text-5xl text-white tracking-tight my-2">
+                        ₹1,000
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/10 space-y-2 text-sm text-slate-200 font-rajdhani font-semibold">
+                        <div class="flex items-center gap-2 text-amber-400">
+                            <i class="fa-solid fa-medal"></i>
+                            <span>Bronze Medal for Squad</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-cyber-cyan">
+                            <i class="fa-solid fa-certificate"></i>
+                            <span>Official Merit Certificate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Other Teams Certificate Banner -->
+            <div class="neon-card-lime rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5 text-center sm:text-left flex-col sm:flex-row">
+                    <div class="w-11 h-11 rounded-xl bg-cyber-lime/20 border border-cyber-lime/50 flex items-center justify-center text-cyber-lime shrink-0">
+                        <i class="fa-solid fa-scroll text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron font-bold text-sm sm:text-base text-white uppercase">
+                            All Other Participating Teams Get Official Certificates!
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-0.5">
+                            Every registered squad in <strong class="text-cyber-lime">The Glory : SKGI Showdown 2026</strong> receives official Participation Certificates from Shree Krishna Group of Institutions, Sitapur.
+                        </p>
+                    </div>
+                </div>
+                <a href="#registerFormSection" class="w-full sm:w-auto text-center shrink-0 px-4 py-2.5 rounded-xl bg-cyber-lime/20 hover:bg-cyber-lime/30 border border-cyber-lime text-cyber-lime font-orbitron font-bold text-xs uppercase tracking-wider transition-all">
+                    Claim Your Slot <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. LIVE 36-TEAM SLOT COUNTER & VISUAL MATRIX -->
+        <section id="slotsSection" class="neon-card rounded-3xl p-5 sm:p-8 relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="space-y-2 max-w-xl">
+                    <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyber-cyan">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cyber-cyan animate-ping"></span>
+                        Real-Time Tournament Capacity Tracker
+                    </div>
+                    <h2 class="font-orbitron font-black text-xl sm:text-3xl text-white uppercase">
+                        Live 36-Team Lobby Slot Meter
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-300">
+                        Maximum capacity is strictly <strong class="text-white">36 Teams</strong>. Every time a squad registers below, <strong class="text-cyber-lime">Available Slots automatically minus by 1</strong> and the squad name is locked on the wall!
+                    </p>
+                </div>
+
+                <!-- 3 Counter Cards -->
+                <div class="grid grid-cols-3 gap-2.5 sm:gap-4 shrink-0">
+                    <div class="bg-[#080911] border border-white/10 rounded-2xl p-3 sm:p-4 text-center">
+                        <div class="text-[10px] sm:text-[11px] font-mono text-slate-400 uppercase">Max Slots</div>
+                        <div class="font-orbitron font-black text-2xl sm:text-4xl text-white mt-1">36</div>
+                        <div class="text-[9px] sm:text-[10px] font-mono text-slate-500 mt-0.5">TOTAL</div>
+                    </div>
+                    <div class="bg-[#080911] border border-cyber-pink/40 rounded-2xl p-3 sm:p-4 text-center shadow-inner shadow-cyber-pink/10">
+                        <div class="text-[10px] sm:text-[11px] font-mono text-cyber-pink uppercase">Registered</div>
+                        <div id="bookedSlotsCount" class="font-orbitron font-black text-2xl sm:text-4xl text-cyber-pink mt-1">0</div>
+                        <div class="text-[9px] sm:text-[10px] font-mono text-pink-400/80 mt-0.5">BOOKED</div>
+                    </div>
+                    <div class="bg-[#080911] border border-cyber-lime/50 rounded-2xl p-3 sm:p-4 text-center shadow-lg shadow-cyber-lime/10">
+                        <div class="text-[10px] sm:text-[11px] font-mono text-cyber-lime uppercase">Available</div>
+                        <div id="availableSlotsCount" class="font-orbitron font-black text-2xl sm:text-4xl text-cyber-lime glow-lime mt-1">36</div>
+                        <div class="text-[9px] sm:text-[10px] font-mono text-cyber-lime/80 mt-0.5">SLOTS LEFT</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mt-6 space-y-2">
+                <div class="flex flex-wrap justify-between gap-2 text-xs font-mono">
+                    <span id="slotStatusText" class="text-cyber-lime font-bold">ALL 36 SLOTS OPEN • REGISTER YOUR SQUAD NOW!</span>
+                    <span id="slotPercentageText" class="text-slate-300">0% FULL (0 / 36 TEAMS)</span>
+                </div>
+                <div class="w-full h-3.5 bg-[#06060b] rounded-full overflow-hidden border border-white/10 p-0.5">
+                    <div id="slotProgressBar" class="h-full rounded-full bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink transition-all duration-700" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Visual 36-Slot Matrix Grid -->
+            <div class="mt-6 pt-5 border-t border-white/10">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <span class="text-xs font-mono uppercase tracking-wider text-slate-400">
+                        <i class="fa-solid fa-table-cells mr-1.5 text-cyber-cyan"></i>Interactive 36-Slot Arena Map (Tap any slot):
+                    </span>
+                    <div class="flex items-center gap-4 text-xs font-mono">
+                        <span class="flex items-center gap-1.5 text-cyber-pink"><span class="w-3 h-3 rounded-sm bg-cyber-pink/30 border border-cyber-pink inline-block"></span> Booked Slot</span>
+                        <span class="flex items-center gap-1.5 text-cyber-lime"><span class="w-3 h-3 rounded-sm bg-cyber-lime/10 border border-cyber-lime/40 inline-block"></span> Open Slot</span>
+                    </div>
+                </div>
+                <div id="slotMatrixGrid" class="grid grid-cols-6 sm:grid-cols-9 md:grid-cols-12 gap-1.5 sm:gap-2">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. INTERACTIVE REGISTRATION FORM & PERMANENT PAYTM UPI PAYMENT PORTAL -->
+        <section id="registerFormSection" class="scroll-mt-20">
+            <!-- Tournament Full Locked Banner (Hidden unless 36/36 slots reached) -->
+            <div id="slotsFullBanner" class="hidden neon-card-pink rounded-3xl p-6 sm:p-8 text-center space-y-4 mb-8">
+                <div class="w-16 h-16 rounded-2xl bg-cyber-pink/20 border border-cyber-pink flex items-center justify-center mx-auto text-cyber-pink text-3xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="font-orbitron font-black text-2xl sm:text-3xl text-white uppercase">
+                    All 36 Squad Slots Are Officially Booked!
+                </h3>
+                <p class="text-slate-300 max-w-xl mx-auto text-sm sm:text-base">
+                    Maximum capacity (36 Teams) for <strong class="text-cyber-cyan">The Glory : SKGI Showdown 2026</strong> has been reached. Please contact the organizers below for queries.
+                </p>
+            </div>
+
+            <div class="animated-border-box">
+                <div class="bg-[#090a12] rounded-[14px] p-4 sm:p-8 lg:p-10">
+                    <!-- Form Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                        <div>
+                            <div class="inline-flex items-center gap-2 text-xs font-mono uppercase text-cyber-lime">
+                                <i class="fa-solid fa-bolt"></i> Open For Everyone • Instant Token Generation
+                            </div>
+                            <h2 class="font-orbitron font-black text-xl sm:text-3xl text-white uppercase mt-1">
+                                Official Squad Registration & UPI Portal
+                            </h2>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1">
+                                Fill in your squad details and complete the <strong class="text-cyber-lime">₹400 Full Squad</strong> payment via the official Paytm UPI QR (<code class="text-cyber-cyan">7081244266@ptyes</code>) to generate your Token Pass.
+                            </p>
+                        </div>
+                        <!-- Live Squad Tag Preview -->
+                        <div class="bg-[#0e101c] border border-cyber-cyan/30 rounded-2xl px-4 py-3 flex items-center gap-3 shrink-0">
+                            <div class="w-10 h-10 rounded-xl bg-cyber-cyan/15 border border-cyber-cyan/40 flex items-center justify-center text-cyber-cyan font-orbitron font-black text-sm" id="liveSlotBadgePreview">
+                                #01
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-mono uppercase text-slate-400">Next Available Slot</div>
+                                <div id="liveSquadNamePreview" class="font-orbitron font-bold text-sm text-white truncate max-w-[180px]">YOUR SQUAD NAME</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+                        <!-- LEFT COLUMN: SQUAD & PLAYER DETAILS (7 Cols) -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <div class="flex items-center gap-2.5 text-cyber-cyan font-orbitron font-bold text-sm sm:text-base uppercase tracking-wider">
+                                <span class="w-7 h-7 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan flex items-center justify-center text-xs shrink-0">01</span>
+                                <span>Full Name & Squad Details</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Full Name (Team Leader) -->
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-slate-300 mb-2" for="leaderName">
+                                        Enter Full Name (Team Leader) <span class="text-cyber-pink">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-user-astronaut absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                                        <input type="text" id="leaderName" required placeholder="Enter Leader Full Name" oninput="syncLeaderToPlayer1()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium">
+                                    </div>
+                                </div>
+
+                                <!-- Squad Name -->
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-slate-300 mb-2" for="squadName">
+                                        Squad Name <span class="text-cyber-pink">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-people-group absolute left-3.5 top-3.5 text-cyber-cyan text-sm"></i>
+                                        <input type="text" id="squadName" required placeholder="Enter Your Squad Name" oninput="updateLiveSquadPreview()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-orbitron font-bold uppercase tracking-wider">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Details: Email & WhatsApp Number -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-slate-300 mb-2" for="emailAddress">
+                                        Email Address <span class="text-cyber-pink">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                                        <input type="email" id="emailAddress" required placeholder="yourname@gmail.com" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-mono uppercase text-slate-300 mb-2" for="whatsappNumber">
+                                        Phone Number (WhatsApp Number) <span class="text-cyber-pink">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <i class="fa-brands fa-whatsapp absolute left-3.5 top-3.5 text-cyber-lime text-base"></i>
+                                        <input type="tel" id="whatsappNumber" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit WhatsApp Number" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Squad Member Names Section -->
+                            <div class="pt-2 space-y-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2.5 text-cyber-purple font-orbitron font-bold text-sm sm:text-base uppercase tracking-wider">
+                                        <span class="w-7 h-7 rounded-lg bg-cyber-purple/20 border border-cyber-purple flex items-center justify-center text-xs shrink-0">02</span>
+                                        <span>Squad Member Names (4 Players) <span class="text-cyber-pink">*</span></span>
+                                    </div>
+                                    <span class="text-[11px] font-mono text-slate-400">In-Game Name / Player Name</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 bg-[#06070d] p-4 rounded-2xl border border-white/10">
+                                    <!-- Player 1 -->
+                                    <div>
+                                        <label class="block text-[11px] font-mono uppercase text-cyber-cyan mb-1.5" for="member1">
+                                            <i class="fa-solid fa-crown mr-1 text-yellow-400"></i>Squad Member 1 (Leader) *
+                                        </label>
+                                        <input type="text" id="member1" required placeholder="Member 1 Name / IGN" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                    <!-- Player 2 -->
+                                    <div>
+                                        <label class="block text-[11px] font-mono uppercase text-slate-300 mb-1.5" for="member2">
+                                            <i class="fa-solid fa-crosshairs mr-1 text-cyber-pink"></i>Squad Member 2 Name *
+                                        </label>
+                                        <input type="text" id="member2" required placeholder="Member 2 Name / IGN" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                    <!-- Player 3 -->
+                                    <div>
+                                        <label class="block text-[11px] font-mono uppercase text-slate-300 mb-1.5" for="member3">
+                                            <i class="fa-solid fa-bolt mr-1 text-cyber-orange"></i>Squad Member 3 Name *
+                                        </label>
+                                        <input type="text" id="member3" required placeholder="Member 3 Name / IGN" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                    <!-- Player 4 -->
+                                    <div>
+                                        <label class="block text-[11px] font-mono uppercase text-slate-300 mb-1.5" for="member4">
+                                            <i class="fa-solid fa-shield mr-1 text-cyber-lime"></i>Squad Member 4 Name *
+                                        </label>
+                                        <input type="text" id="member4" required placeholder="Member 4 Name / IGN" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- College / City / Optional Substitute Info -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5" for="collegeBranch">
+                                            College / School / City (Anyone Can Join)
+                                        </label>
+                                        <input type="text" id="collegeBranch" placeholder="e.g. SKGI Sitapur / Open Squad" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-mono uppercase text-slate-300 mb-1.5" for="subMember">
+                                            5th Member / Substitute (Optional)
+                                        </label>
+                                        <input type="text" id="subMember" placeholder="Optional Substitute Name" class="cyber-input w-full px-3.5 py-2.5 rounded-xl text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Discipline & Anti-Cheat Pledge Checkbox -->
+                            <div class="bg-cyber-pink/10 border border-cyber-pink/30 rounded-xl p-3.5 flex items-start gap-3">
+                                <input type="checkbox" id="rulesAgree" required class="mt-1 w-5 h-5 accent-cyber-pink rounded cursor-pointer shrink-0">
+                                <label for="rulesAgree" class="text-xs sm:text-sm text-slate-300 leading-relaxed cursor-pointer">
+                                    We confirm our squad will play on <strong class="text-white">Mobile Only (No PC Emulators/Hacks)</strong> and strictly follow <strong class="text-cyber-cyan">Shree Krishna Group of Institutions, Sitapur</strong> campus discipline rules.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: PERMANENT PAYTM UPI QR CODE & PAYMENT (5 Cols) -->
+                        <div class="lg:col-span-5 flex flex-col justify-between bg-[#06070d] border border-cyber-cyan/40 rounded-2xl p-4 sm:p-6 relative overflow-hidden">
+                            <div class="space-y-5">
+                                <!-- Step 3 Header & Fee Tag -->
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3.5">
+                                    <div class="flex items-center gap-2 text-cyber-lime font-orbitron font-bold text-xs sm:text-sm uppercase">
+                                        <span class="w-7 h-7 rounded-lg bg-cyber-lime/20 border border-cyber-lime flex items-center justify-center text-xs shrink-0">03</span>
+                                        <span>Permanent UPI Payment</span>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-orbitron font-black text-xs sm:text-sm">
+                                        ₹400 FULL SQUAD
+                                    </span>
+                                </div>
+
+                                <!-- PERMANENT PAYTM UPI QR CARD (Exact Match to Uploaded Image) -->
+                                <div class="paytm-qr-frame max-w-[290px] mx-auto">
+                                    <div class="bg-white rounded-[18px] p-4 text-center shadow-inner relative">
+                                        <!-- Paytm Heart UPI Header -->
+                                        <div class="flex items-center justify-center gap-1.5 mb-2.5 select-none">
+                                            <span class="font-sans font-black text-xl tracking-tight text-[#002970]">pay</span><span class="font-sans font-black text-xl tracking-tight text-[#00baf2]">tm</span>
+                                            <i class="fa-solid fa-heart text-[#ff4b55] text-sm mx-0.5"></i>
+                                            <span class="font-sans font-extrabold text-lg tracking-wider italic text-[#1e293b]">UPI</span>
+                                            <span class="inline-block w-0 h-0 border-t-[6px] border-t-transparent border-l-[8px] border-l-[#00baf2] border-b-[6px] border-b-transparent"></span>
+                                        </div>
+
+                                        <!-- Permanent Scannable QR Code Container -->
+                                        <div class="relative w-52 h-52 sm:w-56 sm:h-56 mx-auto bg-white p-1.5 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center">
+                                            <div class="qr-laser"></div>
+                                            <!-- High-precision scannable QR image for 7081244266@ptyes with automatic offline canvas fallback -->
+                                            <img id="permanentPaytmQrImg"
+                                                 src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=upi%3A%2F%2Fpay%3Fpa%3D7081244266%40ptyes%26pn%3DKushagra%2520Kashyap%26am%3D400%26cu%3DINR%26tn%3DThe%2520Glory%2520SKGI%25202026"
+                                                 alt="Paytm UPI QR 7081244266@ptyes"
+                                                 class="w-full h-full object-contain"
+                                                 onerror="this.style.display='none'; document.getElementById('upiQrCanvas').classList.remove('hidden');">
+                                            <canvas id="upiQrCanvas" width="232" height="232" class="hidden w-full h-full"></canvas>
+                                        </div>
+
+                                        <!-- Permanent UPI ID Footer inside White Card -->
+                                        <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[#0f172a] font-mono font-bold text-xs sm:text-sm">
+                                            <span class="inline-block w-2.5 h-2.5 rotate-45 bg-gradient-to-tr from-orange-500 to-green-500"></span>
+                                            <span class="select-all">7081244266@ptyes</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Copy UPI ID & Direct Mobile UPI App Pay Button -->
+                                <div class="space-y-2.5">
+                                    <div class="flex items-center justify-between bg-[#0b0d18] border border-cyber-cyan/40 rounded-xl px-3.5 py-2.5">
+                                        <div>
+                                            <div class="text-[10px] font-mono uppercase text-slate-400">Official Permanent UPI ID</div>
+                                            <code id="organizerUpiId" class="text-xs sm:text-sm font-mono font-bold text-cyber-lime select-all">7081244266@ptyes</code>
+                                        </div>
+                                        <button type="button" onclick="copyText('7081244266@ptyes', 'UPI ID 7081244266@ptyes Copied!')" class="px-3 py-1.5 rounded-lg bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan/50 text-xs font-mono font-bold text-cyber-cyan transition-all">
+                                            <i class="fa-regular fa-copy mr-1"></i>Copy UPI
+                                        </button>
+                                    </div>
+
+                                    <!-- Direct Mobile Tap-to-Pay Deep Link -->
+                                    <a href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=400&cu=INR&tn=The%20Glory%20SKGI%202026"
+                                       class="touch-target w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#00baf2]/20 to-[#002970]/40 hover:from-[#00baf2]/30 hover:to-[#002970]/60 border border-[#00baf2]/60 text-white font-orbitron font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
+                                        <i class="fa-solid fa-mobile-screen-button text-[#00baf2]"></i>
+                                        <span>Tap to Pay ₹400 on Mobile UPI App</span>
+                                    </a>
+                                </div>
+
+                                <!-- UTR / Transaction Reference & Verification -->
+                                <div class="space-y-2.5 pt-1">
+                                    <div class="flex flex-wrap items-center justify-between gap-1">
+                                        <label class="text-xs font-mono uppercase text-slate-300" for="upiTransactionId">
+                                            Enter 12-Digit UPI Ref / UTR No. <span class="text-cyber-pink">*</span>
+                                        </label>
+                                        <button type="button" onclick="simulateInstantUpiPayment()" class="text-[11px] font-mono text-cyber-lime hover:underline flex items-center gap-1">
+                                            <i class="fa-solid fa-circle-check"></i> Paid ₹400? Auto-Fill Ref
+                                        </button>
+                                    </div>
+                                    <div class="relative">
+                                        <i class="fa-solid fa-receipt absolute left-3.5 top-3.5 text-cyber-lime text-sm"></i>
+                                        <input type="text" id="upiTransactionId" required minlength="6" maxlength="20" placeholder="Enter 12-Digit UTR / UPI Ref No." oninput="verifyUtrInput()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono tracking-wider uppercase">
+                                    </div>
+
+                                    <!-- Live Payment Status Indicator Box -->
+                                    <div id="paymentStatusBadge" class="rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono">
+                                        <span class="flex items-center gap-2 text-amber-300">
+                                            <i id="paymentStatusIcon" class="fa-solid fa-clock animate-spin"></i>
+                                            <span id="paymentStatusText">SCAN QR & PAY ₹400 TO GENERATE TOKEN</span>
+                                        </span>
+                                        <span class="font-bold text-white shrink-0">₹400.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit & Generate Token CTA -->
+                            <div class="mt-6 pt-4 border-t border-white/10">
+                                <button type="submit" id="submitRegBtn" class="touch-target btn-cyber-primary w-full py-4 px-5 rounded-xl font-orbitron font-black text-xs sm:text-base text-white uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl">
+                                    <i class="fa-solid fa-ticket text-lg"></i>
+                                    <span>Complete Registration & Generate Token</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ALREADY REGISTERED SQUADS ROSTER WALL -->
+        <section id="registeredSquadsSection" class="space-y-6 scroll-mt-20">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyber-lime">
+                        <span class="w-2 h-2 rounded-full bg-cyber-lime animate-ping"></span>
+                        Live Verified Squad Roster
+                    </div>
+                    <h2 class="font-orbitron font-black text-xl sm:text-3xl text-white uppercase mt-1">
+                        Already Registered Squads (<span id="rosterHeaderCount" class="text-cyber-cyan">0</span>/36)
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">
+                        Whenever any squad registers on this website, their Squad Name and Slot Number appear here immediately and 1 slot is deducted from the 36 slots.
+                    </p>
+                </div>
+
+                <!-- Search & Admin Controls -->
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <div class="relative flex-1 sm:flex-initial">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="squadSearchInput" oninput="renderRegisteredSquads()" placeholder="Search squad or token..." class="cyber-input pl-9 pr-4 py-2.5 rounded-xl text-xs font-mono w-full sm:w-56">
+                    </div>
+                    <button onclick="openAdminModal()" class="px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-cyber-purple/20 border border-white/15 hover:border-cyber-purple text-xs font-mono text-slate-300 hover:text-white transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-sliders text-cyber-purple"></i>
+                        <span>Organizer Admin</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Squads Grid -->
+            <div id="registeredSquadsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- 6. CAMPUS RULES & TOURNAMENT GUIDELINES -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="neon-card rounded-2xl p-6 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyber-cyan/15 border border-cyber-cyan/40 flex items-center justify-center text-cyber-cyan">
+                        <i class="fa-solid fa-gamepad text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron font-bold text-lg text-white uppercase">Esports Match Protocol</h3>
+                        <p class="text-xs font-mono text-slate-400">Battle Royale Squad Format • 36 Teams</p>
+                    </div>
+                </div>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium">
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-circle-check text-cyber-cyan mt-1"></i>
+                        <span><strong>Mobile Devices Only:</strong> PC Emulators (BlueStacks, etc.), triggers, or third-party scripts/hacks result in immediate squad disqualification.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-circle-check text-cyber-cyan mt-1"></i>
+                        <span><strong>Punctuality:</strong> Event starts strictly at <strong>10:00 AM on 15 Oct 2026</strong>. All squads must join the custom lobby 15 minutes before start time in their assigned slot number.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-circle-check text-cyber-cyan mt-1"></i>
+                        <span><strong>Token Verification:</strong> Show your generated <strong>GLORY26 Token Pass</strong> and valid College ID at the SKGI Computer Science registration desk.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="neon-card-pink rounded-2xl p-6 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyber-pink/15 border border-cyber-pink/40 flex items-center justify-center text-cyber-pink">
+                        <i class="fa-solid fa-building-shield text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron font-bold text-lg text-white uppercase">SKGI Campus Discipline Rules</h3>
+                        <p class="text-xs font-mono text-pink-300">Zero-Tolerance Institutional Policy</p>
+                    </div>
+                </div>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-slate-300 font-medium">
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-triangle-exclamation text-cyber-pink mt-1"></i>
+                        <span><strong>No Campus Disturbance:</strong> Participating squads must stay within the allotted Seminar Hall & Classroom. Do not disturb ongoing classes or faculty.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-triangle-exclamation text-cyber-pink mt-1"></i>
+                        <span><strong>Protect Campus Property:</strong> Do not damage college benches, infrastructure, or plants on campus.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-triangle-exclamation text-cyber-pink mt-1"></i>
+                        <span><strong>Strict Disqualification Policy:</strong> Any violence, indiscipline, or rule violation will lead to immediate squad disqualification and removal from the campus.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 7. QUERIES, ASSISTANCE & ORGANIZER CONTACT SECTION -->
+        <section id="organizersSection" class="neon-card rounded-3xl p-6 sm:p-10 space-y-8 scroll-mt-20 relative overflow-hidden">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="px-3 py-1 rounded-full bg-cyber-purple/20 border border-cyber-purple/50 text-cyber-purple font-mono text-xs uppercase tracking-widest">
+                    24x7 Student Helpdesk
+                </span>
+                <h2 class="font-orbitron font-black text-2xl sm:text-3xl text-white uppercase pt-1">
+                    For Any Queries or Assistance
+                </h2>
+                <p class="text-sm text-slate-300">
+                    Organized by <strong class="text-cyber-cyan">Department of Computer Science</strong>, <strong class="text-white">Shree Krishna Group of Institutions, Sitapur</strong>. Reach out directly to our tournament organizers:
+                </p>
+            </div>
+
+            <!-- 3 Organizer Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Organizer 1: Apurv Mishra -->
+                <div class="bg-[#080912] border border-cyber-cyan/30 hover:border-cyber-cyan rounded-2xl p-6 flex flex-col justify-between transition-all group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-mono uppercase px-2.5 py-0.5 rounded bg-cyber-cyan/15 text-cyber-cyan">Event Organizer</span>
+                            <i class="fa-solid fa-headset text-cyber-cyan text-lg"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-white group-hover:text-cyber-cyan transition-colors">
+                            Apurv Mishra
+                        </h3>
+                        <p class="text-xs text-slate-400 font-rajdhani font-semibold uppercase tracking-wider">
+                            Dept. of Computer Science (BCA) • SKGI Sitapur
+                        </p>
+                        <div class="pt-2 font-mono text-base font-bold text-slate-100 flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-cyber-cyan text-xs"></i>
+                            <span>+91 7754028506</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5 mt-5 pt-4 border-t border-white/10">
+                        <a href="tel:7754028506" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-cyber-cyan/20 border border-white/10 hover:border-cyber-cyan text-center text-xs font-orbitron font-bold text-white transition-all">
+                            <i class="fa-solid fa-phone mr-1 text-cyber-cyan"></i> Call
+                        </a>
+                        <a href="https://wa.me/917754028506?text=Hello%20Apurv%2C%20I%20have%20a%20query%20regarding%20The%20Glory%20%3A%20SKGI%20Showdown%202026" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-cyber-lime/15 hover:bg-cyber-lime/25 border border-cyber-lime/50 text-center text-xs font-orbitron font-bold text-cyber-lime transition-all">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Organizer 2: Kushagra Kashyap -->
+                <div class="bg-[#080912] border border-cyber-pink/40 hover:border-cyber-pink rounded-2xl p-6 flex flex-col justify-between transition-all group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-mono uppercase px-2.5 py-0.5 rounded bg-cyber-pink/15 text-cyber-pink">Event Organizer</span>
+                            <i class="fa-solid fa-crown text-cyber-pink text-lg"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-white group-hover:text-cyber-pink transition-colors">
+                            Kushagra Kashyap
+                        </h3>
+                        <p class="text-xs text-slate-400 font-rajdhani font-semibold uppercase tracking-wider">
+                            Dept. of Computer Science (BCA) • SKGI Sitapur
+                        </p>
+                        <div class="pt-2 font-mono text-base font-bold text-slate-100 flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-cyber-pink text-xs"></i>
+                            <span>+91 7081244266</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5 mt-5 pt-4 border-t border-white/10">
+                        <a href="tel:7081244266" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-cyber-pink/20 border border-white/10 hover:border-cyber-pink text-center text-xs font-orbitron font-bold text-white transition-all">
+                            <i class="fa-solid fa-phone mr-1 text-cyber-pink"></i> Call
+                        </a>
+                        <a href="https://wa.me/917081244266?text=Hello%20Kushagra%2C%20I%20have%20a%20query%20regarding%20The%20Glory%20%3A%20SKGI%20Showdown%202026" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-cyber-lime/15 hover:bg-cyber-lime/25 border border-cyber-lime/50 text-center text-xs font-orbitron font-bold text-cyber-lime transition-all">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Organizer 3: Arnav Mishra -->
+                <div class="bg-[#080912] border border-cyber-purple/40 hover:border-cyber-purple rounded-2xl p-6 flex flex-col justify-between transition-all group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-mono uppercase px-2.5 py-0.5 rounded bg-cyber-purple/15 text-cyber-purple">Event Organizer</span>
+                            <i class="fa-solid fa-bolt text-cyber-purple text-lg"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-xl text-white group-hover:text-cyber-purple transition-colors">
+                            Arnav Mishra
+                        </h3>
+                        <p class="text-xs text-slate-400 font-rajdhani font-semibold uppercase tracking-wider">
+                            Dept. of Computer Science (BCA) • SKGI Sitapur
+                        </p>
+                        <div class="pt-2 font-mono text-base font-bold text-slate-100 flex items-center gap-2">
+                            <i class="fa-solid fa-phone text-cyber-purple text-xs"></i>
+                            <span>+91 9648663088</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5 mt-5 pt-4 border-t border-white/10">
+                        <a href="tel:9648663088" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-cyber-purple/20 border border-white/10 hover:border-cyber-purple text-center text-xs font-orbitron font-bold text-white transition-all">
+                            <i class="fa-solid fa-phone mr-1 text-cyber-purple"></i> Call
+                        </a>
+                        <a href="https://wa.me/919648663088?text=Hello%20Arnav%2C%20I%20have%20a%20query%20regarding%20The%20Glory%20%3A%20SKGI%20Showdown%202026" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-cyber-lime/15 hover:bg-cyber-lime/25 border border-cyber-lime/50 text-center text-xs font-orbitron font-bold text-cyber-lime transition-all">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Official Email & Institution Bar -->
+            <div class="bg-[#06070d] border border-white/10 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-cyber-orange/15 border border-cyber-orange/40 flex items-center justify-center text-cyber-orange shrink-0">
+                        <i class="fa-solid fa-envelope-open-text text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-mono uppercase text-slate-400">Official Tournament Email ID</div>
+                        <a href="mailto:kushagrakashayp@gmail.com" class="font-mono font-bold text-sm sm:text-base text-cyber-cyan hover:underline break-all">
+                            kushagrakashayp@gmail.com
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" onclick="copyText('kushagrakashayp@gmail.com', 'Official Email ID Copied!')" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-cyber-cyan/20 border border-white/15 hover:border-cyber-cyan text-xs font-mono text-white transition-all">
+                        <i class="fa-regular fa-copy mr-1.5 text-cyber-cyan"></i>Copy Email ID
+                    </button>
+                    <a href="mailto:kushagrakashayp@gmail.com?subject=Query%20-%20The%20Glory%20SKGI%20Showdown%202026" class="px-4 py-2 rounded-xl bg-cyber-orange/20 hover:bg-cyber-orange/30 border border-cyber-orange text-xs font-orbitron font-bold text-cyber-orange uppercase transition-all">
+                        Send Email
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="relative z-10 border-t border-white/10 bg-[#040408] py-8 px-4 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2 font-orbitron font-bold text-white">
+                <i class="fa-solid fa-trophy text-cyber-cyan"></i>
+                <span>THE GLORY : SKGI SHOWDOWN 2026</span>
+            </div>
+            <div class="font-rajdhani text-sm text-slate-300">
+                Department of Computer Science • <strong class="text-cyber-cyan">Shree Krishna Group of Institutions, Sitapur</strong>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500">
+                Organizers: Apurv Mishra | Kushagra Kashyap | Arnav Mishra
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= GENERATED TOKEN & VIP SQUAD PASS MODAL ================= -->
+    <div id="tokenModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto">
+        <div id="tokenModalContent" class="neon-card rounded-3xl max-w-xl w-full p-6 sm:p-8 border-2 border-cyber-lime relative my-8 shadow-[0_0_50px_rgba(0,255,136,0.25)]">
+            <!-- Close Button -->
+            <button onclick="closeTokenModal()" class="no-print absolute top-4 right-4 w-9 h-9 rounded-xl bg-white/10 hover:bg-cyber-pink/30 text-slate-300 hover:text-white flex items-center justify-center transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- VIP Pass Header -->
+            <div class="text-center space-y-2 border-b border-white/10 pb-5">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-mono text-xs uppercase">
+                    <i class="fa-solid fa-circle-check"></i> Payment ₹400 Verified & Slot Locked
+                </div>
+                <h3 class="font-orbitron font-black text-2xl sm:text-3xl text-white uppercase tracking-wide">
+                    THE GLORY : SKGI SHOWDOWN 2026
+                </h3>
+                <p class="text-xs font-rajdhani font-bold uppercase tracking-widest text-cyber-cyan">
+                    Department of Computer Science • Shree Krishna Group of Institutions, Sitapur
+                </p>
+            </div>
+
+            <!-- Token Code Highlight Box -->
+            <div class="my-5 bg-[#05060a] border-2 border-dashed border-cyber-cyan rounded-2xl p-4 text-center relative">
+                <div class="text-[11px] font-mono uppercase text-slate-400">Official Participant Registration Token</div>
+                <div id="modalTokenCode" class="font-mono font-extrabold text-xl sm:text-3xl text-cyber-cyan glow-cyan tracking-widest my-1.5 select-all">
+                    GLORY26-SKGI-S04-8921
+                </div>
+                <div class="flex items-center justify-center gap-3 mt-2 no-print">
+                    <button type="button" onclick="copyGeneratedToken()" class="px-3 py-1 rounded-lg bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan/50 text-cyber-cyan font-mono text-xs transition-all">
+                        <i class="fa-regular fa-copy mr-1"></i>Copy Token
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pass Details Grid -->
+            <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm bg-[#070810] p-4 rounded-2xl border border-white/10 font-mono">
+                <div>
+                    <span class="text-slate-400 text-[11px] block">ASSIGNED LOBBY SLOT</span>
+                    <span id="modalSlotNo" class="font-orbitron font-black text-lg text-cyber-lime">SLOT #04 / 36</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[11px] block">SQUAD NAME</span>
+                    <span id="modalSquadName" class="font-orbitron font-bold text-base text-white uppercase">TEAM SKGI</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[11px] block">TEAM LEADER</span>
+                    <span id="modalLeaderName" class="text-slate-200 font-sans font-semibold">Rohit Sharma</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 text-[11px] block">WHATSAPP & EMAIL</span>
+                    <span id="modalContact" class="text-slate-200 text-xs">9876543210</span>
+                </div>
+                <div class="col-span-2 pt-2 border-t border-white/10">
+                    <span class="text-slate-400 text-[11px] block mb-1">REGISTERED SQUAD ROSTER (4 PLAYERS)</span>
+                    <div id="modalMembersList" class="grid grid-cols-2 gap-1.5 text-xs text-cyber-cyan font-sans font-medium">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+                <div class="col-span-2 pt-2 border-t border-white/10 flex items-center justify-between">
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">UPI REF / UTR NO.</span>
+                        <span id="modalUtr" class="text-slate-200 text-xs">UTR428193849102</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-slate-400 text-[10px] block">ENTRY FEE STATUS</span>
+                        <span class="text-cyber-lime font-bold text-xs">₹400.00 • PAID</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 no-print">
+                <button type="button" onclick="window.print()" class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 font-orbitron font-bold text-xs uppercase text-white flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-print text-cyber-cyan"></i>
+                    <span>Print / Save PDF Pass</span>
+                </button>
+                <a id="modalWhatsappShareBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-3 px-4 rounded-xl bg-cyber-lime/20 hover:bg-cyber-lime/30 border border-cyber-lime font-orbitron font-bold text-xs uppercase text-cyber-lime flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>Send Token to Organizers</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ORGANIZER ADMIN MODAL ================= -->
+    <div id="adminModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="neon-card rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-cyber-purple relative space-y-5">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-user-shield text-cyber-purple text-xl"></i>
+                    <h3 class="font-orbitron font-bold text-lg text-white uppercase">SKGI Organizer Admin Controls</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="w-8 h-8 rounded-lg bg-white/10 text-slate-300 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Manage registered squads for <strong class="text-cyber-cyan">The Glory : SKGI Showdown 2026</strong>. Data is stored locally in your browser so you can demo or export the full roster anytime.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="exportSquadsCsv()" class="p-3.5 rounded-xl bg-cyber-cyan/15 hover:bg-cyber-cyan/25 border border-cyber-cyan/50 text-left transition-all">
+                    <i class="fa-solid fa-file-csv text-cyber-cyan text-lg mb-1"></i>
+                    <div class="font-orbitron font-bold text-xs text-white uppercase">Export CSV Sheet</div>
+                    <div class="text-[11px] text-slate-400">Download Excel/CSV of all squads</div>
+                </button>
+
+                <button onclick="clearAllSquads()" class="p-3.5 rounded-xl bg-cyber-pink/15 hover:bg-cyber-pink/25 border border-cyber-pink/50 text-left transition-all">
+                    <i class="fa-solid fa-trash-can text-cyber-pink text-lg mb-1"></i>
+                    <div class="font-orbitron font-bold text-xs text-white uppercase">Clear All Slots (0/36)</div>
+                    <div class="text-[11px] text-slate-400">Reset to 0 registered teams & 36 open slots</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        /*************************************************************
+         * 1. STATE & CLEAN 36-SLOT INITIALIZATION (0 DEMO SQUADS)
+         *************************************************************/
+        const MAX_SLOTS = 36;
+        const STORAGE_KEY = 'glory_skgi_2026_registrations_clean';
+        const PERMANENT_UPI_ID = '7081244266@ptyes';
+        let soundEnabled = true;
+        let selectedUpiApp = 'Paytm UPI (7081244266@ptyes)';
+        let lastGeneratedSquad = null;
+
+        // Starts completely clean with 0 pre-filled squads (all 36 slots open)
+        let registeredSquads = [];
+
+        function loadSquadsFromStorage() {
+            try {
+                // Remove old demo key if present
+                localStorage.removeItem('skgi_glory_2026_squads_v1');
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    registeredSquads = Array.isArray(parsed) ? parsed : [];
+                } else {
+                    registeredSquads = [];
+                    saveSquadsToStorage();
+                }
+            } catch (e) {
+                registeredSquads = [];
+            }
+        }
+
+        function saveSquadsToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(registeredSquads));
+            } catch (e) {
+                console.error('Storage error:', e);
+            }
+        }
+
+        /*************************************************************
+         * 2. SYNTHESIZED CYBER AUDIO MICRO-INTERACTIONS (WEB AUDIO API)
+         *************************************************************/
+        let audioCtx = null;
+        function playCyberSound(type = 'blip') {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === 'blip') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(680, now);
+                    osc.frequency.exponentialRampToValueAtTime(1120, now + 0.07);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(587.33, now + 0.09);
+                    osc.frequency.setValueAtTime(880, now + 0.18);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+                    osc.start(now);
+                    osc.stop(now + 0.43);
+                }
+            } catch (err) {
+                // Ignore audio context restrictions
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-sm';
+                playCyberSound('blip');
+                showToast('Cyber UI Sound Effects Enabled', 'cyan');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-sm text-slate-400';
+                showToast('Sound Effects Muted', 'pink');
+            }
+        }
+
+        /*************************************************************
+         * 3. CUSTOM NEON TOAST NOTIFICATION SYSTEM (NO ALERT/CONFIRM)
+         *************************************************************/
+        function showToast(message, theme = 'cyan') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const borderColors = {
+                cyan: 'border-cyber-cyan text-cyber-cyan',
+                lime: 'border-cyber-lime text-cyber-lime',
+                pink: 'border-cyber-pink text-cyber-pink'
+            };
+            const icons = {
+                cyan: 'fa-circle-info',
+                lime: 'fa-circle-check',
+                pink: 'fa-triangle-exclamation'
+            };
+            const colorClass = borderColors[theme] || borderColors.cyan;
+            const iconClass = icons[theme] || icons.cyan;
+
+            toast.className = `pointer-events-auto bg-[#0b0d18]/95 backdrop-blur-md border-l-4 ${colorClass} border border-white/10 rounded-xl p-3.5 shadow-2xl flex items-center gap-3 transform transition-all duration-300 translate-x-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${iconClass} text-lg shrink-0"></i>
+                <div class="text-xs font-mono text-white leading-snug flex-1">${message}</div>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(30px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        /*************************************************************
+         * 4. CLIPBOARD HELPER (IFRAME SAFE)
+         *************************************************************/
+        function copyText(text, successMsg) {
+            playCyberSound('blip');
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg || 'Copied to clipboard!', 'lime');
+            } catch (e) {
+                showToast('Copy failed, please select manually.', 'pink');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        /*************************************************************
+         * 5. LIVE 36-SLOT DASHBOARD & ROSTER RENDERER
+         *************************************************************/
+        function updateSlotDashboard() {
+            const bookedCount = registeredSquads.length;
+            const availableCount = Math.max(0, MAX_SLOTS - bookedCount);
+            const percentage = Math.min(100, Math.round((bookedCount / MAX_SLOTS) * 100));
+
+            document.getElementById('bookedSlotsCount').textContent = bookedCount;
+            document.getElementById('availableSlotsCount').textContent = availableCount;
+            document.getElementById('navSlotBadge').textContent = `${availableCount}/36 LEFT`;
+            document.getElementById('rosterHeaderCount').textContent = bookedCount;
+
+            document.getElementById('slotPercentageText').textContent = `${percentage}% FULL (${bookedCount} / ${MAX_SLOTS} TEAMS)`;
+            document.getElementById('slotProgressBar').style.width = `${(bookedCount / MAX_SLOTS) * 100}%`;
+
+            // Next available slot badge in form preview
+            const nextSlotNum = bookedCount + 1;
+            const liveSlotBadge = document.getElementById('liveSlotBadgePreview');
+            if (availableCount > 0) {
+                liveSlotBadge.textContent = `#${String(nextSlotNum).padStart(2, '0')}`;
+                document.getElementById('slotStatusText').textContent = bookedCount === 0
+                    ? `ALL 36 SLOTS OPEN • BE THE 1ST SQUAD TO REGISTER!`
+                    : availableCount <= 5
+                        ? `CRITICAL! ONLY ${availableCount} SLOTS REMAINING!`
+                        : `REGISTRATION LIVE • ${availableCount} OF 36 SLOTS AVAILABLE`;
+            } else {
+                liveSlotBadge.textContent = 'FULL';
+                document.getElementById('slotStatusText').textContent = 'ALL 36 SLOTS BOOKED • TOURNAMENT FULL';
+            }
+
+            // Lock or unlock form if 36 teams reached
+            const fullBanner = document.getElementById('slotsFullBanner');
+            const submitBtn = document.getElementById('submitRegBtn');
+            if (availableCount === 0) {
+                fullBanner.classList.remove('hidden');
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.innerHTML = `<i class="fa-solid fa-lock"></i> <span>All 36 Slots Full</span>`;
+            } else {
+                fullBanner.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.innerHTML = `<i class="fa-solid fa-ticket text-lg"></i> <span>Complete Registration & Generate Token</span>`;
+            }
+
+            renderSlotMatrixGrid();
+            renderRegisteredSquads();
+        }
+
+        function renderSlotMatrixGrid() {
+            const grid = document.getElementById('slotMatrixGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= MAX_SLOTS; i++) {
+                const squad = registeredSquads.find(s => s.slotNumber === i);
+                const cell = document.createElement('button');
+                cell.type = 'button';
+                const slotLabel = `#${String(i).padStart(2, '0')}`;
+
+                if (squad) {
+                    cell.className = 'p-2 rounded-xl bg-cyber-pink/20 border border-cyber-pink text-center transition-all hover:scale-105 hover:bg-cyber-pink/30 group relative';
+                    cell.title = `Slot ${slotLabel}: ${squad.squadName} (Leader: ${squad.leaderName})`;
+                    cell.innerHTML = `
+                        <div class="font-orbitron font-bold text-xs text-white">${slotLabel}</div>
+                        <div class="text-[9px] font-mono text-cyber-pink truncate">${escapeHtml(squad.squadName)}</div>
+                    `;
+                    cell.onclick = () => openPassForSquad(squad);
+                } else {
+                    cell.className = 'p-2 rounded-xl bg-cyber-lime/5 border border-cyber-lime/30 hover:border-cyber-lime text-center transition-all';
+                    cell.title = `Slot ${slotLabel} is Open! Tap to register your squad.`;
+                    cell.innerHTML = `
+                        <div class="font-orbitron font-bold text-xs text-cyber-lime">${slotLabel}</div>
+                        <div class="text-[9px] font-mono text-slate-400">OPEN</div>
+                    `;
+                    cell.onclick = () => {
+                        document.getElementById('registerFormSection').scrollIntoView({ behavior: 'smooth' });
+                        document.getElementById('leaderName').focus();
+                    };
+                }
+                grid.appendChild(cell);
+            }
+        }
+
+        function renderRegisteredSquads() {
+            const grid = document.getElementById('registeredSquadsGrid');
+            const query = (document.getElementById('squadSearchInput').value || '').trim().toLowerCase();
+            grid.innerHTML = '';
+
+            if (registeredSquads.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full neon-card rounded-2xl p-8 sm:p-10 text-center space-y-3 border border-dashed border-cyber-cyan/40">
+                        <div class="w-14 h-14 rounded-2xl bg-cyber-cyan/15 border border-cyber-cyan/40 flex items-center justify-center mx-auto text-cyber-cyan text-2xl">
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg sm:text-xl text-white uppercase">
+                            All 36 Slots Currently Open — Be the First Squad to Register!
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
+                            No squads registered yet. As soon as a team submits the form above, their Squad Name, Leader, Roster, and Slot #01 will appear right here automatically!
+                        </p>
+                        <div class="pt-2">
+                            <a href="#registerFormSection" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan text-cyber-cyan font-orbitron font-bold text-xs uppercase tracking-wider transition-all">
+                                <i class="fa-solid fa-bolt"></i> Lock Slot #01 Now
+                            </a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const filtered = registeredSquads
+                .slice()
+                .reverse()
+                .filter(sq =>
+                    sq.squadName.toLowerCase().includes(query) ||
+                    sq.leaderName.toLowerCase().includes(query) ||
+                    sq.token.toLowerCase().includes(query)
+                );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full neon-card rounded-2xl p-8 text-center text-slate-400 font-mono text-sm">
+                        No registered squads match your search filter.
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(sq => {
+                const slotStr = `#${String(sq.slotNumber).padStart(2, '0')}`;
+                const card = document.createElement('div');
+                card.className = 'neon-card rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden group';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-cyber-cyan/15 border border-cyber-cyan/50 font-orbitron font-black text-xs text-cyber-cyan">
+                                SLOT ${slotStr} / 36
+                            </span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-cyber-lime/15 border border-cyber-lime/40 font-mono text-[11px] text-cyber-lime flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> ₹400 PAID
+                            </span>
+                        </div>
+
+                        <h3 class="font-orbitron font-black text-lg text-white uppercase tracking-wide group-hover:text-cyber-cyan transition-colors">
+                            ${escapeHtml(sq.squadName)}
+                        </h3>
+                        <div class="text-xs text-slate-300 font-medium mt-0.5">
+                            <i class="fa-solid fa-user-astronaut text-cyber-pink mr-1.5"></i>Leader: <strong class="text-white">${escapeHtml(sq.leaderName)}</strong>
+                        </div>
+
+                        <!-- Squad Members List -->
+                        <div class="mt-3 pt-3 border-t border-white/10">
+                            <div class="text-[10px] font-mono uppercase text-slate-400 mb-1.5">Squad Roster (4 Players):</div>
+                            <div class="grid grid-cols-2 gap-1.5 text-xs font-rajdhani font-semibold text-slate-200">
+                                ${sq.members.map((m, idx) => `
+                                    <div class="bg-white/5 rounded px-2 py-1 truncate">
+                                        <span class="text-cyber-cyan font-mono mr-1">P${idx + 1}:</span>${escapeHtml(m)}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                        <div>
+                            <div class="text-[10px] font-mono text-slate-400">PARTICIPANT TOKEN</div>
+                            <div class="font-mono font-bold text-xs text-cyber-lime">${sq.token}</div>
+                        </div>
+                        <button type="button" class="view-pass-btn px-3 py-1.5 rounded-xl bg-white/5 hover:bg-cyber-cyan/20 border border-white/15 hover:border-cyber-cyan text-xs font-orbitron font-bold text-cyber-cyan transition-all">
+                            <i class="fa-solid fa-ticket mr-1"></i>Pass
+                        </button>
+                    </div>
+                `;
+                card.querySelector('.view-pass-btn').onclick = () => openPassForSquad(sq);
+                grid.appendChild(card);
+            });
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        /*************************************************************
+         * 6. FORM INTERACTIVITY & UPI PAYMENT VERIFICATION
+         *************************************************************/
+        function syncLeaderToPlayer1() {
+            const leader = document.getElementById('leaderName').value;
+            const m1 = document.getElementById('member1');
+            if (!m1.dataset.manuallyEdited) {
+                m1.value = leader ? `${leader} (Leader)` : '';
+            }
+        }
+
+        document.getElementById('member1').addEventListener('input', function() {
+            this.dataset.manuallyEdited = 'true';
+        });
+
+        function updateLiveSquadPreview() {
+            const val = document.getElementById('squadName').value.trim();
+            document.getElementById('liveSquadNamePreview').textContent = val ? val.toUpperCase() : 'YOUR SQUAD NAME';
+        }
+
+        function simulateInstantUpiPayment() {
+            playCyberSound('success');
+            const randomUtr = '6289' + Math.floor(10000000 + Math.random() * 90000000);
+            const utrInput = document.getElementById('upiTransactionId');
+            utrInput.value = randomUtr;
+            verifyUtrInput();
+            showToast(`₹400 UPI Payment Reference (${randomUtr}) filled for ${PERMANENT_UPI_ID}!`, 'lime');
+        }
+
+        function verifyUtrInput() {
+            const val = document.getElementById('upiTransactionId').value.trim();
+            const badge = document.getElementById('paymentStatusBadge');
+            const icon = document.getElementById('paymentStatusIcon');
+            const text = document.getElementById('paymentStatusText');
+
+            if (val.length >= 6) {
+                badge.className = 'rounded-xl p-3 bg-cyber-lime/15 border border-cyber-lime flex items-center justify-between text-xs font-mono';
+                icon.className = 'fa-solid fa-circle-check text-cyber-lime';
+                text.className = 'text-cyber-lime font-bold';
+                text.textContent = `₹400 PAID TO 7081244266@ptyes (REF: ${val.slice(0, 12)})`;
+            } else {
+                badge.className = 'rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono';
+                icon.className = 'fa-solid fa-clock animate-spin text-amber-300';
+                text.className = 'text-amber-300';
+                text.textContent = 'SCAN QR & PAY ₹400 TO GENERATE TOKEN';
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (registeredSquads.length >= MAX_SLOTS) {
+                showToast('All 36 squad slots are already full!', 'pink');
+                return;
+            }
+
+            const leaderName = document.getElementById('leaderName').value.trim();
+            const squadName = document.getElementById('squadName').value.trim().toUpperCase();
+            const email = document.getElementById('emailAddress').value.trim();
+            const whatsapp = document.getElementById('whatsappNumber').value.trim();
+            const m1 = document.getElementById('member1').value.trim();
+            const m2 = document.getElementById('member2').value.trim();
+            const m3 = document.getElementById('member3').value.trim();
+            const m4 = document.getElementById('member4').value.trim();
+            const branch = document.getElementById('collegeBranch').value.trim() || 'Open Entry Squad';
+            const utr = document.getElementById('upiTransactionId').value.trim().toUpperCase();
+
+            // Check duplicate squad name
+            if (registeredSquads.some(s => s.squadName.toUpperCase() === squadName)) {
+                showToast(`Squad "${squadName}" is already registered! Choose a unique Squad Name.`, 'pink');
+                return;
+            }
+
+            // Compute next available slot number (1..36)
+            const usedSlots = new Set(registeredSquads.map(s => s.slotNumber));
+            let assignedSlot = 1;
+            while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
+                assignedSlot++;
+            }
+
+            const randomPin = Math.floor(1000 + Math.random() * 9000);
+            const slotPadded = String(assignedSlot).padStart(2, '0');
+            const token = `GLORY26-SKGI-S${slotPadded}-${randomPin}`;
+
+            const newSquad = {
+                slotNumber: assignedSlot,
+                token: token,
+                squadName: squadName,
+                leaderName: leaderName,
+                email: email,
+                whatsapp: whatsapp,
+                members: [m1, m2, m3, m4],
+                branch: branch,
+                utr: utr,
+                upiApp: PERMANENT_UPI_ID,
+                timestamp: `Verified • Slot #${slotPadded}`
+            };
+
+            registeredSquads.push(newSquad);
+            saveSquadsToStorage();
+            updateSlotDashboard();
+            playCyberSound('success');
+
+            // Reset form
+            document.getElementById('registrationForm').reset();
+            delete document.getElementById('member1').dataset.manuallyEdited;
+            updateLiveSquadPreview();
+            verifyUtrInput();
+
+            showToast(`Squad "${squadName}" locked in Slot #${slotPadded}! Remaining Slots: ${MAX_SLOTS - registeredSquads.length}/36`, 'lime');
+            openPassForSquad(newSquad);
+        }
+
+        /*************************************************************
+         * 7. VIP SQUAD TOKEN PASS MODAL & WHATSAPP SHARE
+         *************************************************************/
+        function openPassForSquad(squad) {
+            lastGeneratedSquad = squad;
+            const slotStr = `#${String(squad.slotNumber).padStart(2, '0')}`;
+
+            document.getElementById('modalTokenCode').textContent = squad.token;
+            document.getElementById('modalSlotNo').textContent = `SLOT ${slotStr} / 36`;
+            document.getElementById('modalSquadName').textContent = squad.squadName;
+            document.getElementById('modalLeaderName').textContent = squad.leaderName;
+            document.getElementById('modalContact').textContent = `${squad.whatsapp} • ${squad.email}`;
+            document.getElementById('modalUtr').textContent = `${squad.utr} (${squad.upiApp || 'UPI'})`;
+
+            const membersContainer = document.getElementById('modalMembersList');
+            membersContainer.innerHTML = squad.members
+                .map((m, idx) => `<div><span class="text-slate-400 font-mono">P${idx + 1}:</span> ${escapeHtml(m)}</div>`)
+                .join('');
+
+            // Build WhatsApp confirmation link to Kushagra Kashyap (7081244266)
+            const waText = encodeURIComponent(
+                `*THE GLORY : SKGI SHOWDOWN 2026*\n` +
+                `Official Registration Confirmation\n\n` +
+                `*Token ID:* ${squad.token}\n` +
+                `*Assigned Slot:* Slot ${slotStr} / 36\n` +
+                `*Squad Name:* ${squad.squadName}\n` +
+                `*Team Leader:* ${squad.leaderName}\n` +
+                `*WhatsApp:* ${squad.whatsapp}\n` +
+                `*Players:* ${squad.members.join(', ')}\n` +
+                `*Entry Fee:* Rs. 400 PAID (UTR: ${squad.utr})`
+            );
+            document.getElementById('modalWhatsappShareBtn').href = `https://wa.me/917081244266?text=${waText}`;
+
+            const modal = document.getElementById('tokenModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTokenModal() {
+            const modal = document.getElementById('tokenModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function copyGeneratedToken() {
+            if (lastGeneratedSquad) {
+                copyText(lastGeneratedSquad.token, `Token ${lastGeneratedSquad.token} copied!`);
+            }
+        }
+
+        /*************************************************************
+         * 8. ADMIN CONTROLS (CSV EXPORT & SLOT RESET)
+         *************************************************************/
+        function openAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function clearAllSquads() {
+            registeredSquads = [];
+            saveSquadsToStorage();
+            updateSlotDashboard();
+            closeAdminModal();
+            showToast('All 36 slots cleared (0 Registered / 36 Available)!', 'lime');
+        }
+
+        function exportSquadsCsv() {
+            if (registeredSquads.length === 0) {
+                showToast('No squads registered yet to export.', 'pink');
+                return;
+            }
+            const headers = ['Slot', 'Token', 'Squad Name', 'Leader Name', 'WhatsApp', 'Email', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'UTR_Ref'];
+            const rows = registeredSquads.map(s => [
+                s.slotNumber,
+                s.token,
+                `"${s.squadName}"`,
+                `"${s.leaderName}"`,
+                s.whatsapp,
+                s.email,
+                `"${s.members[0] || ''}"`,
+                `"${s.members[1] || ''}"`,
+                `"${s.members[2] || ''}"`,
+                `"${s.members[3] || ''}"`,
+                s.utr
+            ]);
+            const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'The_Glory_SKGI_2026_Registered_Squads.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('Exported Registered Squads CSV!', 'lime');
+        }
+
+        /*************************************************************
+         * 9. CUSTOM UPI QR MATRIX RENDERER
+         *************************************************************/
+        function drawCustomUpiQr(seedText = 'Google Pay') {
+            const canvas = document.getElementById('upiQrCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const size = 21;
+            const cell = canvas.width / size;
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Deterministic hash from seedText
+            let hash = 2166136261;
+            for (let i = 0; i < seedText.length; i++) {
+                hash ^= seedText.charCodeAt(i);
+                hash *= 16777619;
+            }
+
+            const isFinder = (r, c) =>
+                (r < 7 && c < 7) ||
+                (r < 7 && c >= size - 7) ||
+                (r >= size - 7 && c < 7);
+
+            const drawFinder = (startR, startC) => {
+                ctx.fillStyle = '#06060b';
+                ctx.fillRect(startC * cell, startR * cell, 7 * cell, 7 * cell);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect((startC + 1) * cell, (startR + 1) * cell, 5 * cell, 5 * cell);
+                ctx.fillStyle = '#0d9488';
+                ctx.fillRect((startC + 2) * cell, (startR + 2) * cell, 3 * cell, 3 * cell);
+            };
+
+            drawFinder(0, 0);
+            drawFinder(0, size - 7);
+            drawFinder(size - 7, 0);
+
+            ctx.fillStyle = '#06060b';
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    if (isFinder(r, c)) continue;
+                    const v = ((r * 31 + c * 17 + Math.abs(hash)) % 7);
+                    if (v < 3) {
+                        ctx.fillRect(c * cell, r * cell, cell - 0.5, cell - 0.5);
+                    }
+                }
+            }
+        }
+
+        /*************************************************************
+         * 10. ANIMATED CYBER-EMBER PARTICLE CANVAS BACKGROUND
+         *************************************************************/
+        function initParticlesCanvas() {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const colors = ['#00f3ff', '#ff0055', '#ff6b00', '#b537f2', '#00ff88'];
+            const particles = Array.from({ length: 55 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 2.2 + 0.8,
+                vx: (Math.random() - 0.5) * 0.45,
+                vy: -Math.random() * 0.7 - 0.2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: Math.random() * 0.65 + 0.2
+            }));
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y < -10) {
+                        p.y = height + 10;
+                        p.x = Math.random() * width;
+                    }
+                    if (p.x < -10) p.x = width + 10;
+                    if (p.x > width + 10) p.x = -10;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
+                }
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        /*************************************************************
+         * INITIALIZE ON WINDOW LOAD
+         *************************************************************/
+        window.onload = function () {
+            loadSquadsFromStorage();
+            updateSlotDashboard();
+            drawCustomUpiQr(PERMANENT_UPI_ID);
+            initParticlesCanvas();
+        };
+    </script>
+</body>
+</html>
