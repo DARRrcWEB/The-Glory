@@ -371,6 +371,12 @@
 
             <!-- Top Tab Switcher & Action Buttons -->
             <div class="flex items-center gap-2">
+                <!-- Live Cloud Sync Status Indicator -->
+                <div id="cloudSyncBadge" title="Firebase Real-Time Cloud Sync (thegloryskgi2026)" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyber-lime/15 border border-cyber-lime/40 text-cyber-lime font-mono text-[10px] uppercase tracking-wider">
+                    <span id="cloudSyncDot" class="w-2 h-2 rounded-full bg-cyber-lime animate-ping"></span>
+                    <span id="cloudSyncText">CLOUD SYNCING...</span>
+                </div>
+
                 <!-- Participant vs Organizer Admin Tab Pill Switcher -->
                 <div class="flex items-center bg-[#0b0d17] p-1 rounded-xl border border-white/15">
                     <button id="topTabParticipantBtn" type="button" onclick="switchMainTab('participant')" class="px-2.5 sm:px-3 py-1.5 rounded-lg font-orbitron font-bold text-[10px] sm:text-xs uppercase tracking-wider bg-cyber-cyan/20 text-cyber-cyan border border-cyber-cyan/50 transition-all flex items-center gap-1.5">
@@ -1251,15 +1257,49 @@
                         </div>
                     </div>
 
+                    <!-- Firebase Cloud Status & Rules Diagnostic Alert (Shown if Firestore Rules need Test Mode) -->
+                    <div id="firebaseSetupHelperBox" class="hidden pt-3 border-t border-cyber-pink/40">
+                        <div class="bg-cyber-pink/15 border border-cyber-pink rounded-2xl p-4 space-y-2 text-xs">
+                            <div class="font-orbitron font-bold text-cyber-pink uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                                <span id="firebaseErrorTitle">Action Required in Firebase Console (thegloryskgi2026)</span>
+                            </div>
+                            <p id="firebaseErrorDesc" class="text-slate-200 leading-relaxed">
+                                Your Firebase API key (<code class="text-cyber-cyan">thegloryskgi2026</code>) is connected, but Cloud Firestore needs to be enabled in <strong>Test Mode</strong> so all participants' phones can read and write slots globally:
+                            </p>
+                            <ol class="list-decimal list-inside text-slate-300 space-y-1 font-mono text-[11px]">
+                                <li>Open <a href="https://console.firebase.google.com/project/thegloryskgi2026/firestore" target="_blank" rel="noopener noreferrer" class="text-cyber-cyan underline">Firebase Console &rarr; thegloryskgi2026 &rarr; Firestore Database</a></li>
+                                <li>Click <strong>"Create database"</strong> (if not created yet) and choose <strong>"Start in test mode"</strong>.</li>
+                                <li>In the <strong>Rules</strong> tab, paste the rule below and click <strong>Publish</strong>:</li>
+                            </ol>
+                            <div class="bg-[#05060a] border border-white/15 rounded-xl p-3 font-mono text-[11px] text-cyber-lime flex items-center justify-between gap-2">
+                                <pre class="overflow-x-auto">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}</pre>
+                                <button type="button" onclick="copyFirestoreRules()" class="shrink-0 px-3 py-1.5 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-orbitron font-bold text-[10px] uppercase">
+                                    Copy Rules
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Admin Quick Add / Restore Squad Panel -->
                     <div class="pt-4 border-t border-white/10 space-y-3">
-                        <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
                             <span class="text-xs font-orbitron font-bold uppercase text-cyber-cyan">
-                                <i class="fa-solid fa-plus-circle mr-1.5"></i>Quick Add / Restore Previous Squad Slot:
+                                <i class="fa-solid fa-plus-circle mr-1.5"></i>Quick Add / Restore Squad Slot to Global Cloud (`thegloryskgi2026`):
                             </span>
-                            <span class="text-[11px] font-mono text-slate-400">Instantly books the next open slot</span>
+                            <span class="text-[11px] font-mono text-slate-400">Syncs immediately to all participants' phones</span>
                         </div>
-                        <form onsubmit="handleAdminQuickAddSquad(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+                        <form onsubmit="handleAdminQuickAddSquad(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2.5">
+                            <select id="quickSlotSelect" class="cyber-input px-3 py-2 rounded-xl text-xs font-mono text-cyber-cyan">
+                                <option value="auto">Auto Next Slot</option>
+                            </select>
                             <input type="text" id="quickSquadName" required placeholder="Squad Name *" class="cyber-input px-3 py-2 rounded-xl text-xs font-orbitron uppercase">
                             <input type="text" id="quickLeaderName" required placeholder="Leader Full Name *" class="cyber-input px-3 py-2 rounded-xl text-xs">
                             <input type="tel" id="quickWhatsapp" required placeholder="WhatsApp No *" class="cyber-input px-3 py-2 rounded-xl text-xs font-mono">
@@ -1442,14 +1482,47 @@
     </div>
 
     <!-- ================= QR DOWNLOAD / SAVE PREVIEW MODAL (FOR MOBILE WEBVIEW SUPPORT) ================= -->
-    <!-- ================= JAVASCRIPT & REAL-TIME PERSISTENCE LOGIC ================= -->
+    <div id="qrPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div class="neon-card rounded-3xl max-w-sm w-full p-5 border-2 border-cyber-cyan text-center space-y-4 relative">
+            <button type="button" onclick="closeQrPreviewModal()" class="absolute top-3 right-3 w-8 h-8 rounded-lg bg-white/10 hover:bg-cyber-pink/30 text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="font-orbitron font-bold text-sm text-cyber-cyan uppercase">
+                Official Paytm UPI QR Code
+            </div>
+            <img id="downloadableQrPreviewImg" src="" alt="Paytm UPI QR Code" class="w-full rounded-2xl border border-white/20 mx-auto" />
+            <p class="text-[11px] font-mono text-slate-300">
+                Long-press the image above on mobile or tap <strong>Save PNG</strong> below to scan from gallery in any UPI app.
+            </p>
+            <div class="grid grid-cols-2 gap-2.5">
+                <a id="directQrDownloadAnchor" href="#" download="The_Glory_SKGI_2026_UPI_QR.png" class="py-2.5 px-3 rounded-xl bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-orbitron font-bold text-xs uppercase flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-download"></i> Save PNG
+                </a>
+                <button type="button" onclick="closeQrPreviewModal()" class="py-2.5 px-3 rounded-xl bg-white/10 border border-white/20 text-white font-orbitron font-bold text-xs uppercase">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT & REAL-TIME FIREBASE (thegloryskgi2026) LOGIC ================= -->
     <script>
         /*************************************************************
-         * 1. GLOBAL STATE & MULTI-LAYER PERSISTENCE (ZERO-FAILURE)
+         * 1. EXACT FIREBASE CONFIGURATION (thegloryskgi2026) & GLOBAL STATE
          *************************************************************/
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVWXxpDTxNGxL-eoaXGxa9Uw8sqe6S6ZY",
+            authDomain: "thegloryskgi2026.firebaseapp.com",
+            projectId: "thegloryskgi2026",
+            storageBucket: "thegloryskgi2026.firebasestorage.app",
+            messagingSenderId: "938322212049",
+            appId: "1:938322212049:web:56e989adc0593a227ac1f0",
+            measurementId: "G-PWFHDWVXZJ"
+        };
+
         const MAX_SLOTS = 36;
         const ORGANIZER_EMAIL = 'kushagrakashayp@gmail.com';
-        const IDB_NAME = 'TheGlorySKGI2026_DB';
+        const IDB_NAME = 'TheGlorySKGI2026_GlobalDB';
         const IDB_STORE = 'tournament_state';
         let PERMANENT_UPI_ID = '7081244266@ptyes';
         let currentEntryFee = 15; // Default ₹15 Trial Mode (Switchable in Admin Tab)
@@ -1460,16 +1533,45 @@
         let registeredSquads = [];
         let deletedSlotTimestamps = {};
 
-        // Cloud Firestore references (loaded asynchronously so UI never blocks)
+        // Firebase Cloud Firestore references (projectId: "thegloryskgi2026")
         let db = null;
         let auth = null;
-        let currentUser = null;
-        let isCloudConnected = false;
         let firestoreFns = null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'the-glory-skgi-2026';
+        let isCloudConnected = false;
+        let hasReceivedInitialCloudSnapshot = false;
         const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('glory_skgi_2026_live_channel') : null;
 
-        // Layer A: Synchronous Window.name Cache (Survives page refreshes even in strict mobile WebViews)
+        function setCloudSyncIndicator(status, message) {
+            const badge = document.getElementById('cloudSyncBadge');
+            const dot = document.getElementById('cloudSyncDot');
+            const text = document.getElementById('cloudSyncText');
+            const helperBox = document.getElementById('firebaseSetupHelperBox');
+            if (!badge || !dot || !text) return;
+
+            if (status === 'live') {
+                badge.className = 'hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyber-lime/15 border border-cyber-lime/40 text-cyber-lime font-mono text-[10px] uppercase tracking-wider';
+                dot.className = 'w-2 h-2 rounded-full bg-cyber-lime animate-ping';
+                text.textContent = message || 'LIVE CLOUD: thegloryskgi2026';
+                if (helperBox) helperBox.classList.add('hidden');
+            } else if (status === 'error') {
+                badge.className = 'hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyber-pink/20 border border-cyber-pink text-cyber-pink font-mono text-[10px] uppercase tracking-wider cursor-pointer';
+                dot.className = 'w-2 h-2 rounded-full bg-cyber-pink';
+                text.textContent = message || 'CLOUD RULES NEEDED';
+                badge.onclick = () => switchMainTab('admin');
+                if (helperBox) helperBox.classList.remove('hidden');
+            } else {
+                badge.className = 'hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyber-cyan/15 border border-cyber-cyan/40 text-cyber-cyan font-mono text-[10px] uppercase tracking-wider';
+                dot.className = 'w-2 h-2 rounded-full bg-cyber-cyan animate-pulse';
+                text.textContent = message || 'CONNECTING CLOUD...';
+            }
+        }
+
+        function copyFirestoreRules() {
+            const rulesText = `rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if true;\n    }\n  }\n}`;
+            copyText(rulesText, 'Firestore Test Mode Rules Copied!');
+        }
+
+        // Layer A: Synchronous Window.name Cache (Instant Hydration on Refresh)
         function loadFromWindowNameCache() {
             try {
                 if (window.name && window.name.startsWith('GLORY_SKGI_2026::')) {
@@ -1496,7 +1598,7 @@
             } catch (e) {}
         }
 
-        // Layer B: IndexedDB Persistent Database (Survives tab close & browser restart)
+        // Layer B: IndexedDB Local Backup Cache
         function openIndexedDb() {
             return new Promise((resolve, reject) => {
                 if (!window.indexedDB) return reject(new Error('IndexedDB unavailable'));
@@ -1541,28 +1643,6 @@
             }
         }
 
-        // Merge incoming squads with existing squads without ever losing local registrations
-        function mergeSquadLists(incomingList) {
-            if (!Array.isArray(incomingList)) return;
-            const bySlot = new Map();
-            registeredSquads.forEach(sq => {
-                if (sq && sq.slotNumber) {
-                    bySlot.set(Number(sq.slotNumber), sq);
-                }
-            });
-            incomingList.forEach(sq => {
-                if (sq && sq.slotNumber) {
-                    const slotNo = Number(sq.slotNumber);
-                    const deletedAt = deletedSlotTimestamps[slotNo] || 0;
-                    const sqTime = sq.timestamp ? new Date(sq.timestamp).getTime() : Date.now();
-                    if (sqTime >= deletedAt) {
-                        bySlot.set(slotNo, sq);
-                    }
-                }
-            });
-            registeredSquads = Array.from(bySlot.values()).sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
-        }
-
         function persistAllLocalState() {
             saveToWindowNameCache();
             saveToIndexedDb();
@@ -1572,11 +1652,7 @@
             broadcastChannel.onmessage = (ev) => {
                 if (!ev.data) return;
                 if (ev.data.type === 'SYNC_SQUADS') {
-                    if (ev.data.replaceAll) {
-                        registeredSquads = ev.data.squads || [];
-                    } else {
-                        mergeSquadLists(ev.data.squads || []);
-                    }
+                    registeredSquads = (ev.data.squads || []).sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
                     persistAllLocalState();
                     updateSlotDashboard();
                 } else if (ev.data.type === 'SYNC_SETTINGS') {
@@ -1589,118 +1665,156 @@
             };
         }
 
-        // Layer C: Non-blocking Firebase Cloud Sync (Merges cloud data with local registrations)
+        // Layer C: Real-Time Firebase Cloud Sync (Connected directly to "thegloryskgi2026")
         async function initRealtimeCloudSync() {
+            setCloudSyncIndicator('connecting', 'CONNECTING thegloryskgi2026...');
+
+            // Load local cache first while Firebase connects
             try {
                 const stored = await loadFromIndexedDb();
-                if (stored && Array.isArray(stored.squads) && stored.squads.length > 0) {
-                    mergeSquadLists(stored.squads);
+                if (stored && Array.isArray(stored.squads) && stored.squads.length > 0 && !hasReceivedInitialCloudSnapshot) {
+                    const bySlot = new Map();
+                    registeredSquads.forEach(s => bySlot.set(Number(s.slotNumber), s));
+                    stored.squads.forEach(s => bySlot.set(Number(s.slotNumber), s));
+                    registeredSquads = Array.from(bySlot.values()).sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
                     if (stored.fee) currentEntryFee = Number(stored.fee);
                     if (stored.upiId) PERMANENT_UPI_ID = String(stored.upiId);
                     saveToWindowNameCache();
                     updateFeeUiElements();
                     updateSlotDashboard();
                 }
+            } catch (e) {}
 
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    const [appMod, authMod, fsMod] = await Promise.all([
-                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"),
-                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"),
-                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js")
-                    ]);
-                    firestoreFns = fsMod;
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    const app = appMod.initializeApp(firebaseConfig);
-                    auth = authMod.getAuth(app);
-                    db = fsMod.getFirestore(app);
+            try {
+                const [appMod, authMod, fsMod] = await Promise.all([
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"),
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"),
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js")
+                ]);
+                firestoreFns = fsMod;
 
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await authMod.signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await authMod.signInAnonymously(auth);
-                    }
+                // Initialize user's exact Firebase project: thegloryskgi2026
+                const app = appMod.initializeApp(firebaseConfig, 'thegloryskgi2026_app');
+                db = fsMod.getFirestore(app);
+                auth = authMod.getAuth(app);
 
-                    authMod.onAuthStateChanged(auth, (user) => {
-                        currentUser = user;
-                        if (user) {
-                            isCloudConnected = true;
-                            attachFirestoreListeners();
-                            // Push any locally registered squads up to Firestore so nothing is ever lost
-                            registeredSquads.forEach(sq => pushSingleSquadToFirestore(sq));
-                        }
-                    });
+                // Attempt optional anonymous sign-in silently (ignores error if Anonymous Auth is disabled in console)
+                try {
+                    await authMod.signInAnonymously(auth);
+                } catch (authErr) {
+                    // Proceed directly with Firestore listeners (works with open/test mode rules)
                 }
+
+                attachGlobalFirestoreListeners();
             } catch (err) {
-                console.warn('Local persistence active:', err);
+                console.error('Firebase initialization error:', err);
+                setCloudSyncIndicator('error', 'CLOUD INIT ERROR');
             }
         }
 
-        function attachFirestoreListeners() {
-            if (!db || !currentUser || !firestoreFns) return;
-            const { collection, onSnapshot } = firestoreFns;
+        function attachGlobalFirestoreListeners() {
+            if (!db || !firestoreFns) return;
+            const { collection, doc, onSnapshot } = firestoreFns;
 
-            const regColRef = collection(db, 'artifacts', appId, 'public', 'data', 'registrations');
+            // 1. Real-Time Listener on "registrations" collection in "thegloryskgi2026"
+            const regColRef = collection(db, 'registrations');
             onSnapshot(
                 regColRef,
                 (snapshot) => {
-                    const cloudList = [];
+                    isCloudConnected = true;
+                    setCloudSyncIndicator('live', 'LIVE CLOUD: thegloryskgi2026');
+
+                    const cloudSquadsMap = new Map();
                     snapshot.forEach((docSnap) => {
                         const data = docSnap.data();
                         if (data && data.slotNumber) {
-                            cloudList.push(data);
+                            const slotNum = Number(data.slotNumber);
+                            if (slotNum >= 1 && slotNum <= MAX_SLOTS) {
+                                if (!Array.isArray(data.members) && data.membersJson) {
+                                    try { data.members = JSON.parse(data.membersJson); } catch (e) { data.members = []; }
+                                }
+                                cloudSquadsMap.set(slotNum, data);
+                            }
                         }
                     });
-                    if (cloudList.length > 0) {
-                        mergeSquadLists(cloudList);
+
+                    // On very first snapshot, if the user had any locally booked squads on this device that aren't in Firebase yet, push them up automatically!
+                    if (!hasReceivedInitialCloudSnapshot) {
+                        hasReceivedInitialCloudSnapshot = true;
+                        registeredSquads.forEach((localSq) => {
+                            const slotNum = Number(localSq.slotNumber);
+                            const wasDeleted = deletedSlotTimestamps[slotNum];
+                            if (!cloudSquadsMap.has(slotNum) && !wasDeleted) {
+                                cloudSquadsMap.set(slotNum, localSq);
+                                pushSingleSquadToFirestore(localSq);
+                            }
+                        });
+                    }
+
+                    // Authoritative real-time sync: everyone across the city sees the exact same booked & freed slots!
+                    registeredSquads = Array.from(cloudSquadsMap.values()).sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
+                    persistAllLocalState();
+                    updateSlotDashboard();
+                },
+                (err) => {
+                    console.warn('Firestore real-time listener error:', err);
+                    isCloudConnected = false;
+                    setCloudSyncIndicator('error', 'FIRESTORE RULES REQUIRED');
+                    const errDesc = document.getElementById('firebaseErrorDesc');
+                    if (errDesc && err && err.code) {
+                        errDesc.innerHTML = `Firebase (<code class="text-cyber-cyan">thegloryskgi2026</code>) returned <strong>${escapeHtml(err.code)}</strong>. Please enable Cloud Firestore in <strong>Test Mode</strong> using the 3 steps below so all participants' phones sync globally:`;
+                    }
+                }
+            );
+
+            // 2. Real-Time Listener on "settings/tournament_config" in "thegloryskgi2026"
+            const configDocRef = doc(db, 'settings', 'tournament_config');
+            onSnapshot(
+                configDocRef,
+                (docSnap) => {
+                    if (docSnap.exists()) {
+                        const cfg = docSnap.data();
+                        if (cfg && cfg.entryFee) currentEntryFee = Number(cfg.entryFee);
+                        if (cfg && cfg.upiId) PERMANENT_UPI_ID = String(cfg.upiId);
                         persistAllLocalState();
+                        updateFeeUiElements();
                         updateSlotDashboard();
                     }
                 },
                 (err) => {
-                    console.warn('Firestore listener warning:', err);
-                }
-            );
-
-            const settingsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'settings');
-            onSnapshot(
-                settingsColRef,
-                (snapshot) => {
-                    snapshot.forEach((docSnap) => {
-                        if (docSnap.id === 'config') {
-                            const cfg = docSnap.data();
-                            if (cfg.entryFee) currentEntryFee = Number(cfg.entryFee);
-                            if (cfg.upiId) PERMANENT_UPI_ID = String(cfg.upiId);
-                            persistAllLocalState();
-                            updateFeeUiElements();
-                            updateSlotDashboard();
-                        }
-                    });
-                },
-                (err) => {
-                    console.warn('Firestore settings warning:', err);
+                    console.warn('Firestore settings listener notice:', err);
                 }
             );
         }
 
         async function pushSingleSquadToFirestore(newSquad) {
-            if (!db || !currentUser || !firestoreFns) return;
+            if (!db || !firestoreFns) return false;
             try {
                 const { doc, setDoc } = firestoreFns;
                 const slotDocId = `slot_${String(newSquad.slotNumber).padStart(2, '0')}`;
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId);
+                const docRef = doc(db, 'registrations', slotDocId);
                 await setDoc(docRef, {
                     ...newSquad,
-                    membersJson: JSON.stringify(newSquad.members || [])
+                    members: Array.isArray(newSquad.members) ? newSquad.members : [],
+                    membersJson: JSON.stringify(newSquad.members || []),
+                    syncedAt: new Date().toISOString()
                 });
+                setCloudSyncIndicator('live', 'LIVE CLOUD: thegloryskgi2026');
+                return true;
             } catch (err) {
-                console.warn('Cloud sync deferred:', err);
+                console.error('Error writing slot to Firebase (thegloryskgi2026):', err);
+                setCloudSyncIndicator('error', 'FIRESTORE WRITE BLOCKED');
+                showToast('Saved on device! Admin: Enable Firestore Test Mode in Firebase Console for global sync.', 'pink');
+                return false;
             }
         }
 
         function saveSquadGlobally(newSquad) {
-            // 1. IMMEDIATELY & SYNCHRONOUSLY update in-memory state + UI + local persistence (0ms delay)
-            lastBookedSlotHighlight = Number(newSquad.slotNumber);
-            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== Number(newSquad.slotNumber));
+            // 1. Immediately update UI and local storage in 0ms
+            const slotNum = Number(newSquad.slotNumber);
+            delete deletedSlotTimestamps[slotNum];
+            lastBookedSlotHighlight = slotNum;
+            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== slotNum);
             registeredSquads.push(newSquad);
             registeredSquads.sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
 
@@ -1711,7 +1825,7 @@
                 broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads });
             }
 
-            // 2. Non-blocking cloud sync in background
+            // 2. Immediately push to Firebase project "thegloryskgi2026" so all other phones see it in real time
             pushSingleSquadToFirestore(newSquad);
         }
 
@@ -1724,28 +1838,32 @@
                     upiId: PERMANENT_UPI_ID
                 });
             }
-            if (db && currentUser && firestoreFns) {
+            if (db && firestoreFns) {
                 try {
                     const { doc, setDoc } = firestoreFns;
-                    const cfgRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+                    const cfgRef = doc(db, 'settings', 'tournament_config');
                     await setDoc(cfgRef, {
                         entryFee: currentEntryFee,
                         upiId: PERMANENT_UPI_ID,
                         updatedAt: new Date().toISOString()
                     });
-                } catch (err) {}
+                } catch (err) {
+                    console.warn('Error saving settings to Firebase:', err);
+                }
             }
         }
 
         /*************************************************************
-         * 2. SYNTHESIZED CYBER AUDIO MICRO-INTERACTIONS
+         * 2. AUDIO SYNTHESIZER & TOAST NOTIFICATION HELPERS
          *************************************************************/
         let audioCtx = null;
+
         function playCyberSound(type = 'blip') {
             if (!soundEnabled) return;
             try {
                 if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContext();
                 }
                 if (audioCtx.state === 'suspended') {
                     audioCtx.resume();
@@ -1756,47 +1874,41 @@
                 gain.connect(audioCtx.destination);
 
                 const now = audioCtx.currentTime;
-                if (type === 'blip') {
+                if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else {
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(680, now);
-                    osc.frequency.exponentialRampToValueAtTime(1120, now + 0.07);
-                    gain.gain.setValueAtTime(0.06, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.06);
+                    gain.gain.setValueAtTime(0.05, now);
                     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
                     osc.start(now);
-                    osc.stop(now + 0.08);
-                } else if (type === 'success') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(440, now);
-                    osc.frequency.setValueAtTime(587.33, now + 0.09);
-                    osc.frequency.setValueAtTime(880, now + 0.18);
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
-                    osc.start(now);
-                    osc.stop(now + 0.43);
+                    osc.stop(now + 0.07);
                 }
-            } catch (err) {}
+            } catch (e) {}
         }
 
         function toggleSound() {
             soundEnabled = !soundEnabled;
             const icon = document.getElementById('soundIcon');
-            if (soundEnabled) {
-                icon.className = 'fa-solid fa-volume-high text-sm';
-                playCyberSound('blip');
-                showToast('Cyber UI Sound Effects Enabled', 'cyan');
-            } else {
-                icon.className = 'fa-solid fa-volume-xmark text-sm text-slate-400';
-                showToast('Sound Effects Muted', 'pink');
+            if (icon) {
+                icon.className = soundEnabled ? 'fa-solid fa-volume-high text-sm' : 'fa-solid fa-volume-xmark text-sm text-slate-400';
             }
+            if (soundEnabled) playCyberSound('blip');
+            showToast(soundEnabled ? 'Cyber UI Sound Effects Enabled' : 'Sound Effects Muted', 'cyan');
         }
 
-        /*************************************************************
-         * 3. CUSTOM NEON TOAST NOTIFICATION SYSTEM
-         *************************************************************/
-        function showToast(message, theme = 'cyan') {
+        function showToast(message, variant = 'cyan') {
             const container = document.getElementById('toastContainer');
             if (!container) return;
-            const toast = document.createElement('div');
+
             const borderColors = {
                 cyan: 'border-cyber-cyan text-cyber-cyan',
                 lime: 'border-cyber-lime text-cyber-lime',
@@ -1807,101 +1919,78 @@
                 lime: 'fa-circle-check',
                 pink: 'fa-triangle-exclamation'
             };
-            const colorClass = borderColors[theme] || borderColors.cyan;
-            const iconClass = icons[theme] || icons.cyan;
 
-            toast.className = `pointer-events-auto bg-[#0b0d18]/95 backdrop-blur-md border-l-4 ${colorClass} border border-white/10 rounded-xl p-3.5 shadow-2xl flex items-center gap-3 transform transition-all duration-300 translate-x-0`;
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto neon-card rounded-2xl p-3.5 border-l-4 ${borderColors[variant] || borderColors.cyan} flex items-center gap-3 shadow-2xl transition-all duration-300`;
             toast.innerHTML = `
-                <i class="fa-solid ${iconClass} text-lg shrink-0"></i>
-                <div class="text-xs font-mono text-white leading-snug flex-1">${message}</div>
+                <i class="fa-solid ${icons[variant] || icons.cyan} text-lg shrink-0"></i>
+                <div class="text-xs font-mono text-white leading-snug">${escapeHtml(message)}</div>
             `;
             container.appendChild(toast);
 
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(30px)';
+                toast.style.transform = 'translateX(20px)';
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
 
         /*************************************************************
-         * 4. BULLETPROOF "COPY UPI ID" & CLIPBOARD HELPER
+         * 3. CLIPBOARD COPY & UPI ID COPY HELPER
          *************************************************************/
-        function copyText(text, successMsg) {
+        function copyText(textToCopy, successMessage = 'Copied to clipboard!') {
             playCyberSound('blip');
             let copied = false;
 
-            // Method 1: Synchronous visible-viewport textarea + setSelectionRange + execCommand('copy')
             try {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.setAttribute('readonly', '');
-                textarea.style.position = 'fixed';
-                textarea.style.top = '10px';
-                textarea.style.left = '10px';
-                textarea.style.width = '2em';
-                textarea.style.height = '2em';
-                textarea.style.padding = '0';
-                textarea.style.border = 'none';
-                textarea.style.outline = 'none';
-                textarea.style.boxShadow = 'none';
-                textarea.style.background = 'transparent';
-                textarea.style.opacity = '0.01';
-                textarea.style.zIndex = '-1';
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
-                textarea.setSelectionRange(0, 99999);
+                const tempInput = document.createElement('textarea');
+                tempInput.value = textToCopy;
+                tempInput.setAttribute('readonly', '');
+                tempInput.style.position = 'fixed';
+                tempInput.style.top = '0';
+                tempInput.style.left = '0';
+                tempInput.style.opacity = '0';
+                document.body.appendChild(tempInput);
+                tempInput.focus();
+                tempInput.select();
+                tempInput.setSelectionRange(0, 99999);
                 copied = document.execCommand('copy');
-                document.body.removeChild(textarea);
-            } catch (err) {
-                copied = false;
+                document.body.removeChild(tempInput);
+            } catch (e) {}
+
+            if (!copied && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).catch(() => {});
             }
 
-            // Method 2: Select the readonly input box if present
-            if (!copied) {
-                try {
-                    const inputBox = document.getElementById('readonlyUpiIdBox');
-                    if (inputBox && text === PERMANENT_UPI_ID) {
-                        inputBox.focus();
-                        inputBox.select();
-                        inputBox.setSelectionRange(0, 99999);
-                        copied = document.execCommand('copy');
-                    }
-                } catch (e) {}
-            }
-
-            // Method 3: Modern Async Clipboard API fallback
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => {});
-                copied = true;
-            }
-
-            showToast(successMsg || `Copied: ${text}`, 'lime');
-            return copied;
+            showToast(successMessage, 'lime');
+            return true;
         }
 
         function copyUpiIdNow() {
+            const upiBox = document.getElementById('readonlyUpiIdBox');
+            if (upiBox) {
+                upiBox.select();
+                upiBox.setSelectionRange(0, 99999);
+            }
             copyText(PERMANENT_UPI_ID, `UPI ID Copied: ${PERMANENT_UPI_ID}`);
-            playCyberSound('success');
 
             const btnText = document.getElementById('copyUpiBtnText');
             const btnIcon = document.getElementById('copyUpiBtnIcon');
             if (btnText && btnIcon) {
-                btnIcon.className = 'fa-solid fa-check text-cyber-lime text-base';
                 btnText.textContent = 'UPI ID Copied!';
+                btnIcon.className = 'fa-solid fa-check text-cyber-lime text-base';
                 setTimeout(() => {
-                    btnIcon.className = 'fa-regular fa-copy text-cyber-lime text-base';
                     btnText.textContent = 'Copy UPI ID';
+                    btnIcon.className = 'fa-regular fa-copy text-cyber-lime text-base';
                 }, 2500);
             }
         }
 
         /*************************************************************
-         * 5. 100% UNTAINTED LOCAL CANVAS QR GENERATOR & PNG DOWNLOAD
+         * 4. UNTAINTED LOCAL CANVAS QR GENERATOR & PNG DOWNLOADER
          *************************************************************/
         function getCleanUpiUri() {
-            return `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&cu=INR`;
+            return `upi://pay?pa=${encodeURIComponent(PERMANENT_UPI_ID)}&pn=${encodeURIComponent('DHARMENDRA KUMAR')}&cu=INR`;
         }
 
         function renderLocalUntaintedQrCanvas() {
@@ -1909,64 +1998,35 @@
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const size = canvas.width;
-            const upiUri = getCleanUpiUri();
 
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, size, size);
 
-            if (typeof window.qrcode === 'function') {
+            if (typeof qrcode === 'function') {
                 try {
-                    const qr = window.qrcode(0, 'M');
-                    qr.addData(upiUri);
+                    const qr = qrcode(0, 'M');
+                    qr.addData(getCleanUpiUri());
                     qr.make();
                     const moduleCount = qr.getModuleCount();
-                    const margin = 12;
-                    const drawSize = size - margin * 2;
-                    const tileW = drawSize / moduleCount;
-                    const tileH = drawSize / moduleCount;
+                    const padding = 16;
+                    const cellSize = (size - padding * 2) / moduleCount;
 
-                    ctx.fillStyle = '#000000';
+                    ctx.fillStyle = '#0f172a';
                     for (let r = 0; r < moduleCount; r++) {
                         for (let c = 0; c < moduleCount; c++) {
                             if (qr.isDark(r, c)) {
-                                const w = Math.ceil((c + 1) * tileW) - Math.floor(c * tileW);
-                                const h = Math.ceil((r + 1) * tileH) - Math.floor(r * tileH);
                                 ctx.fillRect(
-                                    Math.round(margin + c * tileW),
-                                    Math.round(margin + r * tileH),
-                                    w,
-                                    h
+                                    Math.floor(padding + c * cellSize),
+                                    Math.floor(padding + r * cellSize),
+                                    Math.ceil(cellSize),
+                                    Math.ceil(cellSize)
                                 );
                             }
                         }
                     }
                     return;
-                } catch (e) {
-                    console.warn('QR library fallback triggered:', e);
-                }
-            }
-
-            // Fallback deterministic QR matrix renderer if CDN is offline
-            const grid = 25;
-            const cell = size / grid;
-            const drawFinder = (sr, sc) => {
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(sc * cell, sr * cell, 7 * cell, 7 * cell);
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect((sc + 1) * cell, (sr + 1) * cell, 5 * cell, 5 * cell);
-                ctx.fillStyle = '#000000';
-                ctx.fillRect((sc + 2) * cell, (sr + 2) * cell, 3 * cell, 3 * cell);
-            };
-            drawFinder(1, 1);
-            drawFinder(1, grid - 8);
-            drawFinder(grid - 8, 1);
-            ctx.fillStyle = '#000000';
-            for (let r = 1; r < grid - 1; r++) {
-                for (let c = 1; c < grid - 1; c++) {
-                    if ((r < 9 && c < 9) || (r < 9 && c >= grid - 9) || (r >= grid - 9 && c < 9)) continue;
-                    if (((r * 19 + c * 37 + upiUri.length) % 5) < 2) {
-                        ctx.fillRect(c * cell, r * cell, cell - 1, cell - 1);
-                    }
+                } catch (err) {
+                    console.warn('QR generator fallback:', err);
                 }
             }
         }
@@ -2354,21 +2414,39 @@
                 broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads, replaceAll: true });
             }
 
-            if (db && currentUser && firestoreFns) {
+            if (db && firestoreFns) {
                 try {
                     const { doc, deleteDoc } = firestoreFns;
                     const slotDocId = `slot_${String(num).padStart(2, '0')}`;
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId));
+                    await deleteDoc(doc(db, 'registrations', slotDocId));
                 } catch (err) {
-                    console.warn('Error deleting slot from cloud:', err);
+                    console.warn('Error deleting slot from Firebase:', err);
                 }
             }
-            showToast(`Slot #${String(num).padStart(2, '0')} freed globally!`, 'cyan');
+            showToast(`Slot #${String(num).padStart(2, '0')} freed globally across all devices!`, 'cyan');
+        }
+
+        function populateQuickSlotSelect() {
+            const sel = document.getElementById('quickSlotSelect');
+            if (!sel) return;
+            const currentVal = sel.value || 'auto';
+            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
+            let html = `<option value="auto">Auto Next Open Slot</option>`;
+            for (let i = 1; i <= MAX_SLOTS; i++) {
+                const pad = String(i).padStart(2, '0');
+                const isBooked = usedSlots.has(i);
+                html += `<option value="${i}">Slot #${pad} ${isBooked ? '(Overwrite Booked)' : '(Open)'}</option>`;
+            }
+            sel.innerHTML = html;
+            if ([...sel.options].some(o => o.value === currentVal)) {
+                sel.value = currentVal;
+            }
         }
 
         function handleAdminQuickAddSquad(e) {
             e.preventDefault();
-            if (registeredSquads.length >= MAX_SLOTS) {
+            const slotChoice = document.getElementById('quickSlotSelect')?.value || 'auto';
+            if (slotChoice === 'auto' && registeredSquads.length >= MAX_SLOTS) {
                 showToast('All 36 slots are already full!', 'pink');
                 return;
             }
@@ -2389,10 +2467,14 @@
                 playerParts[3] || 'Squad Player 4'
             ];
 
-            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
             let assignedSlot = 1;
-            while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
-                assignedSlot++;
+            if (slotChoice !== 'auto') {
+                assignedSlot = Number(slotChoice);
+            } else {
+                const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
+                while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
+                    assignedSlot++;
+                }
             }
 
             const slotPadded = String(assignedSlot).padStart(2, '0');
@@ -2418,7 +2500,7 @@
             playCyberSound('success');
             saveSquadGlobally(newSquad);
             e.target.reset();
-            showToast(`Slot #${slotPadded} booked for "${squadName}"!`, 'lime');
+            showToast(`Slot #${slotPadded} booked globally for "${squadName}"!`, 'lime');
         }
 
         function renderInstantBookingHistoryBar() {
@@ -2520,7 +2602,39 @@
             renderSlotMatrixGrid();
             renderRegisteredSquads();
             renderAdminDashboard();
+            populateQuickSlotSelect();
         }
+
+        function renderSlotMatrixGrid() {
+            const grid = document.getElementById('slotMatrixGrid');
+            if (!grid) return;
+            const bySlot = new Map();
+            registeredSquads.forEach(sq => bySlot.set(Number(sq.slotNumber), sq));
+
+            let html = '';
+            for (let i = 1; i <= MAX_SLOTS; i++) {
+                const pad = String(i).padStart(2, '0');
+                const bookedSquad = bySlot.get(i);
+                if (bookedSquad) {
+                    const isRecent = Number(lastBookedSlotHighlight) === i;
+                    html += `
+                        <button type="button" onclick="openPassForSquadBySlot(${i})" title="Slot #${pad}: ${escapeHtml(bookedSquad.squadName)} (Click to view pass)" class="group relative rounded-xl p-2 text-center transition-all ${isRecent ? 'bg-cyber-pink/35 border-2 border-cyber-lime shadow-[0_0_15px_rgba(0,255,136,0.4)]' : 'bg-cyber-pink/20 border border-cyber-pink/70 hover:bg-cyber-pink/30'}">
+                            <div class="font-orbitron font-black text-xs text-white">#${pad}</div>
+                            <div class="text-[9px] font-mono text-cyber-pink font-bold truncate mt-0.5">${escapeHtml(bookedSquad.squadName)}</div>
+                        </button>
+                    `;
+                } else {
+                    html += `
+                        <a href="#registerFormSection" onclick="playCyberSound('blip')" title="Slot #${pad} is OPEN - Click to Register" class="rounded-xl p-2 text-center bg-cyber-lime/10 hover:bg-cyber-lime/20 border border-cyber-lime/35 hover:border-cyber-lime transition-all block">
+                            <div class="font-orbitron font-bold text-xs text-cyber-lime">#${pad}</div>
+                            <div class="text-[9px] font-mono text-slate-400 uppercase mt-0.5">OPEN</div>
+                        </a>
+                    `;
+                }
+            }
+            grid.innerHTML = html;
+        }
+
         function handleFormSubmit(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -2560,6 +2674,18 @@
                 return;
             }
 
+            // Prevent duplicate Squad Name globally
+            if (registeredSquads.some(s => (s.squadName || '').toUpperCase() === squadName)) {
+                showToast(`Squad "${squadName}" is already registered! Choose a unique Squad Name.`, 'pink');
+                return;
+            }
+
+            // Prevent duplicate Transaction ID globally
+            if (registeredSquads.some(s => (s.transactionId || '').toUpperCase() === transactionId)) {
+                showToast(`Transaction ID "${transactionId}" has already been used!`, 'pink');
+                return;
+            }
+
             // Compute next available slot number (1..36)
             const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
             let assignedSlot = 1;
@@ -2589,7 +2715,7 @@
 
             playCyberSound('success');
 
-            // 1. IMMEDIATELY & SYNCHRONOUSLY book slot, persist & update all UI sections
+            // 1. Immediately book slot locally & push to Firebase ("thegloryskgi2026") for all participants globally
             saveSquadGlobally(newSquad);
 
             // 2. Reset form fields
@@ -2598,7 +2724,7 @@
             updateLiveSquadPreview();
             verifyTransactionIdInput();
 
-            showToast(`SLOT #${slotPadded} BOOKED! (${registeredSquads.length}/36 Filled, ${MAX_SLOTS - registeredSquads.length} Left)`, 'lime');
+            showToast(`SLOT #${slotPadded} BOOKED GLOBALLY! (${registeredSquads.length}/36 Filled, ${MAX_SLOTS - registeredSquads.length} Left)`, 'lime');
             openPassForSquad(newSquad);
 
             // 3. Non-blocking automatic email notification to kushagrakashayp@gmail.com
@@ -2763,88 +2889,6 @@
             }
         }
 
-        async function handleFormSubmit(e) {
-            e.preventDefault();
-
-            if (registeredSquads.length >= MAX_SLOTS) {
-                showToast('All 36 squad slots are already booked!', 'pink');
-                return;
-            }
-
-            const leaderName = document.getElementById('leaderName').value.trim();
-            const squadName = document.getElementById('squadName').value.trim().toUpperCase();
-            const email = document.getElementById('emailAddress').value.trim();
-            const whatsapp = document.getElementById('whatsappNumber').value.trim();
-            const m1 = document.getElementById('member1').value.trim();
-            const m2 = document.getElementById('member2').value.trim();
-            const m3 = document.getElementById('member3').value.trim();
-            const m4 = document.getElementById('member4').value.trim();
-            const substitute = document.getElementById('subMember').value.trim();
-            const branch = document.getElementById('collegeBranch').value.trim() || 'Open Entry Squad';
-            const transactionId = document.getElementById('upiTransactionId').value.trim().toUpperCase();
-
-            if (transactionId.length < 4) {
-                showToast('Please enter a valid UPI Transaction ID!', 'pink');
-                return;
-            }
-
-            // Prevent duplicate Squad Name
-            if (registeredSquads.some(s => (s.squadName || '').toUpperCase() === squadName)) {
-                showToast(`Squad "${squadName}" is already registered! Choose a unique Squad Name.`, 'pink');
-                return;
-            }
-
-            // Prevent duplicate Transaction ID
-            if (registeredSquads.some(s => (s.transactionId || '').toUpperCase() === transactionId)) {
-                showToast(`Transaction ID "${transactionId}" has already been used!`, 'pink');
-                return;
-            }
-
-            // Compute next available slot number (1..36)
-            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
-            let assignedSlot = 1;
-            while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
-                assignedSlot++;
-            }
-
-            const randomPin = Math.floor(1000 + Math.random() * 9000);
-            const slotPadded = String(assignedSlot).padStart(2, '0');
-            const token = `GLORY26-SKGI-S${slotPadded}-${randomPin}`;
-
-            const newSquad = {
-                slotNumber: assignedSlot,
-                token: token,
-                squadName: squadName,
-                leaderName: leaderName,
-                email: email,
-                whatsapp: whatsapp,
-                members: [m1, m2, m3, m4],
-                substitute: substitute,
-                branch: branch,
-                transactionId: transactionId,
-                feePaid: currentEntryFee,
-                upiApp: PERMANENT_UPI_ID,
-                timestamp: new Date().toISOString()
-            };
-
-            playCyberSound('success');
-
-            // Save globally to Firestore & update everyone's screen immediately
-            await saveSquadGlobally(newSquad);
-
-            // Reset form
-            document.getElementById('registrationForm').reset();
-            delete document.getElementById('member1').dataset.manuallyEdited;
-            updateLiveSquadPreview();
-            verifyTransactionIdInput();
-
-            showToast(`Slot #${slotPadded} Booked for "${squadName}"! Sending confirmation email...`, 'lime');
-            openPassForSquad(newSquad);
-
-            // Automatically send full registration details to kushagrakashayp@gmail.com
-            sendRegistrationEmailAutomatically(newSquad);
-        }
-
         /*************************************************************
          * 9. VIP SQUAD TOKEN PASS MODAL & WHATSAPP SHARE
          *************************************************************/
@@ -2913,16 +2957,16 @@
                 broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: [], replaceAll: true });
             }
 
-            if (db && currentUser && firestoreFns) {
+            if (db && firestoreFns) {
                 const { doc, deleteDoc } = firestoreFns;
-                for (const slotNo of currentSlots) {
+                for (let slotNo = 1; slotNo <= MAX_SLOTS; slotNo++) {
                     try {
                         const slotDocId = `slot_${String(slotNo).padStart(2, '0')}`;
-                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId));
+                        await deleteDoc(doc(db, 'registrations', slotDocId));
                     } catch (e) {}
                 }
             }
-            showToast('All 36 slots reset globally (0 Registered / 36 Available)!', 'lime');
+            showToast('All 36 slots reset globally in Firebase (0 Registered / 36 Available)!', 'lime');
         }
 
         function exportSquadsCsv() {
@@ -3017,6 +3061,7 @@
             toggleSound,
             copyText,
             copyUpiIdNow,
+            copyFirestoreRules,
             downloadQrCodeImage,
             closeQrPreviewModal,
             syncLeaderToPlayer1,
