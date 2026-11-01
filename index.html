@@ -831,45 +831,61 @@
 
                         <!-- RIGHT COLUMN: PERMANENT PAYTM UPI QR CODE & PAYMENT (5 Cols) -->
                         <div class="lg:col-span-5 flex flex-col justify-between bg-[#06070d] border border-cyber-cyan/40 rounded-2xl p-4 sm:p-6 relative overflow-hidden">
-                            <div class="space-y-5">
+                            <div class="space-y-4">
                                 <!-- Step 3 Header & Fee Tag -->
                                 <div class="flex items-center justify-between border-b border-white/10 pb-3.5">
                                     <div class="flex items-center gap-2 text-cyber-lime font-orbitron font-bold text-xs sm:text-sm uppercase">
                                         <span class="w-7 h-7 rounded-lg bg-cyber-lime/20 border border-cyber-lime flex items-center justify-center text-xs shrink-0">03</span>
-                                        <span>Permanent UPI Payment</span>
+                                        <span>Safe UPI Payment Portal</span>
                                     </div>
                                     <span id="formFeePillBadge" class="px-3 py-1 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-orbitron font-black text-xs sm:text-sm">
                                         ₹15 TRIAL MODE
                                     </span>
                                 </div>
 
-                                <!-- QR Mode Switcher (Auto-Fill ₹15 vs Standard QR) -->
+                                <!-- Anti-Bank-Limit Error Solution Notice (Hinglish) -->
+                                <div class="bg-cyber-lime/10 border border-cyber-lime/40 rounded-xl p-3 text-[11px] sm:text-xs text-slate-200 leading-relaxed">
+                                    <div class="font-orbitron font-bold text-cyber-lime uppercase flex items-center gap-1.5 mb-1">
+                                        <i class="fa-solid fa-shield-check"></i> 100% Working Payment Method (No Bank Limit Error)
+                                    </div>
+                                    <p class="text-slate-300">
+                                        Direct link se Personal UPI par GPay/Bank limit error aata hai. Isliye <strong class="text-white">QR Scan karein</strong> (ya QR Download karke GPay/PhonePe me <em>"Scan from Gallery"</em> karein) ya <strong class="text-cyber-cyan">UPI ID Copy</strong> karke normal tarike se <strong class="text-cyber-lime"><span class="fee-amount-label">₹15</span></strong> pay karein!
+                                    </p>
+                                </div>
+
+                                <!-- QR Mode Switcher (Default: Clean Personal QR - No Limit Error) -->
                                 <div class="bg-[#0b0d18] border border-white/10 rounded-xl p-1.5 grid grid-cols-2 gap-1.5 text-[10px] sm:text-[11px] font-mono">
-                                    <button type="button" id="qrModeAutoBtn" onclick="setQrScanMode('auto')" class="py-1.5 px-2 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold transition-all">
-                                        <i class="fa-solid fa-bolt mr-1"></i><span class="fee-amount-label">₹15</span> Auto-Fill QR
+                                    <button type="button" id="qrModeManualBtn" onclick="setQrScanMode('manual')" class="py-1.5 px-2 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-bold transition-all">
+                                        <i class="fa-solid fa-circle-check mr-1"></i>Safe QR (No Bank Error)
                                     </button>
-                                    <button type="button" id="qrModeManualBtn" onclick="setQrScanMode('manual')" class="py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all">
-                                        <i class="fa-solid fa-qrcode mr-1"></i>Standard QR (Enter <span class="fee-amount-label">₹15</span>)
+                                    <button type="button" id="qrModeAutoBtn" onclick="setQrScanMode('auto')" class="py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all">
+                                        <i class="fa-solid fa-bolt mr-1"></i>Auto <span class="fee-amount-label">₹15</span> QR (Merchant)
                                     </button>
                                 </div>
 
-                                <!-- PERMANENT PAYTM UPI QR CARD (Exact Match to Uploaded Image) -->
-                                <div class="paytm-qr-frame max-w-[290px] mx-auto">
-                                    <div class="bg-white rounded-[18px] p-4 text-center shadow-inner relative">
+                                <!-- PERMANENT PAYTM UPI QR CARD (Clean Personal UPI String) -->
+                                <div class="paytm-qr-frame max-w-[285px] mx-auto">
+                                    <div class="bg-white rounded-[18px] p-3.5 text-center shadow-inner relative">
                                         <!-- Paytm Heart UPI Header -->
-                                        <div class="flex items-center justify-center gap-1.5 mb-2.5 select-none">
+                                        <div class="flex items-center justify-center gap-1.5 mb-1.5 select-none">
                                             <span class="font-sans font-black text-xl tracking-tight text-[#002970]">pay</span><span class="font-sans font-black text-xl tracking-tight text-[#00baf2]">tm</span>
                                             <i class="fa-solid fa-heart text-[#ff4b55] text-sm mx-0.5"></i>
                                             <span class="font-sans font-extrabold text-lg tracking-wider italic text-[#1e293b]">UPI</span>
                                             <span class="inline-block w-0 h-0 border-t-[6px] border-t-transparent border-l-[8px] border-l-[#00baf2] border-b-[6px] border-b-transparent"></span>
                                         </div>
 
-                                        <!-- Permanent Scannable QR Code Container -->
-                                        <div class="relative w-52 h-52 sm:w-56 sm:h-56 mx-auto bg-white p-1.5 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center">
+                                        <!-- Verified Banking Name Badge -->
+                                        <div class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2.5 py-0.5 inline-flex items-center gap-1 mb-2">
+                                            <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                                            <span>Banking Name: DHARMENDRA KUMAR</span>
+                                        </div>
+
+                                        <!-- Permanent Scannable QR Code Container (DEFAULT CLEAN URI WITHOUT am= or tn=) -->
+                                        <div class="relative w-48 h-48 sm:w-52 sm:h-52 mx-auto bg-white p-1.5 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center">
                                             <div class="qr-laser"></div>
-                                            <!-- High-precision scannable QR image for 7081244266@ptyes with ₹15 amount -->
                                             <img id="permanentPaytmQrImg"
-                                                 src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=upi%3A%2F%2Fpay%3Fpa%3D7081244266%40ptyes%26pn%3DKushagra%2520Kashyap%26am%3D15%26cu%3DINR%26tn%3DTheGlorySKGI2026"
+                                                 crossorigin="anonymous"
+                                                 src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=upi%3A%2F%2Fpay%3Fpa%3D7081244266%40ptyes%26pn%3DDHARMENDRA%2520KUMAR%26cu%3DINR"
                                                  alt="Paytm UPI QR 7081244266@ptyes"
                                                  class="w-full h-full object-contain"
                                                  onerror="this.style.display='none'; document.getElementById('upiQrCanvas').classList.remove('hidden');">
@@ -877,72 +893,72 @@
                                         </div>
 
                                         <!-- Permanent UPI ID Footer inside White Card -->
-                                        <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[#0f172a] font-mono font-bold text-xs sm:text-sm">
+                                        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[#0f172a] font-mono font-bold text-xs sm:text-sm">
                                             <span class="inline-block w-2.5 h-2.5 rotate-45 bg-gradient-to-tr from-orange-500 to-green-500"></span>
-                                            <span class="select-all">7081244266@ptyes</span>
+                                            <span class="upi-id-display select-all">7081244266@ptyes</span>
                                         </div>
-                                        <div id="qrScanSubtext" class="mt-1 text-[11px] font-mono font-semibold text-[#00baf2]">
-                                            Scan with Paytm / GPay / PhonePe • Pay <span class="fee-amount-label">₹15</span>
+                                        <div id="qrScanSubtext" class="mt-1 text-[11px] font-mono font-bold text-[#002970]">
+                                            Scan QR & Enter <span class="fee-amount-label">₹15</span> Manually (Zero Error)
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Copy UPI ID & Direct Mobile UPI App Pay Buttons -->
+                                <!-- HUGE GLOWING COPY UPI ID + DOWNLOAD QR BUTTONS -->
                                 <div class="space-y-2.5">
-                                    <div class="flex items-center justify-between bg-[#0b0d18] border border-cyber-cyan/40 rounded-xl px-3.5 py-2.5">
-                                        <div>
-                                            <div class="text-[10px] font-mono uppercase text-slate-400">Official Permanent UPI ID</div>
-                                            <code id="organizerUpiId" class="text-xs sm:text-sm font-mono font-bold text-cyber-lime select-all">7081244266@ptyes</code>
-                                        </div>
-                                        <button type="button" onclick="copyText('7081244266@ptyes', 'UPI ID 7081244266@ptyes Copied!')" class="px-3 py-1.5 rounded-lg bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan/50 text-xs font-mono font-bold text-cyber-cyan transition-all">
-                                            <i class="fa-regular fa-copy mr-1"></i>Copy UPI
+                                    <!-- Huge Glowing Copy UPI ID Button -->
+                                    <button type="button" onclick="smartCopyAndPayUpi()" class="touch-target w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyber-lime/25 via-cyber-cyan/25 to-cyber-lime/25 hover:from-cyber-lime/40 hover:to-cyber-cyan/40 border-2 border-cyber-lime text-white font-orbitron font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,255,136,0.3)] transition-all">
+                                        <i class="fa-regular fa-copy text-cyber-lime text-base"></i>
+                                        <span>COPY UPI ID: <span class="upi-id-display text-cyber-lime">7081244266@ptyes</span></span>
+                                    </button>
+
+                                    <!-- Download QR Image & Smart Copy+Pay Row -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        <button type="button" onclick="downloadQrCodeImage()" class="touch-target py-2.5 px-3 rounded-xl bg-cyber-cyan/15 hover:bg-cyber-cyan/30 border border-cyber-cyan/60 text-cyber-cyan font-orbitron font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all">
+                                            <i class="fa-solid fa-download"></i>
+                                            <span>Download QR Image</span>
+                                        </button>
+                                        <button type="button" onclick="smartCopyAndPayUpi(true)" class="touch-target py-2.5 px-3 rounded-xl bg-cyber-purple/20 hover:bg-cyber-purple/35 border border-cyber-purple/60 text-white font-orbitron font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all">
+                                            <i class="fa-solid fa-mobile-screen-button text-cyber-purple"></i>
+                                            <span>Copy ID & Pay <span class="fee-amount-label">₹15</span></span>
                                         </button>
                                     </div>
 
-                                    <!-- Direct Mobile Tap-to-Pay Deep Link (₹15 Default) -->
-                                    <a id="primaryUpiDeepLink" href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=15&cu=INR&tn=TheGlorySKGI2026"
-                                       class="touch-target w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#00baf2]/25 to-[#002970]/50 hover:from-[#00baf2]/35 hover:to-[#002970]/70 border border-[#00baf2]/60 text-white font-orbitron font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
-                                        <i class="fa-solid fa-mobile-screen-button text-[#00baf2]"></i>
-                                        <span>Tap to Pay <span class="fee-amount-label">₹15</span> via Any UPI App</span>
-                                    </a>
-
-                                    <!-- Quick App Selector Deep Links (GPay, PhonePe, Paytm, BHIM) -->
-                                    <div class="grid grid-cols-4 gap-1.5 pt-0.5">
-                                        <a href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=15&cu=INR&tn=TheGlorySKGI2026" class="upi-app-link py-2 px-1 rounded-lg bg-white/5 hover:bg-cyber-cyan/20 border border-white/10 hover:border-cyber-cyan text-center text-[10px] font-mono text-slate-200 transition-all">
-                                            <i class="fa-brands fa-google-pay text-sm text-cyber-cyan block"></i>GPay <span class="fee-amount-label">₹15</span>
-                                        </a>
-                                        <a href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=15&cu=INR&tn=TheGlorySKGI2026" class="upi-app-link py-2 px-1 rounded-lg bg-white/5 hover:bg-cyber-purple/20 border border-white/10 hover:border-cyber-purple text-center text-[10px] font-mono text-slate-200 transition-all">
-                                            <i class="fa-solid fa-bolt text-sm text-cyber-purple block"></i>PhonePe <span class="fee-amount-label">₹15</span>
-                                        </a>
-                                        <a href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=15&cu=INR&tn=TheGlorySKGI2026" class="upi-app-link py-2 px-1 rounded-lg bg-white/5 hover:bg-[#00baf2]/20 border border-white/10 hover:border-[#00baf2] text-center text-[10px] font-mono text-slate-200 transition-all">
-                                            <i class="fa-solid fa-wallet text-sm text-[#00baf2] block"></i>Paytm <span class="fee-amount-label">₹15</span>
-                                        </a>
-                                        <a href="upi://pay?pa=7081244266@ptyes&pn=Kushagra%20Kashyap&am=15&cu=INR&tn=TheGlorySKGI2026" class="upi-app-link py-2 px-1 rounded-lg bg-white/5 hover:bg-cyber-lime/20 border border-white/10 hover:border-cyber-lime text-center text-[10px] font-mono text-slate-200 transition-all">
-                                            <i class="fa-solid fa-indian-rupee-sign text-sm text-cyber-lime block"></i>BHIM <span class="fee-amount-label">₹15</span>
-                                        </a>
+                                    <!-- Hinglish Step-by-Step Guide Banner (Reveals/Pulses on Click) -->
+                                    <div id="hinglishPayGuideBanner" class="hidden rounded-xl p-3.5 bg-[#0c141d] border-2 border-cyber-cyan text-xs space-y-2 shadow-lg shadow-cyber-cyan/20">
+                                        <div class="font-orbitron font-bold text-cyber-lime flex items-center gap-1.5 text-xs uppercase">
+                                            <i class="fa-solid fa-circle-check text-sm"></i> UPI ID Copy Ho Gayi Hai! (<span class="upi-id-display">7081244266@ptyes</span>)
+                                        </div>
+                                        <p class="text-slate-200 text-[11px] sm:text-xs leading-relaxed">
+                                            Ab apna <strong>GPay / PhonePe / Paytm</strong> app normal tarike se kholein, <strong>"Pay UPI ID"</strong> me <code class="text-cyber-cyan font-bold upi-id-display">7081244266@ptyes</code> paste karein (ya Downloaded QR ko Gallery se scan karein) aur <strong class="text-cyber-lime"><span class="fee-amount-label">₹15</span></strong> pay karein. <em>(Is tarike se Bank Limit error bilkul nahi aayega!)</em>
+                                        </p>
+                                        <div class="pt-1 flex flex-wrap items-center gap-2">
+                                            <a id="cleanFallbackUpiLink" href="upi://pay?pa=7081244266@ptyes&pn=DHARMENDRA%20KUMAR&cu=INR" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-mono text-cyber-cyan flex items-center gap-1">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Try Clean UPI App Open (No Amount Tag)
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- UTR / Transaction Reference & Verification -->
-                                <div class="space-y-2.5 pt-1">
+                                <!-- UTR / Transaction Reference & Verification (Accepts Last 4 or 12 Digits) -->
+                                <div class="space-y-2.5 pt-2 border-t border-white/10">
                                     <div class="flex flex-wrap items-center justify-between gap-1">
-                                        <label class="text-xs font-mono uppercase text-slate-300" for="upiTransactionId">
-                                            Enter 12-Digit UPI Ref / UTR No. <span class="text-cyber-pink">*</span>
+                                        <label class="text-xs font-mono font-bold uppercase text-cyber-cyan" for="upiTransactionId">
+                                            Step 4: Enter UPI Ref / UTR (Last 4 or 12 Digits) <span class="text-cyber-pink">*</span>
                                         </label>
                                         <button type="button" onclick="simulateInstantUpiPayment()" class="text-[11px] font-mono text-cyber-lime hover:underline flex items-center gap-1">
-                                            <i class="fa-solid fa-circle-check"></i> Paid <span class="fee-amount-label">₹15</span>? Auto-Fill Trial UTR
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Test Demo UTR
                                         </button>
                                     </div>
                                     <div class="relative">
                                         <i class="fa-solid fa-receipt absolute left-3.5 top-3.5 text-cyber-lime text-sm"></i>
-                                        <input type="text" id="upiTransactionId" required minlength="6" maxlength="20" placeholder="Enter 12-Digit UTR / UPI Ref No." oninput="verifyUtrInput()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono tracking-wider uppercase">
+                                        <input type="text" id="upiTransactionId" required minlength="4" maxlength="22" placeholder="Enter Last 4 or 12 Digit UTR / UPI Ref No." oninput="verifyUtrInput()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono tracking-wider uppercase border-cyber-cyan/50">
                                     </div>
 
                                     <!-- Live Payment Status Indicator Box -->
                                     <div id="paymentStatusBadge" class="rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono">
                                         <span class="flex items-center gap-2 text-amber-300">
                                             <i id="paymentStatusIcon" class="fa-solid fa-clock animate-spin"></i>
-                                            <span id="paymentStatusText">SCAN QR & PAY ₹15 TO GENERATE TOKEN</span>
+                                            <span id="paymentStatusText">PAY ₹15 ON UPI & ENTER LAST 4/12 DIGIT UTR</span>
                                         </span>
                                         <span id="paymentStatusAmount" class="font-bold text-white shrink-0">₹15.00</span>
                                     </div>
@@ -950,10 +966,10 @@
                             </div>
 
                             <!-- Submit & Generate Token CTA -->
-                            <div class="mt-6 pt-4 border-t border-white/10">
+                            <div class="mt-5 pt-4 border-t border-white/10">
                                 <button type="submit" id="submitRegBtn" class="touch-target btn-cyber-primary w-full py-4 px-5 rounded-xl font-orbitron font-black text-xs sm:text-base text-white uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl">
                                     <i class="fa-solid fa-ticket text-lg"></i>
-                                    <span>Complete <span class="fee-amount-label">₹15</span> Registration & Generate Token</span>
+                                    <span>Confirm Payment & Generate Squad Token</span>
                                 </button>
                             </div>
                         </div>
@@ -1218,28 +1234,43 @@
                 </div>
 
                 <!-- Admin Action Toolbar -->
-                <div class="neon-card rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs font-orbitron font-bold uppercase text-white">
-                            <i class="fa-solid fa-sliders text-cyber-cyan mr-1.5"></i>Payment Mode & Roster Controls:
-                        </span>
-                        <span id="adminCurrentFeeBadge" class="px-3 py-1 rounded-full bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-mono text-xs font-bold">
-                            Active Fee: ₹15 (Trial Mode)
-                        </span>
+                <div class="neon-card rounded-2xl p-5 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-orbitron font-bold uppercase text-white">
+                                <i class="fa-solid fa-sliders text-cyber-cyan mr-1.5"></i>Payment Mode & Roster Controls:
+                            </span>
+                            <span id="adminCurrentFeeBadge" class="px-3 py-1 rounded-full bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-mono text-xs font-bold">
+                                Active Fee: ₹15 (Trial Mode)
+                            </span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <button type="button" onclick="toggleFeeMode()" class="px-4 py-2.5 rounded-xl bg-cyber-orange/20 hover:bg-cyber-orange/30 border border-cyber-orange text-cyber-orange font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-repeat"></i>
+                                <span id="toggleFeeBtnLabel">Switch to ₹400 Official Mode</span>
+                            </button>
+                            <button type="button" onclick="exportSquadsCsv()" class="px-4 py-2.5 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan text-cyber-cyan font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>Export Squads CSV</span>
+                            </button>
+                            <button type="button" onclick="clearAllSquads()" class="px-4 py-2.5 rounded-xl bg-cyber-pink/20 hover:bg-cyber-pink/30 border border-cyber-pink text-cyber-pink font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Reset All Slots (0/36)</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button type="button" onclick="toggleFeeMode()" class="px-4 py-2.5 rounded-xl bg-cyber-orange/20 hover:bg-cyber-orange/30 border border-cyber-orange text-cyber-orange font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-repeat"></i>
-                            <span id="toggleFeeBtnLabel">Switch to ₹400 Official Mode</span>
-                        </button>
-                        <button type="button" onclick="exportSquadsCsv()" class="px-4 py-2.5 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan text-cyber-cyan font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-file-csv"></i>
-                            <span>Export Squads CSV</span>
-                        </button>
-                        <button type="button" onclick="clearAllSquads()" class="px-4 py-2.5 rounded-xl bg-cyber-pink/20 hover:bg-cyber-pink/30 border border-cyber-pink text-cyber-pink font-orbitron font-bold text-xs uppercase transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-trash-can"></i>
-                            <span>Reset All Slots (0/36)</span>
-                        </button>
+
+                    <!-- Editable Organizer UPI ID Setting (For Personal or Merchant UPI) -->
+                    <div class="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="text-xs font-mono text-slate-300">
+                            <i class="fa-solid fa-qrcode text-cyber-lime mr-1.5"></i>Active Receiving UPI ID (Personal / Merchant): <strong class="text-cyber-cyan upi-id-display">7081244266@ptyes</strong>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="adminUpiIdInput" value="7081244266@ptyes" placeholder="Enter UPI ID (e.g. 7081244266@ptyes)" class="cyber-input px-3 py-2 rounded-xl text-xs font-mono w-56">
+                            <button type="button" onclick="updateOrganizerUpiId()" class="px-3.5 py-2 rounded-xl bg-cyber-lime/20 hover:bg-cyber-lime/30 border border-cyber-lime text-cyber-lime font-orbitron font-bold text-xs uppercase transition-all">
+                                Update UPI ID
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1408,9 +1439,10 @@
          *************************************************************/
         const MAX_SLOTS = 36;
         const STORAGE_KEY = 'glory_skgi_2026_registrations_clean';
-        const PERMANENT_UPI_ID = '7081244266@ptyes';
-        let currentEntryFee = 15; // Default ₹15 Trial Mode (accepted smoothly by all UPI apps)
-        let qrScanMode = 'auto'; // 'auto' includes am=15, 'manual' lets user enter ₹15 manually
+        const UPI_STORAGE_KEY = 'glory_skgi_2026_active_upi_id';
+        let PERMANENT_UPI_ID = localStorage.getItem(UPI_STORAGE_KEY) || '7081244266@ptyes';
+        let currentEntryFee = 15; // Default ₹15 Trial Mode
+        let qrScanMode = 'manual'; // Default 'manual' (Clean Personal QR without am= or tn= so GPay/NPCI never throws Bank Limit error!)
         let adminUnlocked = false;
         let soundEnabled = true;
         let selectedUpiApp = 'Paytm UPI (7081244266@ptyes)';
@@ -1556,23 +1588,169 @@
          * 5. LIVE 36-SLOT DASHBOARD & ROSTER RENDERER
          *************************************************************/
         function setQrScanMode(mode) {
-            qrScanMode = mode === 'manual' ? 'manual' : 'auto';
+            qrScanMode = mode === 'auto' ? 'auto' : 'manual';
             playCyberSound('blip');
             const autoBtn = document.getElementById('qrModeAutoBtn');
             const manualBtn = document.getElementById('qrModeManualBtn');
             const subtext = document.getElementById('qrScanSubtext');
 
-            if (qrScanMode === 'auto') {
-                if (autoBtn) autoBtn.className = 'py-1.5 px-2 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold transition-all';
-                if (manualBtn) manualBtn.className = 'py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all';
-                if (subtext) subtext.innerHTML = `Scan with Paytm / GPay / PhonePe • Auto-Fills <span class="fee-amount-label">₹${currentEntryFee}</span>`;
-                showToast(`Switched to ₹${currentEntryFee} Auto-Fill UPI QR Code`, 'cyan');
-            } else {
+            if (qrScanMode === 'manual') {
                 if (manualBtn) manualBtn.className = 'py-1.5 px-2 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-bold transition-all';
                 if (autoBtn) autoBtn.className = 'py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all';
-                if (subtext) subtext.innerHTML = `Standard Paytm QR • Enter <span class="fee-amount-label">₹${currentEntryFee}</span> Manually in App`;
-                showToast(`Switched to Standard UPI QR (Type ₹${currentEntryFee} manually in your UPI app)`, 'lime');
+                if (subtext) subtext.innerHTML = `Scan QR & Enter <span class="fee-amount-label">₹${currentEntryFee}</span> Manually (Zero Error)`;
+                showToast(`Safe Personal QR Active: Scan or Copy UPI ID & enter ₹${currentEntryFee} manually (No Bank Limit Error!)`, 'lime');
+            } else {
+                if (autoBtn) autoBtn.className = 'py-1.5 px-2 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold transition-all';
+                if (manualBtn) manualBtn.className = 'py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all';
+                if (subtext) subtext.innerHTML = `Merchant Auto-Fill QR • Pre-fills <span class="fee-amount-label">₹${currentEntryFee}</span>`;
+                showToast(`Switched to Auto-Fill ₹${currentEntryFee} QR (Best for Business/Merchant UPI IDs)`, 'cyan');
             }
+            updateFeeUiElements();
+        }
+
+        function updateFeeUiElements() {
+            const feeStr = `₹${currentEntryFee}`;
+            document.querySelectorAll('.fee-amount-label').forEach(el => {
+                el.textContent = feeStr;
+            });
+
+            document.querySelectorAll('.upi-id-display').forEach(el => {
+                el.textContent = PERMANENT_UPI_ID;
+            });
+
+            const adminUpiInput = document.getElementById('adminUpiIdInput');
+            if (adminUpiInput && document.activeElement !== adminUpiInput) {
+                adminUpiInput.value = PERMANENT_UPI_ID;
+            }
+
+            const pill = document.getElementById('formFeePillBadge');
+            if (pill) {
+                pill.textContent = currentEntryFee === 15 ? '₹15 TRIAL MODE' : '₹400 FULL SQUAD';
+            }
+
+            // Clean Personal UPI URI (NO am= and NO tn= parameters that trigger NPCI/GPay Bank Limit error on personal accounts)
+            const upiUriCleanPersonal = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&cu=INR`;
+            // Auto-fill URI (only if organizer switches to 'auto' Merchant mode)
+            const upiUriWithAmount = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&am=${currentEntryFee}&cu=INR`;
+            const activeQrUri = qrScanMode === 'auto' ? upiUriWithAmount : upiUriCleanPersonal;
+
+            const cleanFallbackLink = document.getElementById('cleanFallbackUpiLink');
+            if (cleanFallbackLink) cleanFallbackLink.href = upiUriCleanPersonal;
+
+            const qrImg = document.getElementById('permanentPaytmQrImg');
+            if (qrImg) {
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=${encodeURIComponent(activeQrUri)}`;
+            }
+
+            const statusAmt = document.getElementById('paymentStatusAmount');
+            if (statusAmt) statusAmt.textContent = `₹${currentEntryFee}.00`;
+
+            const adminBadge = document.getElementById('adminCurrentFeeBadge');
+            if (adminBadge) {
+                adminBadge.textContent = currentEntryFee === 15 ? 'Active Fee: ₹15 (Trial Mode)' : 'Active Fee: ₹400 (Official Mode)';
+            }
+
+            const toggleLabel = document.getElementById('toggleFeeBtnLabel');
+            if (toggleLabel) {
+                toggleLabel.textContent = currentEntryFee === 15 ? 'Switch to ₹400 Official Mode' : 'Switch to ₹15 Trial Mode';
+            }
+
+            verifyUtrInput();
+        }
+
+        function smartCopyAndPayUpi(showGuide = true) {
+            copyText(
+                PERMANENT_UPI_ID,
+                `UPI ID (${PERMANENT_UPI_ID}) Copy Ho Gayi! Ab GPay/PhonePe/Paytm khol kar paste karein aur ₹${currentEntryFee} pay karein.`
+            );
+            playCyberSound('success');
+            const banner = document.getElementById('hinglishPayGuideBanner');
+            if (banner && showGuide) {
+                banner.classList.remove('hidden');
+                banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function downloadQrCodeImage() {
+            playCyberSound('blip');
+            const canvas = document.createElement('canvas');
+            canvas.width = 520;
+            canvas.height = 640;
+            const ctx = canvas.getContext('2d');
+
+            // Background card
+            ctx.fillStyle = '#002970';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00baf2';
+            ctx.fillRect(0, 0, canvas.width, 290);
+
+            // Inner white box
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(28, 28, canvas.width - 56, canvas.height - 56);
+
+            // Title text
+            ctx.fillStyle = '#002970';
+            ctx.font = 'bold 26px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('THE GLORY : SKGI SHOWDOWN 2026', canvas.width / 2, 78);
+
+            ctx.fillStyle = '#047857';
+            ctx.font = 'bold 18px monospace';
+            ctx.fillText('Banking Name: DHARMENDRA KUMAR', canvas.width / 2, 112);
+
+            const qrImg = document.getElementById('permanentPaytmQrImg');
+            const finishDownload = () => {
+                ctx.fillStyle = '#0f172a';
+                ctx.font = 'bold 22px monospace';
+                ctx.fillText(`UPI ID: ${PERMANENT_UPI_ID}`, canvas.width / 2, 520);
+
+                ctx.fillStyle = '#00baf2';
+                ctx.font = 'bold 18px sans-serif';
+                ctx.fillText(`Scan from Gallery in GPay/PhonePe/Paytm & Pay Rs.${currentEntryFee}`, canvas.width / 2, 558);
+
+                try {
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = `SKGI_Glory_2026_UPI_QR_${currentEntryFee}Rs.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    showToast('QR Image Downloaded! Open GPay/PhonePe -> Scan any QR -> Upload from Gallery.', 'lime');
+                } catch (err) {
+                    window.open(qrImg.src, '_blank');
+                    showToast('QR opened in new tab — long press image to save!', 'cyan');
+                }
+            };
+
+            if (qrImg && qrImg.complete && qrImg.naturalWidth > 0) {
+                try {
+                    ctx.drawImage(qrImg, 95, 135, 330, 330);
+                    finishDownload();
+                } catch (e) {
+                    window.open(qrImg.src, '_blank');
+                    showToast('QR opened — long press to save or screenshot!', 'cyan');
+                }
+            } else {
+                window.open(qrImg ? qrImg.src : '', '_blank');
+            }
+        }
+
+        function updateOrganizerUpiId() {
+            const input = document.getElementById('adminUpiIdInput');
+            const newUpi = (input ? input.value : '').trim();
+            if (!newUpi || !newUpi.includes('@')) {
+                showToast('Please enter a valid UPI ID containing @ (e.g., 7081244266@ptyes)', 'pink');
+                return;
+            }
+            PERMANENT_UPI_ID = newUpi;
+            try {
+                localStorage.setItem(UPI_STORAGE_KEY, PERMANENT_UPI_ID);
+            } catch (e) {}
+            playCyberSound('success');
+            updateFeeUiElements();
+            showToast(`Active UPI ID updated to ${PERMANENT_UPI_ID}!`, 'lime');
+        }
             updateFeeUiElements();
         }
 
@@ -1786,7 +1964,7 @@
                 fullBanner.classList.add('hidden');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                submitBtn.innerHTML = `<i class="fa-solid fa-ticket text-lg"></i> <span>Complete <span class="fee-amount-label">₹${currentEntryFee}</span> Registration & Generate Token</span>`;
+                submitBtn.innerHTML = `<i class="fa-solid fa-ticket text-lg"></i> <span>Confirm Payment & Generate Squad Token</span>`;
             }
 
             renderSlotMatrixGrid();
@@ -1967,16 +2145,16 @@
             const icon = document.getElementById('paymentStatusIcon');
             const text = document.getElementById('paymentStatusText');
 
-            if (val.length >= 6) {
+            if (val.length >= 4) {
                 badge.className = 'rounded-xl p-3 bg-cyber-lime/15 border border-cyber-lime flex items-center justify-between text-xs font-mono';
                 icon.className = 'fa-solid fa-circle-check text-cyber-lime';
                 text.className = 'text-cyber-lime font-bold';
-                text.textContent = `₹${currentEntryFee} PAID TO 7081244266@ptyes (REF: ${val.slice(0, 12)})`;
+                text.textContent = `₹${currentEntryFee} PAID TO ${PERMANENT_UPI_ID} (UTR: ${val.slice(0, 12)})`;
             } else {
                 badge.className = 'rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono';
                 icon.className = 'fa-solid fa-clock animate-spin text-amber-300';
                 text.className = 'text-amber-300';
-                text.textContent = `SCAN QR & PAY ₹${currentEntryFee} TO GENERATE TOKEN`;
+                text.textContent = `PAY ₹${currentEntryFee} ON UPI & ENTER LAST 4/12 DIGIT UTR`;
             }
         }
 
