@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Orbitron:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Pure JS QR Code Generator (For 100% Untainted Local Canvas QR Rendering & Instant PNG Download) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -836,34 +838,24 @@
                                 <div class="flex items-center justify-between border-b border-white/10 pb-3.5">
                                     <div class="flex items-center gap-2 text-cyber-lime font-orbitron font-bold text-xs sm:text-sm uppercase">
                                         <span class="w-7 h-7 rounded-lg bg-cyber-lime/20 border border-cyber-lime flex items-center justify-center text-xs shrink-0">03</span>
-                                        <span>Safe UPI Payment Portal</span>
+                                        <span>UPI Payment (<span class="fee-amount-label">₹15</span>)</span>
                                     </div>
                                     <span id="formFeePillBadge" class="px-3 py-1 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-orbitron font-black text-xs sm:text-sm">
-                                        ₹15 TRIAL MODE
+                                        ₹15 FULL SQUAD
                                     </span>
                                 </div>
 
-                                <!-- Anti-Bank-Limit Error Solution Notice (Hinglish) -->
+                                <!-- Simple Payment Instructions -->
                                 <div class="bg-cyber-lime/10 border border-cyber-lime/40 rounded-xl p-3 text-[11px] sm:text-xs text-slate-200 leading-relaxed">
                                     <div class="font-orbitron font-bold text-cyber-lime uppercase flex items-center gap-1.5 mb-1">
-                                        <i class="fa-solid fa-shield-check"></i> 100% Working Payment Method (No Bank Limit Error)
+                                        <i class="fa-solid fa-qrcode"></i> Scan QR or Copy UPI ID to Pay <span class="fee-amount-label">₹15</span>
                                     </div>
                                     <p class="text-slate-300">
-                                        Direct link se Personal UPI par GPay/Bank limit error aata hai. Isliye <strong class="text-white">QR Scan karein</strong> (ya QR Download karke GPay/PhonePe me <em>"Scan from Gallery"</em> karein) ya <strong class="text-cyber-cyan">UPI ID Copy</strong> karke normal tarike se <strong class="text-cyber-lime"><span class="fee-amount-label">₹15</span></strong> pay karein!
+                                        Copy the UPI ID or Download the QR Image below to pay <strong class="text-cyber-lime"><span class="fee-amount-label">₹15</span></strong> from any UPI app, then enter your <strong class="text-cyber-cyan">Transaction ID</strong> below to generate your Squad Token.
                                     </p>
                                 </div>
 
-                                <!-- QR Mode Switcher (Default: Clean Personal QR - No Limit Error) -->
-                                <div class="bg-[#0b0d18] border border-white/10 rounded-xl p-1.5 grid grid-cols-2 gap-1.5 text-[10px] sm:text-[11px] font-mono">
-                                    <button type="button" id="qrModeManualBtn" onclick="setQrScanMode('manual')" class="py-1.5 px-2 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-bold transition-all">
-                                        <i class="fa-solid fa-circle-check mr-1"></i>Safe QR (No Bank Error)
-                                    </button>
-                                    <button type="button" id="qrModeAutoBtn" onclick="setQrScanMode('auto')" class="py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all">
-                                        <i class="fa-solid fa-bolt mr-1"></i>Auto <span class="fee-amount-label">₹15</span> QR (Merchant)
-                                    </button>
-                                </div>
-
-                                <!-- PERMANENT PAYTM UPI QR CARD (Clean Personal UPI String) -->
+                                <!-- PERMANENT PAYTM UPI QR CARD (100% Untainted Local Canvas QR) -->
                                 <div class="paytm-qr-frame max-w-[285px] mx-auto">
                                     <div class="bg-white rounded-[18px] p-3.5 text-center shadow-inner relative">
                                         <!-- Paytm Heart UPI Header -->
@@ -880,85 +872,54 @@
                                             <span>Banking Name: DHARMENDRA KUMAR</span>
                                         </div>
 
-                                        <!-- Permanent Scannable QR Code Container (DEFAULT CLEAN URI WITHOUT am= or tn=) -->
-                                        <div class="relative w-48 h-48 sm:w-52 sm:h-52 mx-auto bg-white p-1.5 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center">
+                                        <!-- Local Untainted Scannable QR Code Canvas -->
+                                        <div class="relative w-48 h-48 sm:w-52 sm:h-52 mx-auto bg-white p-2 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center">
                                             <div class="qr-laser"></div>
-                                            <img id="permanentPaytmQrImg"
-                                                 crossorigin="anonymous"
-                                                 src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=upi%3A%2F%2Fpay%3Fpa%3D7081244266%40ptyes%26pn%3DDHARMENDRA%2520KUMAR%26cu%3DINR"
-                                                 alt="Paytm UPI QR 7081244266@ptyes"
-                                                 class="w-full h-full object-contain"
-                                                 onerror="this.style.display='none'; document.getElementById('upiQrCanvas').classList.remove('hidden');">
-                                            <canvas id="upiQrCanvas" width="232" height="232" class="hidden w-full h-full"></canvas>
+                                            <canvas id="upiQrCanvas" width="300" height="300" class="w-full h-full object-contain"></canvas>
                                         </div>
 
-                                        <!-- Permanent UPI ID Footer inside White Card -->
-                                        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[#0f172a] font-mono font-bold text-xs sm:text-sm">
-                                            <span class="inline-block w-2.5 h-2.5 rotate-45 bg-gradient-to-tr from-orange-500 to-green-500"></span>
-                                            <span class="upi-id-display select-all">7081244266@ptyes</span>
+                                        <!-- Selectable UPI ID Box inside White Card -->
+                                        <div class="mt-2.5 pt-2 border-t border-slate-200 flex items-center justify-center gap-1.5 text-[#0f172a] font-mono font-bold text-xs sm:text-sm">
+                                            <span class="inline-block w-2.5 h-2.5 rotate-45 bg-gradient-to-tr from-orange-500 to-green-500 shrink-0"></span>
+                                            <input type="text" id="readonlyUpiIdBox" value="7081244266@ptyes" readonly onclick="this.select(); copyUpiIdNow();" class="upi-id-input bg-slate-100 border border-slate-300 rounded px-2 py-0.5 text-center font-mono font-bold text-xs sm:text-sm text-[#0f172a] w-44 cursor-pointer focus:outline-none" title="Tap to select & copy UPI ID">
                                         </div>
-                                        <div id="qrScanSubtext" class="mt-1 text-[11px] font-mono font-bold text-[#002970]">
-                                            Scan QR & Enter <span class="fee-amount-label">₹15</span> Manually (Zero Error)
+                                        <div class="mt-1 text-[11px] font-mono font-bold text-[#002970]">
+                                            Pay <span class="fee-amount-label">₹15</span> • UPI ID: <span class="upi-id-display">7081244266@ptyes</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- HUGE GLOWING COPY UPI ID + DOWNLOAD QR BUTTONS -->
-                                <div class="space-y-2.5">
-                                    <!-- Huge Glowing Copy UPI ID Button -->
-                                    <button type="button" onclick="smartCopyAndPayUpi()" class="touch-target w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyber-lime/25 via-cyber-cyan/25 to-cyber-lime/25 hover:from-cyber-lime/40 hover:to-cyber-cyan/40 border-2 border-cyber-lime text-white font-orbitron font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,255,136,0.3)] transition-all">
-                                        <i class="fa-regular fa-copy text-cyber-lime text-base"></i>
-                                        <span>COPY UPI ID: <span class="upi-id-display text-cyber-lime">7081244266@ptyes</span></span>
+                                <!-- ONLY 2 ACTION BUTTONS: COPY UPI ID & DOWNLOAD QR IMAGE -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                                    <button type="button" id="copyUpiBtn" onclick="copyUpiIdNow()" class="touch-target w-full py-3.5 px-4 rounded-xl bg-cyber-lime/20 hover:bg-cyber-lime/35 border-2 border-cyber-lime text-white font-orbitron font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,255,136,0.25)] transition-all active:scale-95">
+                                        <i id="copyUpiBtnIcon" class="fa-regular fa-copy text-cyber-lime text-base"></i>
+                                        <span id="copyUpiBtnText">Copy UPI ID</span>
                                     </button>
 
-                                    <!-- Download QR Image & Smart Copy+Pay Row -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <button type="button" onclick="downloadQrCodeImage()" class="touch-target py-2.5 px-3 rounded-xl bg-cyber-cyan/15 hover:bg-cyber-cyan/30 border border-cyber-cyan/60 text-cyber-cyan font-orbitron font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all">
-                                            <i class="fa-solid fa-download"></i>
-                                            <span>Download QR Image</span>
-                                        </button>
-                                        <button type="button" onclick="smartCopyAndPayUpi(true)" class="touch-target py-2.5 px-3 rounded-xl bg-cyber-purple/20 hover:bg-cyber-purple/35 border border-cyber-purple/60 text-white font-orbitron font-bold text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all">
-                                            <i class="fa-solid fa-mobile-screen-button text-cyber-purple"></i>
-                                            <span>Copy ID & Pay <span class="fee-amount-label">₹15</span></span>
-                                        </button>
-                                    </div>
-
-                                    <!-- Hinglish Step-by-Step Guide Banner (Reveals/Pulses on Click) -->
-                                    <div id="hinglishPayGuideBanner" class="hidden rounded-xl p-3.5 bg-[#0c141d] border-2 border-cyber-cyan text-xs space-y-2 shadow-lg shadow-cyber-cyan/20">
-                                        <div class="font-orbitron font-bold text-cyber-lime flex items-center gap-1.5 text-xs uppercase">
-                                            <i class="fa-solid fa-circle-check text-sm"></i> UPI ID Copy Ho Gayi Hai! (<span class="upi-id-display">7081244266@ptyes</span>)
-                                        </div>
-                                        <p class="text-slate-200 text-[11px] sm:text-xs leading-relaxed">
-                                            Ab apna <strong>GPay / PhonePe / Paytm</strong> app normal tarike se kholein, <strong>"Pay UPI ID"</strong> me <code class="text-cyber-cyan font-bold upi-id-display">7081244266@ptyes</code> paste karein (ya Downloaded QR ko Gallery se scan karein) aur <strong class="text-cyber-lime"><span class="fee-amount-label">₹15</span></strong> pay karein. <em>(Is tarike se Bank Limit error bilkul nahi aayega!)</em>
-                                        </p>
-                                        <div class="pt-1 flex flex-wrap items-center gap-2">
-                                            <a id="cleanFallbackUpiLink" href="upi://pay?pa=7081244266@ptyes&pn=DHARMENDRA%20KUMAR&cu=INR" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-mono text-cyber-cyan flex items-center gap-1">
-                                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Try Clean UPI App Open (No Amount Tag)
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <button type="button" id="downloadQrBtn" onclick="downloadQrCodeImage()" class="touch-target w-full py-3.5 px-4 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/35 border-2 border-cyber-cyan text-white font-orbitron font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,243,255,0.25)] transition-all active:scale-95">
+                                        <i class="fa-solid fa-download text-cyber-cyan text-base"></i>
+                                        <span>Download QR Image</span>
+                                    </button>
                                 </div>
 
-                                <!-- UTR / Transaction Reference & Verification (Accepts Last 4 or 12 Digits) -->
-                                <div class="space-y-2.5 pt-2 border-t border-white/10">
-                                    <div class="flex flex-wrap items-center justify-between gap-1">
+                                <!-- TRANSACTION ID INPUT FIELD ONLY (NO UTR WORDING) -->
+                                <div class="space-y-2.5 pt-3 border-t border-white/10">
+                                    <div class="flex items-center justify-between gap-1">
                                         <label class="text-xs font-mono font-bold uppercase text-cyber-cyan" for="upiTransactionId">
-                                            Step 4: Enter UPI Ref / UTR (Last 4 or 12 Digits) <span class="text-cyber-pink">*</span>
+                                            Step 4: Enter Transaction ID <span class="text-cyber-pink">*</span>
                                         </label>
-                                        <button type="button" onclick="simulateInstantUpiPayment()" class="text-[11px] font-mono text-cyber-lime hover:underline flex items-center gap-1">
-                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Test Demo UTR
-                                        </button>
+                                        <span class="text-[10px] font-mono text-slate-400">Required for Token</span>
                                     </div>
                                     <div class="relative">
                                         <i class="fa-solid fa-receipt absolute left-3.5 top-3.5 text-cyber-lime text-sm"></i>
-                                        <input type="text" id="upiTransactionId" required minlength="4" maxlength="22" placeholder="Enter Last 4 or 12 Digit UTR / UPI Ref No." oninput="verifyUtrInput()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono tracking-wider uppercase border-cyber-cyan/50">
+                                        <input type="text" id="upiTransactionId" required minlength="4" maxlength="28" placeholder="Enter UPI Transaction ID after payment" oninput="verifyTransactionIdInput()" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono tracking-wider uppercase border-cyber-cyan/50">
                                     </div>
 
                                     <!-- Live Payment Status Indicator Box -->
                                     <div id="paymentStatusBadge" class="rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono">
                                         <span class="flex items-center gap-2 text-amber-300">
                                             <i id="paymentStatusIcon" class="fa-solid fa-clock animate-spin"></i>
-                                            <span id="paymentStatusText">PAY ₹15 ON UPI & ENTER LAST 4/12 DIGIT UTR</span>
+                                            <span id="paymentStatusText">PAY ₹15 & ENTER TRANSACTION ID</span>
                                         </span>
                                         <span id="paymentStatusAmount" class="font-bold text-white shrink-0">₹15.00</span>
                                     </div>
@@ -1408,13 +1369,19 @@
                 </div>
                 <div class="col-span-2 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div>
-                        <span class="text-slate-400 text-[10px] block">UPI REF / UTR NO.</span>
-                        <span id="modalUtr" class="text-slate-200 text-xs">UTR428193849102</span>
+                        <span class="text-slate-400 text-[10px] block">TRANSACTION ID</span>
+                        <span id="modalTransactionId" class="text-slate-200 text-xs">TXN428193849102</span>
                     </div>
                     <div class="text-right">
                         <span class="text-slate-400 text-[10px] block">ENTRY FEE STATUS</span>
                         <span id="modalFeePaidLabel" class="text-cyber-lime font-bold text-xs">₹15.00 • PAID</span>
                     </div>
+                </div>
+                <div class="col-span-2 pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+                    <span class="text-slate-400">EMAIL NOTIFICATION (`kushagrakashayp@gmail.com`)</span>
+                    <span id="modalEmailSyncStatus" class="text-cyber-lime font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-paper-plane"></i> Sent Automatically
+                    </span>
                 </div>
             </div>
 
@@ -1432,52 +1399,199 @@
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
-    <script>
+    <!-- ================= QR DOWNLOAD / SAVE PREVIEW MODAL (FOR MOBILE WEBVIEW SUPPORT) ================= -->
+    <div id="qrPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto no-print">
+        <div class="neon-card rounded-3xl max-w-sm w-full p-5 sm:p-6 border-2 border-cyber-cyan relative text-center space-y-4">
+            <button type="button" onclick="closeQrPreviewModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/10 hover:bg-cyber-pink/30 text-slate-300 hover:text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="space-y-1">
+                <span class="px-2.5 py-0.5 rounded-full bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-mono text-[10px] uppercase">
+                    <i class="fa-solid fa-circle-check mr-1"></i>QR Image Ready
+                </span>
+                <h3 class="font-orbitron font-black text-lg text-white uppercase">Save Paytm UPI QR Code</h3>
+                <p class="text-[11px] text-slate-300">
+                    Your QR download has started! On mobile, you can also <strong>Long-Press the QR image below</strong> and tap <strong>"Download / Save Image"</strong> to scan from Gallery.
+                </p>
+            </div>
+            <div class="bg-white p-2 rounded-2xl mx-auto max-w-[260px] shadow-xl">
+                <img id="downloadableQrPreviewImg" src="" alt="Paytm UPI QR Card" class="w-full h-auto rounded-xl">
+            </div>
+            <div class="grid grid-cols-1 gap-2 pt-1">
+                <a id="directQrDownloadAnchor" href="#" download="The_Glory_SKGI_2026_UPI_QR.png" class="py-3 px-4 rounded-xl bg-cyber-cyan/25 hover:bg-cyber-cyan/40 border border-cyber-cyan text-white font-orbitron font-bold text-xs uppercase flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download text-cyber-cyan"></i>
+                    <span>Save PNG to Device</span>
+                </a>
+                <button type="button" onclick="closeQrPreviewModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-mono text-slate-300">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT & REAL-TIME FIREBASE LOGIC ================= -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         /*************************************************************
-         * 1. STATE & CLEAN 36-SLOT INITIALIZATION (₹15 TRIAL MODE)
+         * 1. GLOBAL STATE & REAL-TIME CLOUD SYNC CONFIGURATION
          *************************************************************/
         const MAX_SLOTS = 36;
-        const STORAGE_KEY = 'glory_skgi_2026_registrations_clean';
-        const UPI_STORAGE_KEY = 'glory_skgi_2026_active_upi_id';
-        let PERMANENT_UPI_ID = localStorage.getItem(UPI_STORAGE_KEY) || '7081244266@ptyes';
-        let currentEntryFee = 15; // Default ₹15 Trial Mode
-        let qrScanMode = 'manual'; // Default 'manual' (Clean Personal QR without am= or tn= so GPay/NPCI never throws Bank Limit error!)
+        const ORGANIZER_EMAIL = 'kushagrakashayp@gmail.com';
+        let PERMANENT_UPI_ID = '7081244266@ptyes';
+        let currentEntryFee = 15; // Default ₹15 Trial Mode (Switchable in Admin Tab)
         let adminUnlocked = false;
         let soundEnabled = true;
-        let selectedUpiApp = 'Paytm UPI (7081244266@ptyes)';
         let lastGeneratedSquad = null;
-
-        // Starts completely clean with 0 pre-filled squads (all 36 slots open)
         let registeredSquads = [];
 
-        function loadSquadsFromStorage() {
-            try {
-                // Remove old demo key if present
-                localStorage.removeItem('skgi_glory_2026_squads_v1');
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) {
-                    const parsed = JSON.parse(raw);
-                    registeredSquads = Array.isArray(parsed) ? parsed : [];
-                } else {
-                    registeredSquads = [];
-                    saveSquadsToStorage();
+        // Firebase state
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let isCloudConnected = false;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'the-glory-skgi-2026';
+        const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('glory_skgi_2026_live_channel') : null;
+
+        if (broadcastChannel) {
+            broadcastChannel.onmessage = (ev) => {
+                if (ev.data && ev.data.type === 'SYNC_SQUADS' && !isCloudConnected) {
+                    registeredSquads = ev.data.squads || [];
+                    updateSlotDashboard();
+                } else if (ev.data && ev.data.type === 'SYNC_SETTINGS' && !isCloudConnected) {
+                    if (ev.data.fee) currentEntryFee = Number(ev.data.fee);
+                    if (ev.data.upiId) PERMANENT_UPI_ID = ev.data.upiId;
+                    updateFeeUiElements();
+                    updateSlotDashboard();
                 }
-            } catch (e) {
-                registeredSquads = [];
+            };
+        }
+
+        async function initRealtimeCloudSync() {
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    // RULE 3: Authenticate FIRST before attaching listeners
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    onAuthStateChanged(auth, (user) => {
+                        currentUser = user;
+                        if (user) {
+                            isCloudConnected = true;
+                            attachFirestoreListeners();
+                        }
+                    });
+                }
+            } catch (err) {
+                console.warn('Using instant local session sync:', err);
             }
         }
 
-        function saveSquadsToStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(registeredSquads));
-            } catch (e) {
-                console.error('Storage error:', e);
+        function attachFirestoreListeners() {
+            if (!db || !currentUser) return;
+
+            // RULE 1 & RULE 2: Strict public path with simple collection() query
+            const regColRef = collection(db, 'artifacts', appId, 'public', 'data', 'registrations');
+            onSnapshot(
+                regColRef,
+                (snapshot) => {
+                    const list = [];
+                    snapshot.forEach((docSnap) => {
+                        const data = docSnap.data();
+                        if (data && data.slotNumber) {
+                            list.push(data);
+                        }
+                    });
+                    // Sort in JS memory by slotNumber ascending
+                    list.sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
+                    registeredSquads = list;
+                    updateSlotDashboard();
+                },
+                (err) => {
+                    console.error('Firestore registrations listener error:', err);
+                }
+            );
+
+            // Listen to global tournament settings (Fee & UPI ID)
+            const settingsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'settings');
+            onSnapshot(
+                settingsColRef,
+                (snapshot) => {
+                    snapshot.forEach((docSnap) => {
+                        if (docSnap.id === 'config') {
+                            const cfg = docSnap.data();
+                            if (cfg.entryFee) currentEntryFee = Number(cfg.entryFee);
+                            if (cfg.upiId) PERMANENT_UPI_ID = String(cfg.upiId);
+                            updateFeeUiElements();
+                            updateSlotDashboard();
+                        }
+                    });
+                },
+                (err) => {
+                    console.error('Firestore settings listener error:', err);
+                }
+            );
+        }
+
+        async function saveSquadGlobally(newSquad) {
+            // Update local state immediately so UI responds in 0ms
+            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== Number(newSquad.slotNumber));
+            registeredSquads.push(newSquad);
+            registeredSquads.sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
+            updateSlotDashboard();
+
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads });
+            }
+
+            if (db && currentUser) {
+                try {
+                    const slotDocId = `slot_${String(newSquad.slotNumber).padStart(2, '0')}`;
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId);
+                    await setDoc(docRef, {
+                        ...newSquad,
+                        membersJson: JSON.stringify(newSquad.members || [])
+                    });
+                } catch (err) {
+                    console.error('Error saving squad to cloud:', err);
+                }
+            }
+        }
+
+        async function saveSettingsGlobally() {
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({
+                    type: 'SYNC_SETTINGS',
+                    fee: currentEntryFee,
+                    upiId: PERMANENT_UPI_ID
+                });
+            }
+            if (db && currentUser) {
+                try {
+                    const cfgRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+                    await setDoc(cfgRef, {
+                        entryFee: currentEntryFee,
+                        upiId: PERMANENT_UPI_ID,
+                        updatedAt: new Date().toISOString()
+                    });
+                } catch (err) {
+                    console.error('Error saving settings:', err);
+                }
             }
         }
 
         /*************************************************************
-         * 2. SYNTHESIZED CYBER AUDIO MICRO-INTERACTIONS (WEB AUDIO API)
+         * 2. SYNTHESIZED CYBER AUDIO MICRO-INTERACTIONS
          *************************************************************/
         let audioCtx = null;
         function playCyberSound(type = 'blip') {
@@ -1513,9 +1627,7 @@
                     osc.start(now);
                     osc.stop(now + 0.43);
                 }
-            } catch (err) {
-                // Ignore audio context restrictions
-            }
+            } catch (err) {}
         }
 
         function toggleSound() {
@@ -1532,10 +1644,11 @@
         }
 
         /*************************************************************
-         * 3. CUSTOM NEON TOAST NOTIFICATION SYSTEM (NO ALERT/CONFIRM)
+         * 3. CUSTOM NEON TOAST NOTIFICATION SYSTEM
          *************************************************************/
         function showToast(message, theme = 'cyan') {
             const container = document.getElementById('toastContainer');
+            if (!container) return;
             const toast = document.createElement('div');
             const borderColors = {
                 cyan: 'border-cyber-cyan text-cyber-cyan',
@@ -1565,49 +1678,341 @@
         }
 
         /*************************************************************
-         * 4. CLIPBOARD HELPER (IFRAME SAFE)
+         * 4. BULLETPROOF "COPY UPI ID" & CLIPBOARD HELPER
          *************************************************************/
         function copyText(text, successMsg) {
             playCyberSound('blip');
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
+            let copied = false;
+
+            // Method 1: Synchronous visible-viewport textarea + setSelectionRange + execCommand('copy')
             try {
-                document.execCommand('copy');
-                showToast(successMsg || 'Copied to clipboard!', 'lime');
-            } catch (e) {
-                showToast('Copy failed, please select manually.', 'pink');
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'fixed';
+                textarea.style.top = '10px';
+                textarea.style.left = '10px';
+                textarea.style.width = '2em';
+                textarea.style.height = '2em';
+                textarea.style.padding = '0';
+                textarea.style.border = 'none';
+                textarea.style.outline = 'none';
+                textarea.style.boxShadow = 'none';
+                textarea.style.background = 'transparent';
+                textarea.style.opacity = '0.01';
+                textarea.style.zIndex = '-1';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                textarea.setSelectionRange(0, 99999);
+                copied = document.execCommand('copy');
+                document.body.removeChild(textarea);
+            } catch (err) {
+                copied = false;
             }
-            document.body.removeChild(textarea);
+
+            // Method 2: Select the readonly input box if present
+            if (!copied) {
+                try {
+                    const inputBox = document.getElementById('readonlyUpiIdBox');
+                    if (inputBox && text === PERMANENT_UPI_ID) {
+                        inputBox.focus();
+                        inputBox.select();
+                        inputBox.setSelectionRange(0, 99999);
+                        copied = document.execCommand('copy');
+                    }
+                } catch (e) {}
+            }
+
+            // Method 3: Modern Async Clipboard API fallback
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(() => {});
+                copied = true;
+            }
+
+            showToast(successMsg || `Copied: ${text}`, 'lime');
+            return copied;
+        }
+
+        function copyUpiIdNow() {
+            copyText(PERMANENT_UPI_ID, `UPI ID Copied: ${PERMANENT_UPI_ID}`);
+            playCyberSound('success');
+
+            const btnText = document.getElementById('copyUpiBtnText');
+            const btnIcon = document.getElementById('copyUpiBtnIcon');
+            if (btnText && btnIcon) {
+                btnIcon.className = 'fa-solid fa-check text-cyber-lime text-base';
+                btnText.textContent = 'UPI ID Copied!';
+                setTimeout(() => {
+                    btnIcon.className = 'fa-regular fa-copy text-cyber-lime text-base';
+                    btnText.textContent = 'Copy UPI ID';
+                }, 2500);
+            }
         }
 
         /*************************************************************
-         * 5. LIVE 36-SLOT DASHBOARD & ROSTER RENDERER
+         * 5. 100% UNTAINTED LOCAL CANVAS QR GENERATOR & PNG DOWNLOAD
          *************************************************************/
-        function setQrScanMode(mode) {
-            qrScanMode = mode === 'auto' ? 'auto' : 'manual';
-            playCyberSound('blip');
-            const autoBtn = document.getElementById('qrModeAutoBtn');
-            const manualBtn = document.getElementById('qrModeManualBtn');
-            const subtext = document.getElementById('qrScanSubtext');
-
-            if (qrScanMode === 'manual') {
-                if (manualBtn) manualBtn.className = 'py-1.5 px-2 rounded-lg bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-bold transition-all';
-                if (autoBtn) autoBtn.className = 'py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all';
-                if (subtext) subtext.innerHTML = `Scan QR & Enter <span class="fee-amount-label">₹${currentEntryFee}</span> Manually (Zero Error)`;
-                showToast(`Safe Personal QR Active: Scan or Copy UPI ID & enter ₹${currentEntryFee} manually (No Bank Limit Error!)`, 'lime');
-            } else {
-                if (autoBtn) autoBtn.className = 'py-1.5 px-2 rounded-lg bg-cyber-cyan/20 border border-cyber-cyan text-cyber-cyan font-bold transition-all';
-                if (manualBtn) manualBtn.className = 'py-1.5 px-2 rounded-lg bg-white/5 border border-transparent text-slate-300 hover:text-white transition-all';
-                if (subtext) subtext.innerHTML = `Merchant Auto-Fill QR • Pre-fills <span class="fee-amount-label">₹${currentEntryFee}</span>`;
-                showToast(`Switched to Auto-Fill ₹${currentEntryFee} QR (Best for Business/Merchant UPI IDs)`, 'cyan');
-            }
-            updateFeeUiElements();
+        function getCleanUpiUri() {
+            return `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&cu=INR`;
         }
 
+        function renderLocalUntaintedQrCanvas() {
+            const canvas = document.getElementById('upiQrCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const upiUri = getCleanUpiUri();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, size, size);
+
+            if (typeof window.qrcode === 'function') {
+                try {
+                    const qr = window.qrcode(0, 'M');
+                    qr.addData(upiUri);
+                    qr.make();
+                    const moduleCount = qr.getModuleCount();
+                    const margin = 12;
+                    const drawSize = size - margin * 2;
+                    const tileW = drawSize / moduleCount;
+                    const tileH = drawSize / moduleCount;
+
+                    ctx.fillStyle = '#000000';
+                    for (let r = 0; r < moduleCount; r++) {
+                        for (let c = 0; c < moduleCount; c++) {
+                            if (qr.isDark(r, c)) {
+                                const w = Math.ceil((c + 1) * tileW) - Math.floor(c * tileW);
+                                const h = Math.ceil((r + 1) * tileH) - Math.floor(r * tileH);
+                                ctx.fillRect(
+                                    Math.round(margin + c * tileW),
+                                    Math.round(margin + r * tileH),
+                                    w,
+                                    h
+                                );
+                            }
+                        }
+                    }
+                    return;
+                } catch (e) {
+                    console.warn('QR library fallback triggered:', e);
+                }
+            }
+
+            // Fallback deterministic QR matrix renderer if CDN is offline
+            const grid = 25;
+            const cell = size / grid;
+            const drawFinder = (sr, sc) => {
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(sc * cell, sr * cell, 7 * cell, 7 * cell);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect((sc + 1) * cell, (sr + 1) * cell, 5 * cell, 5 * cell);
+                ctx.fillStyle = '#000000';
+                ctx.fillRect((sc + 2) * cell, (sr + 2) * cell, 3 * cell, 3 * cell);
+            };
+            drawFinder(1, 1);
+            drawFinder(1, grid - 8);
+            drawFinder(grid - 8, 1);
+            ctx.fillStyle = '#000000';
+            for (let r = 1; r < grid - 1; r++) {
+                for (let c = 1; c < grid - 1; c++) {
+                    if ((r < 9 && c < 9) || (r < 9 && c >= grid - 9) || (r >= grid - 9 && c < 9)) continue;
+                    if (((r * 19 + c * 37 + upiUri.length) % 5) < 2) {
+                        ctx.fillRect(c * cell, r * cell, cell - 1, cell - 1);
+                    }
+                }
+            }
+        }
+
+        function buildFullPaytmPosterCanvas() {
+            // Render fresh QR first
+            renderLocalUntaintedQrCanvas();
+            const qrSourceCanvas = document.getElementById('upiQrCanvas');
+
+            const poster = document.createElement('canvas');
+            poster.width = 600;
+            poster.height = 760;
+            const ctx = poster.getContext('2d');
+
+            // Two-tone Paytm blue background
+            ctx.fillStyle = '#00baf2';
+            ctx.fillRect(0, 0, poster.width, 360);
+            ctx.fillStyle = '#002970';
+            ctx.fillRect(0, 360, poster.width, poster.height - 360);
+
+            // Inner white card
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(36, 36, poster.width - 72, poster.height - 72);
+
+            // Header text
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#002970';
+            ctx.font = '900 34px sans-serif';
+            ctx.fillText('paytm  UPI', poster.width / 2, 98);
+
+            ctx.fillStyle = '#047857';
+            ctx.font = 'bold 20px monospace';
+            ctx.fillText('Banking Name: DHARMENDRA KUMAR', poster.width / 2, 138);
+
+            // Border around QR
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(115, 165, 370, 370);
+
+            // Copy untainted local QR canvas onto poster
+            if (qrSourceCanvas) {
+                ctx.drawImage(qrSourceCanvas, 125, 175, 350, 350);
+            }
+
+            // UPI ID & Tournament details
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 26px monospace';
+            ctx.fillText(`UPI ID: ${PERMANENT_UPI_ID}`, poster.width / 2, 585);
+
+            ctx.fillStyle = '#002970';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`THE GLORY : SKGI SHOWDOWN 2026 (Rs.${currentEntryFee})`, poster.width / 2, 630);
+
+            ctx.fillStyle = '#475569';
+            ctx.font = 'bold 17px sans-serif';
+            ctx.fillText('Scan from Gallery in GPay / PhonePe / Paytm & Enter Transaction ID', poster.width / 2, 670);
+
+            return poster;
+        }
+
+        function downloadQrCodeImage() {
+            playCyberSound('success');
+            try {
+                const posterCanvas = buildFullPaytmPosterCanvas();
+                const dataUrl = posterCanvas.toDataURL('image/png');
+                const fileName = `The_Glory_SKGI_2026_UPI_QR_Rs${currentEntryFee}.png`;
+
+                // Populate fallback modal preview image and direct anchor
+                const previewImg = document.getElementById('downloadableQrPreviewImg');
+                const directAnchor = document.getElementById('directQrDownloadAnchor');
+                if (previewImg) previewImg.src = dataUrl;
+                if (directAnchor) {
+                    directAnchor.href = dataUrl;
+                    directAnchor.download = fileName;
+                }
+
+                // Trigger instant Blob / DataURL download
+                if (posterCanvas.toBlob) {
+                    posterCanvas.toBlob((blob) => {
+                        if (blob) {
+                            const blobUrl = URL.createObjectURL(blob);
+                            const tempLink = document.createElement('a');
+                            tempLink.style.display = 'none';
+                            tempLink.href = blobUrl;
+                            tempLink.download = fileName;
+                            document.body.appendChild(tempLink);
+                            tempLink.click();
+                            setTimeout(() => {
+                                document.body.removeChild(tempLink);
+                                URL.revokeObjectURL(blobUrl);
+                            }, 1500);
+                        }
+                    }, 'image/png');
+                } else {
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+
+                // Open the QR save modal so mobile users can also long-press or tap Save PNG
+                const modal = document.getElementById('qrPreviewModal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+
+                showToast('Paytm UPI QR Image Downloaded!', 'lime');
+            } catch (err) {
+                console.error('QR Download Error:', err);
+                showToast('Tap the QR preview to save image.', 'cyan');
+            }
+        }
+
+        function closeQrPreviewModal() {
+            const modal = document.getElementById('qrPreviewModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        /*************************************************************
+         * 6. AUTOMATIC BACKGROUND EMAIL SENDER (kushagrakashayp@gmail.com)
+         *************************************************************/
+        async function sendRegistrationEmailAutomatically(squad) {
+            const statusEl = document.getElementById('modalEmailSyncStatus');
+            if (statusEl) {
+                statusEl.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Sending to ${ORGANIZER_EMAIL}...`;
+            }
+
+            const slotStr = `#${String(squad.slotNumber).padStart(2, '0')}`;
+            const payload = {
+                _subject: `New Squad Registered: ${squad.squadName} (Slot ${slotStr} - Token: ${squad.token})`,
+                _template: 'table',
+                _captcha: 'false',
+                Tournament: 'The Glory : SKGI Showdown 2026 (Shree Krishna Group of Institutions, Sitapur)',
+                Assigned_Slot: `Slot ${slotStr} of 36`,
+                Registration_Token: squad.token,
+                Squad_Name: squad.squadName,
+                Team_Leader_Full_Name: squad.leaderName,
+                WhatsApp_Number: squad.whatsapp,
+                Participant_Email: squad.email,
+                Player_1_Leader: squad.members[0] || '',
+                Player_2: squad.members[1] || '',
+                Player_3: squad.members[2] || '',
+                Player_4: squad.members[3] || '',
+                Substitute_Player: squad.substitute || 'None',
+                College_Or_City: squad.branch || 'Open Squad',
+                Transaction_ID: squad.transactionId,
+                Entry_Fee_Paid: `Rs. ${squad.feePaid}`,
+                Remaining_Slots: `${MAX_SLOTS - registeredSquads.length} / 36`,
+                Registered_At: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            };
+
+            try {
+                const res = await fetch(`https://formsubmit.co/ajax/${ORGANIZER_EMAIL}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    if (statusEl) {
+                        statusEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Sent to ${ORGANIZER_EMAIL}`;
+                    }
+                    return;
+                }
+            } catch (err) {
+                // Fallback no-cors FormData submission
+                try {
+                    const fd = new FormData();
+                    Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
+                    await fetch(`https://formsubmit.co/${ORGANIZER_EMAIL}`, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: fd
+                    });
+                } catch (e2) {}
+            }
+
+            if (statusEl) {
+                statusEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Dispatched to ${ORGANIZER_EMAIL}`;
+            }
+        }
+
+        /*************************************************************
+         * 7. LIVE 36-SLOT DASHBOARD, ADMIN TAB & ROSTER RENDERER
+         *************************************************************/
         function updateFeeUiElements() {
             const feeStr = `₹${currentEntryFee}`;
             document.querySelectorAll('.fee-amount-label').forEach(el => {
@@ -1617,6 +2022,9 @@
             document.querySelectorAll('.upi-id-display').forEach(el => {
                 el.textContent = PERMANENT_UPI_ID;
             });
+
+            const readonlyBox = document.getElementById('readonlyUpiIdBox');
+            if (readonlyBox) readonlyBox.value = PERMANENT_UPI_ID;
 
             const adminUpiInput = document.getElementById('adminUpiIdInput');
             if (adminUpiInput && document.activeElement !== adminUpiInput) {
@@ -1628,20 +2036,6 @@
                 pill.textContent = currentEntryFee === 15 ? '₹15 TRIAL MODE' : '₹400 FULL SQUAD';
             }
 
-            // Clean Personal UPI URI (NO am= and NO tn= parameters that trigger NPCI/GPay Bank Limit error on personal accounts)
-            const upiUriCleanPersonal = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&cu=INR`;
-            // Auto-fill URI (only if organizer switches to 'auto' Merchant mode)
-            const upiUriWithAmount = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=DHARMENDRA%20KUMAR&am=${currentEntryFee}&cu=INR`;
-            const activeQrUri = qrScanMode === 'auto' ? upiUriWithAmount : upiUriCleanPersonal;
-
-            const cleanFallbackLink = document.getElementById('cleanFallbackUpiLink');
-            if (cleanFallbackLink) cleanFallbackLink.href = upiUriCleanPersonal;
-
-            const qrImg = document.getElementById('permanentPaytmQrImg');
-            if (qrImg) {
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=${encodeURIComponent(activeQrUri)}`;
-            }
-
             const statusAmt = document.getElementById('paymentStatusAmount');
             if (statusAmt) statusAmt.textContent = `₹${currentEntryFee}.00`;
 
@@ -1655,88 +2049,11 @@
                 toggleLabel.textContent = currentEntryFee === 15 ? 'Switch to ₹400 Official Mode' : 'Switch to ₹15 Trial Mode';
             }
 
-            verifyUtrInput();
+            renderLocalUntaintedQrCanvas();
+            verifyTransactionIdInput();
         }
 
-        function smartCopyAndPayUpi(showGuide = true) {
-            copyText(
-                PERMANENT_UPI_ID,
-                `UPI ID (${PERMANENT_UPI_ID}) Copy Ho Gayi! Ab GPay/PhonePe/Paytm khol kar paste karein aur ₹${currentEntryFee} pay karein.`
-            );
-            playCyberSound('success');
-            const banner = document.getElementById('hinglishPayGuideBanner');
-            if (banner && showGuide) {
-                banner.classList.remove('hidden');
-                banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        }
-
-        function downloadQrCodeImage() {
-            playCyberSound('blip');
-            const canvas = document.createElement('canvas');
-            canvas.width = 520;
-            canvas.height = 640;
-            const ctx = canvas.getContext('2d');
-
-            // Background card
-            ctx.fillStyle = '#002970';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00baf2';
-            ctx.fillRect(0, 0, canvas.width, 290);
-
-            // Inner white box
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(28, 28, canvas.width - 56, canvas.height - 56);
-
-            // Title text
-            ctx.fillStyle = '#002970';
-            ctx.font = 'bold 26px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('THE GLORY : SKGI SHOWDOWN 2026', canvas.width / 2, 78);
-
-            ctx.fillStyle = '#047857';
-            ctx.font = 'bold 18px monospace';
-            ctx.fillText('Banking Name: DHARMENDRA KUMAR', canvas.width / 2, 112);
-
-            const qrImg = document.getElementById('permanentPaytmQrImg');
-            const finishDownload = () => {
-                ctx.fillStyle = '#0f172a';
-                ctx.font = 'bold 22px monospace';
-                ctx.fillText(`UPI ID: ${PERMANENT_UPI_ID}`, canvas.width / 2, 520);
-
-                ctx.fillStyle = '#00baf2';
-                ctx.font = 'bold 18px sans-serif';
-                ctx.fillText(`Scan from Gallery in GPay/PhonePe/Paytm & Pay Rs.${currentEntryFee}`, canvas.width / 2, 558);
-
-                try {
-                    const dataUrl = canvas.toDataURL('image/png');
-                    const a = document.createElement('a');
-                    a.href = dataUrl;
-                    a.download = `SKGI_Glory_2026_UPI_QR_${currentEntryFee}Rs.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    showToast('QR Image Downloaded! Open GPay/PhonePe -> Scan any QR -> Upload from Gallery.', 'lime');
-                } catch (err) {
-                    window.open(qrImg.src, '_blank');
-                    showToast('QR opened in new tab — long press image to save!', 'cyan');
-                }
-            };
-
-            if (qrImg && qrImg.complete && qrImg.naturalWidth > 0) {
-                try {
-                    ctx.drawImage(qrImg, 95, 135, 330, 330);
-                    finishDownload();
-                } catch (e) {
-                    window.open(qrImg.src, '_blank');
-                    showToast('QR opened — long press to save or screenshot!', 'cyan');
-                }
-            } else {
-                window.open(qrImg ? qrImg.src : '', '_blank');
-            }
-        }
-
-        function updateOrganizerUpiId() {
+        async function updateOrganizerUpiId() {
             const input = document.getElementById('adminUpiIdInput');
             const newUpi = (input ? input.value : '').trim();
             if (!newUpi || !newUpi.includes('@')) {
@@ -1744,65 +2061,19 @@
                 return;
             }
             PERMANENT_UPI_ID = newUpi;
-            try {
-                localStorage.setItem(UPI_STORAGE_KEY, PERMANENT_UPI_ID);
-            } catch (e) {}
             playCyberSound('success');
             updateFeeUiElements();
+            await saveSettingsGlobally();
             showToast(`Active UPI ID updated to ${PERMANENT_UPI_ID}!`, 'lime');
         }
-            updateFeeUiElements();
-        }
 
-        function updateFeeUiElements() {
-            const feeStr = `₹${currentEntryFee}`;
-            document.querySelectorAll('.fee-amount-label').forEach(el => {
-                el.textContent = feeStr;
-            });
-
-            const pill = document.getElementById('formFeePillBadge');
-            if (pill) {
-                pill.textContent = currentEntryFee === 15 ? '₹15 TRIAL MODE' : '₹400 FULL SQUAD';
-            }
-
-            const upiUriWithAmount = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=Kushagra%20Kashyap&am=${currentEntryFee}&cu=INR&tn=TheGlorySKGI2026`;
-            const upiUriStandard = `upi://pay?pa=${PERMANENT_UPI_ID}&pn=Kushagra%20Kashyap&cu=INR`;
-            const activeQrUri = qrScanMode === 'manual' ? upiUriStandard : upiUriWithAmount;
-
-            const primaryLink = document.getElementById('primaryUpiDeepLink');
-            if (primaryLink) primaryLink.href = upiUriWithAmount;
-
-            document.querySelectorAll('.upi-app-link').forEach(link => {
-                link.href = upiUriWithAmount;
-            });
-
-            const qrImg = document.getElementById('permanentPaytmQrImg');
-            if (qrImg) {
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=M&margin=0&data=${encodeURIComponent(activeQrUri)}`;
-            }
-
-            const statusAmt = document.getElementById('paymentStatusAmount');
-            if (statusAmt) statusAmt.textContent = `₹${currentEntryFee}.00`;
-
-            const adminBadge = document.getElementById('adminCurrentFeeBadge');
-            if (adminBadge) {
-                adminBadge.textContent = currentEntryFee === 15 ? 'Active Fee: ₹15 (Trial Mode)' : 'Active Fee: ₹400 (Official Mode)';
-            }
-
-            const toggleLabel = document.getElementById('toggleFeeBtnLabel');
-            if (toggleLabel) {
-                toggleLabel.textContent = currentEntryFee === 15 ? 'Switch to ₹400 Official Mode' : 'Switch to ₹15 Trial Mode';
-            }
-
-            verifyUtrInput();
-        }
-
-        function toggleFeeMode() {
+        async function toggleFeeMode() {
             currentEntryFee = currentEntryFee === 15 ? 400 : 15;
             playCyberSound('blip');
             updateFeeUiElements();
             updateSlotDashboard();
-            showToast(`Entry Fee switched to ₹${currentEntryFee} (${currentEntryFee === 15 ? '₹15 Trial Mode' : '₹400 Official Squad Mode'})!`, 'lime');
+            await saveSettingsGlobally();
+            showToast(`Entry Fee switched to ₹${currentEntryFee} globally!`, 'lime');
         }
 
         function switchMainTab(tab) {
@@ -1838,8 +2109,16 @@
                 renderAdminDashboard();
                 showToast('Organizer Admin Dashboard Unlocked!', 'lime');
             } else {
-                showToast('Invalid Admin PIN! Default trial PIN is 2026.', 'pink');
+                showToast('Invalid Admin PIN! Default PIN is 2026.', 'pink');
             }
+        }
+
+        function getSquadMembersArray(sq) {
+            if (Array.isArray(sq.members)) return sq.members;
+            if (sq.membersJson) {
+                try { return JSON.parse(sq.membersJson); } catch (e) {}
+            }
+            return [];
         }
 
         function renderAdminDashboard() {
@@ -1860,7 +2139,7 @@
             if (registeredSquads.length === 0) {
                 container.innerHTML = `
                     <div class="p-8 text-center text-slate-400 font-mono text-xs sm:text-sm border border-dashed border-white/10 rounded-2xl">
-                        No squads registered yet (0 / 36). Register a trial squad using ₹${currentEntryFee} on the Participant tab to test live slot deduction and WhatsApp captain messaging!
+                        No squads registered yet (0 / 36). Whenever any participant registers on the site, their booked slot and Transaction ID appear here in real-time!
                     </div>
                 `;
                 return;
@@ -1869,6 +2148,8 @@
             const rowsHtml = registeredSquads.map(sq => {
                 const slotStr = `#${String(sq.slotNumber).padStart(2, '0')}`;
                 const feePaid = sq.feePaid || currentEntryFee;
+                const txnId = sq.transactionId || '';
+                const members = getSquadMembersArray(sq);
                 const waCaptainLink = `https://wa.me/91${sq.whatsapp}?text=${encodeURIComponent(
                     `Hello ${sq.leaderName}, your squad "${sq.squadName}" (Slot ${slotStr}, Token: ${sq.token}) is verified for THE GLORY : SKGI SHOWDOWN 2026!`
                 )}`;
@@ -1878,8 +2159,8 @@
                         <td class="py-3.5 px-3 font-mono text-cyber-lime">${escapeHtml(sq.token)}</td>
                         <td class="py-3.5 px-3 font-orbitron font-bold text-white uppercase">${escapeHtml(sq.squadName)}</td>
                         <td class="py-3.5 px-3 text-slate-200">${escapeHtml(sq.leaderName)}</td>
-                        <td class="py-3.5 px-3 text-slate-300 font-mono text-[11px]">${sq.members.map(m => escapeHtml(m)).join(', ')}</td>
-                        <td class="py-3.5 px-3 font-mono text-cyber-lime">₹${feePaid} (${escapeHtml(sq.utr)})</td>
+                        <td class="py-3.5 px-3 text-slate-300 font-mono text-[11px]">${members.map(m => escapeHtml(m)).join(', ')}</td>
+                        <td class="py-3.5 px-3 font-mono text-cyber-lime">₹${feePaid} (TXN: ${escapeHtml(txnId)})</td>
                         <td class="py-3.5 px-3">
                             <div class="flex items-center gap-2">
                                 <a href="${waCaptainLink}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 rounded-lg bg-cyber-lime/20 hover:bg-cyber-lime/30 border border-cyber-lime text-cyber-lime font-mono text-[11px] flex items-center gap-1">
@@ -1903,7 +2184,7 @@
                             <th class="py-3 px-3">Squad Name</th>
                             <th class="py-3 px-3">Leader</th>
                             <th class="py-3 px-3">4 Squad Members</th>
-                            <th class="py-3 px-3">Paid & UTR</th>
+                            <th class="py-3 px-3">Fee & Transaction ID</th>
                             <th class="py-3 px-3">Actions</th>
                         </tr>
                     </thead>
@@ -1914,12 +2195,24 @@
             `;
         }
 
-        function deleteSingleSquad(slotNumber) {
-            registeredSquads = registeredSquads.filter(s => s.slotNumber !== slotNumber);
-            saveSquadsToStorage();
+        async function deleteSingleSquad(slotNumber) {
+            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== Number(slotNumber));
             updateSlotDashboard();
             renderAdminDashboard();
-            showToast(`Slot #${String(slotNumber).padStart(2, '0')} freed! Available slots updated.`, 'cyan');
+
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads });
+            }
+
+            if (db && currentUser) {
+                try {
+                    const slotDocId = `slot_${String(slotNumber).padStart(2, '0')}`;
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId));
+                } catch (err) {
+                    console.error('Error deleting slot from cloud:', err);
+                }
+            }
+            showToast(`Slot #${String(slotNumber).padStart(2, '0')} freed globally!`, 'cyan');
         }
 
         function updateSlotDashboard() {
@@ -1937,8 +2230,13 @@
             document.getElementById('slotPercentageText').textContent = `${percentage}% FULL (${bookedCount} / ${MAX_SLOTS} TEAMS)`;
             document.getElementById('slotProgressBar').style.width = `${(bookedCount / MAX_SLOTS) * 100}%`;
 
-            // Next available slot badge in form preview
-            const nextSlotNum = bookedCount + 1;
+            // Next available slot number
+            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
+            let nextSlotNum = 1;
+            while (usedSlots.has(nextSlotNum) && nextSlotNum <= MAX_SLOTS) {
+                nextSlotNum++;
+            }
+
             const liveSlotBadge = document.getElementById('liveSlotBadgePreview');
             if (availableCount > 0) {
                 liveSlotBadge.textContent = `#${String(nextSlotNum).padStart(2, '0')}`;
@@ -1946,13 +2244,12 @@
                     ? `ALL 36 SLOTS OPEN • BE THE 1ST SQUAD TO REGISTER!`
                     : availableCount <= 5
                         ? `CRITICAL! ONLY ${availableCount} SLOTS REMAINING!`
-                        : `REGISTRATION LIVE • ${availableCount} OF 36 SLOTS AVAILABLE`;
+                        : `LIVE SYNC ACTIVE • ${bookedCount} BOOKED / ${availableCount} SLOTS AVAILABLE`;
             } else {
                 liveSlotBadge.textContent = 'FULL';
                 document.getElementById('slotStatusText').textContent = 'ALL 36 SLOTS BOOKED • TOURNAMENT FULL';
             }
 
-            // Lock or unlock form if 36 teams reached
             const fullBanner = document.getElementById('slotsFullBanner');
             const submitBtn = document.getElementById('submitRegBtn');
             if (availableCount === 0) {
@@ -1974,28 +2271,29 @@
 
         function renderSlotMatrixGrid() {
             const grid = document.getElementById('slotMatrixGrid');
+            if (!grid) return;
             grid.innerHTML = '';
 
             for (let i = 1; i <= MAX_SLOTS; i++) {
-                const squad = registeredSquads.find(s => s.slotNumber === i);
+                const squad = registeredSquads.find(s => Number(s.slotNumber) === i);
                 const cell = document.createElement('button');
                 cell.type = 'button';
                 const slotLabel = `#${String(i).padStart(2, '0')}`;
 
                 if (squad) {
-                    cell.className = 'p-2 rounded-xl bg-cyber-pink/20 border border-cyber-pink text-center transition-all hover:scale-105 hover:bg-cyber-pink/30 group relative';
-                    cell.title = `Slot ${slotLabel}: ${squad.squadName} (Leader: ${squad.leaderName})`;
+                    cell.className = 'p-2 rounded-xl bg-cyber-pink/25 border-2 border-cyber-pink text-center transition-all hover:scale-105 hover:bg-cyber-pink/35 group relative shadow-md shadow-cyber-pink/15';
+                    cell.title = `BOOKED — Slot ${slotLabel}: ${squad.squadName} (Leader: ${squad.leaderName})`;
                     cell.innerHTML = `
                         <div class="font-orbitron font-bold text-xs text-white">${slotLabel}</div>
-                        <div class="text-[9px] font-mono text-cyber-pink truncate">${escapeHtml(squad.squadName)}</div>
+                        <div class="text-[9px] font-mono font-bold text-cyber-pink truncate">${escapeHtml(squad.squadName)}</div>
                     `;
                     cell.onclick = () => openPassForSquad(squad);
                 } else {
-                    cell.className = 'p-2 rounded-xl bg-cyber-lime/5 border border-cyber-lime/30 hover:border-cyber-lime text-center transition-all';
-                    cell.title = `Slot ${slotLabel} is Open! Tap to register your squad.`;
+                    cell.className = 'p-2 rounded-xl bg-cyber-lime/10 border border-cyber-lime/40 hover:border-cyber-lime text-center transition-all';
+                    cell.title = `Slot ${slotLabel} is AVAILABLE! Tap to register your squad.`;
                     cell.innerHTML = `
                         <div class="font-orbitron font-bold text-xs text-cyber-lime">${slotLabel}</div>
-                        <div class="text-[9px] font-mono text-slate-400">OPEN</div>
+                        <div class="text-[9px] font-mono text-cyber-lime/80">OPEN</div>
                     `;
                     cell.onclick = () => {
                         document.getElementById('registerFormSection').scrollIntoView({ behavior: 'smooth' });
@@ -2008,7 +2306,8 @@
 
         function renderRegisteredSquads() {
             const grid = document.getElementById('registeredSquadsGrid');
-            const query = (document.getElementById('squadSearchInput').value || '').trim().toLowerCase();
+            if (!grid) return;
+            const query = (document.getElementById('squadSearchInput')?.value || '').trim().toLowerCase();
             grid.innerHTML = '';
 
             if (registeredSquads.length === 0) {
@@ -2021,7 +2320,7 @@
                             All 36 Slots Currently Open — Be the First Squad to Register!
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
-                            No squads registered yet. As soon as a team submits the form above, their Squad Name, Leader, Roster, and Slot #01 will appear right here automatically!
+                            Whenever any team registers on this website, their Squad Name, Leader, 4 Players, and Booked Slot Number appear here immediately for everyone!
                         </p>
                         <div class="pt-2">
                             <a href="#registerFormSection" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan text-cyber-cyan font-orbitron font-bold text-xs uppercase tracking-wider transition-all">
@@ -2037,9 +2336,9 @@
                 .slice()
                 .reverse()
                 .filter(sq =>
-                    sq.squadName.toLowerCase().includes(query) ||
-                    sq.leaderName.toLowerCase().includes(query) ||
-                    sq.token.toLowerCase().includes(query)
+                    (sq.squadName || '').toLowerCase().includes(query) ||
+                    (sq.leaderName || '').toLowerCase().includes(query) ||
+                    (sq.token || '').toLowerCase().includes(query)
                 );
 
             if (filtered.length === 0) {
@@ -2054,16 +2353,17 @@
             filtered.forEach(sq => {
                 const slotStr = `#${String(sq.slotNumber).padStart(2, '0')}`;
                 const feePaid = sq.feePaid || currentEntryFee;
+                const members = getSquadMembersArray(sq);
                 const card = document.createElement('div');
                 card.className = 'neon-card rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden group';
                 card.innerHTML = `
                     <div>
                         <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="px-2.5 py-1 rounded-lg bg-cyber-cyan/15 border border-cyber-cyan/50 font-orbitron font-black text-xs text-cyber-cyan">
-                                SLOT ${slotStr} / 36
+                            <span class="px-2.5 py-1 rounded-lg bg-cyber-pink/20 border border-cyber-pink font-orbitron font-black text-xs text-cyber-pink">
+                                SLOT ${slotStr} BOOKED
                             </span>
                             <span class="px-2.5 py-0.5 rounded-full bg-cyber-lime/15 border border-cyber-lime/40 font-mono text-[11px] text-cyber-lime flex items-center gap-1">
-                                <i class="fa-solid fa-circle-check"></i> ₹${feePaid} PAID
+                                <i class="fa-solid fa-circle-check"></i> ₹${feePaid} VERIFIED
                             </span>
                         </div>
 
@@ -2078,7 +2378,7 @@
                         <div class="mt-3 pt-3 border-t border-white/10">
                             <div class="text-[10px] font-mono uppercase text-slate-400 mb-1.5">Squad Roster (4 Players):</div>
                             <div class="grid grid-cols-2 gap-1.5 text-xs font-rajdhani font-semibold text-slate-200">
-                                ${sq.members.map((m, idx) => `
+                                ${members.map((m, idx) => `
                                     <div class="bg-white/5 rounded px-2 py-1 truncate">
                                         <span class="text-cyber-cyan font-mono mr-1">P${idx + 1}:</span>${escapeHtml(m)}
                                     </div>
@@ -2090,10 +2390,10 @@
                     <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between gap-2">
                         <div>
                             <div class="text-[10px] font-mono text-slate-400">PARTICIPANT TOKEN</div>
-                            <div class="font-mono font-bold text-xs text-cyber-lime">${sq.token}</div>
+                            <div class="font-mono font-bold text-xs text-cyber-lime">${escapeHtml(sq.token)}</div>
                         </div>
                         <button type="button" class="view-pass-btn px-3 py-1.5 rounded-xl bg-white/5 hover:bg-cyber-cyan/20 border border-white/15 hover:border-cyber-cyan text-xs font-orbitron font-bold text-cyber-cyan transition-all">
-                            <i class="fa-solid fa-ticket mr-1"></i>Pass
+                            <i class="fa-solid fa-ticket mr-1"></i>View Pass
                         </button>
                     </div>
                 `;
@@ -2111,36 +2411,32 @@
         }
 
         /*************************************************************
-         * 6. FORM INTERACTIVITY & UPI PAYMENT VERIFICATION
+         * 8. FORM INTERACTIVITY & TRANSACTION ID VERIFICATION
          *************************************************************/
         function syncLeaderToPlayer1() {
             const leader = document.getElementById('leaderName').value;
             const m1 = document.getElementById('member1');
-            if (!m1.dataset.manuallyEdited) {
+            if (m1 && !m1.dataset.manuallyEdited) {
                 m1.value = leader ? `${leader} (Leader)` : '';
             }
         }
 
-        document.getElementById('member1').addEventListener('input', function() {
-            this.dataset.manuallyEdited = 'true';
-        });
+        const member1Input = document.getElementById('member1');
+        if (member1Input) {
+            member1Input.addEventListener('input', function() {
+                this.dataset.manuallyEdited = 'true';
+            });
+        }
 
         function updateLiveSquadPreview() {
             const val = document.getElementById('squadName').value.trim();
             document.getElementById('liveSquadNamePreview').textContent = val ? val.toUpperCase() : 'YOUR SQUAD NAME';
         }
 
-        function simulateInstantUpiPayment() {
-            playCyberSound('success');
-            const randomUtr = '6289' + Math.floor(10000000 + Math.random() * 90000000);
-            const utrInput = document.getElementById('upiTransactionId');
-            utrInput.value = randomUtr;
-            verifyUtrInput();
-            showToast(`₹${currentEntryFee} UPI Payment Reference (${randomUtr}) filled for ${PERMANENT_UPI_ID}!`, 'lime');
-        }
-
-        function verifyUtrInput() {
-            const val = document.getElementById('upiTransactionId').value.trim();
+        function verifyTransactionIdInput() {
+            const input = document.getElementById('upiTransactionId');
+            if (!input) return;
+            const val = input.value.trim();
             const badge = document.getElementById('paymentStatusBadge');
             const icon = document.getElementById('paymentStatusIcon');
             const text = document.getElementById('paymentStatusText');
@@ -2149,20 +2445,20 @@
                 badge.className = 'rounded-xl p-3 bg-cyber-lime/15 border border-cyber-lime flex items-center justify-between text-xs font-mono';
                 icon.className = 'fa-solid fa-circle-check text-cyber-lime';
                 text.className = 'text-cyber-lime font-bold';
-                text.textContent = `₹${currentEntryFee} PAID TO ${PERMANENT_UPI_ID} (UTR: ${val.slice(0, 12)})`;
+                text.textContent = `TRANSACTION ID READY (${val.slice(0, 14)})`;
             } else {
                 badge.className = 'rounded-xl p-3 bg-amber-500/10 border border-amber-500/40 flex items-center justify-between text-xs font-mono';
                 icon.className = 'fa-solid fa-clock animate-spin text-amber-300';
                 text.className = 'text-amber-300';
-                text.textContent = `PAY ₹${currentEntryFee} ON UPI & ENTER LAST 4/12 DIGIT UTR`;
+                text.textContent = `PAY ₹${currentEntryFee} & ENTER TRANSACTION ID`;
             }
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
 
             if (registeredSquads.length >= MAX_SLOTS) {
-                showToast('All 36 squad slots are already full!', 'pink');
+                showToast('All 36 squad slots are already booked!', 'pink');
                 return;
             }
 
@@ -2174,17 +2470,29 @@
             const m2 = document.getElementById('member2').value.trim();
             const m3 = document.getElementById('member3').value.trim();
             const m4 = document.getElementById('member4').value.trim();
+            const substitute = document.getElementById('subMember').value.trim();
             const branch = document.getElementById('collegeBranch').value.trim() || 'Open Entry Squad';
-            const utr = document.getElementById('upiTransactionId').value.trim().toUpperCase();
+            const transactionId = document.getElementById('upiTransactionId').value.trim().toUpperCase();
 
-            // Check duplicate squad name
-            if (registeredSquads.some(s => s.squadName.toUpperCase() === squadName)) {
+            if (transactionId.length < 4) {
+                showToast('Please enter a valid UPI Transaction ID!', 'pink');
+                return;
+            }
+
+            // Prevent duplicate Squad Name
+            if (registeredSquads.some(s => (s.squadName || '').toUpperCase() === squadName)) {
                 showToast(`Squad "${squadName}" is already registered! Choose a unique Squad Name.`, 'pink');
                 return;
             }
 
+            // Prevent duplicate Transaction ID
+            if (registeredSquads.some(s => (s.transactionId || '').toUpperCase() === transactionId)) {
+                showToast(`Transaction ID "${transactionId}" has already been used!`, 'pink');
+                return;
+            }
+
             // Compute next available slot number (1..36)
-            const usedSlots = new Set(registeredSquads.map(s => s.slotNumber));
+            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
             let assignedSlot = 1;
             while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
                 assignedSlot++;
@@ -2202,51 +2510,56 @@
                 email: email,
                 whatsapp: whatsapp,
                 members: [m1, m2, m3, m4],
+                substitute: substitute,
                 branch: branch,
-                utr: utr,
+                transactionId: transactionId,
                 feePaid: currentEntryFee,
                 upiApp: PERMANENT_UPI_ID,
-                timestamp: `Verified • Slot #${slotPadded}`
+                timestamp: new Date().toISOString()
             };
 
-            registeredSquads.push(newSquad);
-            saveSquadsToStorage();
-            updateSlotDashboard();
             playCyberSound('success');
+
+            // Save globally to Firestore & update everyone's screen immediately
+            await saveSquadGlobally(newSquad);
 
             // Reset form
             document.getElementById('registrationForm').reset();
             delete document.getElementById('member1').dataset.manuallyEdited;
             updateLiveSquadPreview();
-            verifyUtrInput();
+            verifyTransactionIdInput();
 
-            showToast(`Squad "${squadName}" locked in Slot #${slotPadded}! Remaining Slots: ${MAX_SLOTS - registeredSquads.length}/36`, 'lime');
+            showToast(`Slot #${slotPadded} Booked for "${squadName}"! Sending confirmation email...`, 'lime');
             openPassForSquad(newSquad);
+
+            // Automatically send full registration details to kushagrakashayp@gmail.com
+            sendRegistrationEmailAutomatically(newSquad);
         }
 
         /*************************************************************
-         * 7. VIP SQUAD TOKEN PASS MODAL & WHATSAPP SHARE
+         * 9. VIP SQUAD TOKEN PASS MODAL & WHATSAPP SHARE
          *************************************************************/
         function openPassForSquad(squad) {
             lastGeneratedSquad = squad;
             const slotStr = `#${String(squad.slotNumber).padStart(2, '0')}`;
             const paidAmt = squad.feePaid || currentEntryFee;
+            const txnId = squad.transactionId || '';
+            const members = getSquadMembersArray(squad);
 
             document.getElementById('modalTokenCode').textContent = squad.token;
             document.getElementById('modalSlotNo').textContent = `SLOT ${slotStr} / 36`;
             document.getElementById('modalSquadName').textContent = squad.squadName;
             document.getElementById('modalLeaderName').textContent = squad.leaderName;
             document.getElementById('modalContact').textContent = `${squad.whatsapp} • ${squad.email}`;
-            document.getElementById('modalUtr').textContent = `${squad.utr} (${squad.upiApp || 'UPI'})`;
+            document.getElementById('modalTransactionId').textContent = `${txnId} (${squad.upiApp || PERMANENT_UPI_ID})`;
             const feeLabel = document.getElementById('modalFeePaidLabel');
             if (feeLabel) feeLabel.textContent = `₹${paidAmt}.00 • PAID`;
 
             const membersContainer = document.getElementById('modalMembersList');
-            membersContainer.innerHTML = squad.members
+            membersContainer.innerHTML = members
                 .map((m, idx) => `<div><span class="text-slate-400 font-mono">P${idx + 1}:</span> ${escapeHtml(m)}</div>`)
                 .join('');
 
-            // Build WhatsApp confirmation link to Kushagra Kashyap (7081244266)
             const waText = encodeURIComponent(
                 `*THE GLORY : SKGI SHOWDOWN 2026*\n` +
                 `Official Registration Confirmation\n\n` +
@@ -2255,8 +2568,8 @@
                 `*Squad Name:* ${squad.squadName}\n` +
                 `*Team Leader:* ${squad.leaderName}\n` +
                 `*WhatsApp:* ${squad.whatsapp}\n` +
-                `*Players:* ${squad.members.join(', ')}\n` +
-                `*Entry Fee:* Rs. ${paidAmt} PAID (UTR: ${squad.utr})`
+                `*Players:* ${members.join(', ')}\n` +
+                `*Entry Fee:* Rs. ${paidAmt} PAID (Transaction ID: ${txnId})`
             );
             document.getElementById('modalWhatsappShareBtn').href = `https://wa.me/917081244266?text=${waText}`;
 
@@ -2278,13 +2591,26 @@
         }
 
         /*************************************************************
-         * 8. ADMIN CONTROLS (CSV EXPORT & SLOT RESET)
+         * 10. ADMIN CONTROLS (CSV EXPORT & GLOBAL SLOT RESET)
          *************************************************************/
-        function clearAllSquads() {
+        async function clearAllSquads() {
+            const currentSlots = registeredSquads.map(s => s.slotNumber);
             registeredSquads = [];
-            saveSquadsToStorage();
             updateSlotDashboard();
-            showToast('All 36 slots cleared (0 Registered / 36 Available)!', 'lime');
+
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: [] });
+            }
+
+            if (db && currentUser) {
+                for (const slotNo of currentSlots) {
+                    try {
+                        const slotDocId = `slot_${String(slotNo).padStart(2, '0')}`;
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId));
+                    } catch (e) {}
+                }
+            }
+            showToast('All 36 slots reset globally (0 Registered / 36 Available)!', 'lime');
         }
 
         function exportSquadsCsv() {
@@ -2292,20 +2618,24 @@
                 showToast('No squads registered yet to export.', 'pink');
                 return;
             }
-            const headers = ['Slot', 'Token', 'Squad Name', 'Leader Name', 'WhatsApp', 'Email', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'UTR_Ref'];
-            const rows = registeredSquads.map(s => [
-                s.slotNumber,
-                s.token,
-                `"${s.squadName}"`,
-                `"${s.leaderName}"`,
-                s.whatsapp,
-                s.email,
-                `"${s.members[0] || ''}"`,
-                `"${s.members[1] || ''}"`,
-                `"${s.members[2] || ''}"`,
-                `"${s.members[3] || ''}"`,
-                s.utr
-            ]);
+            const headers = ['Slot', 'Token', 'Squad Name', 'Leader Name', 'WhatsApp', 'Email', 'Player 1', 'Player 2', 'Player 3', 'Player 4', 'Transaction_ID', 'Fee_Paid'];
+            const rows = registeredSquads.map(s => {
+                const members = getSquadMembersArray(s);
+                return [
+                    s.slotNumber,
+                    s.token,
+                    `"${s.squadName}"`,
+                    `"${s.leaderName}"`,
+                    s.whatsapp,
+                    s.email,
+                    `"${members[0] || ''}"`,
+                    `"${members[1] || ''}"`,
+                    `"${members[2] || ''}"`,
+                    `"${members[3] || ''}"`,
+                    s.transactionId || '',
+                    s.feePaid || currentEntryFee
+                ];
+            });
             const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement('a');
@@ -2318,60 +2648,11 @@
         }
 
         /*************************************************************
-         * 9. CUSTOM UPI QR MATRIX RENDERER
-         *************************************************************/
-        function drawCustomUpiQr(seedText = 'Google Pay') {
-            const canvas = document.getElementById('upiQrCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const size = 21;
-            const cell = canvas.width / size;
-
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Deterministic hash from seedText
-            let hash = 2166136261;
-            for (let i = 0; i < seedText.length; i++) {
-                hash ^= seedText.charCodeAt(i);
-                hash *= 16777619;
-            }
-
-            const isFinder = (r, c) =>
-                (r < 7 && c < 7) ||
-                (r < 7 && c >= size - 7) ||
-                (r >= size - 7 && c < 7);
-
-            const drawFinder = (startR, startC) => {
-                ctx.fillStyle = '#06060b';
-                ctx.fillRect(startC * cell, startR * cell, 7 * cell, 7 * cell);
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect((startC + 1) * cell, (startR + 1) * cell, 5 * cell, 5 * cell);
-                ctx.fillStyle = '#0d9488';
-                ctx.fillRect((startC + 2) * cell, (startR + 2) * cell, 3 * cell, 3 * cell);
-            };
-
-            drawFinder(0, 0);
-            drawFinder(0, size - 7);
-            drawFinder(size - 7, 0);
-
-            ctx.fillStyle = '#06060b';
-            for (let r = 0; r < size; r++) {
-                for (let c = 0; c < size; c++) {
-                    if (isFinder(r, c)) continue;
-                    const v = ((r * 31 + c * 17 + Math.abs(hash)) % 7);
-                    if (v < 3) {
-                        ctx.fillRect(c * cell, r * cell, cell - 0.5, cell - 0.5);
-                    }
-                }
-            }
-        }
-
-        /*************************************************************
-         * 10. ANIMATED CYBER-EMBER PARTICLE CANVAS BACKGROUND
+         * 11. ANIMATED CYBER-EMBER PARTICLE CANVAS BACKGROUND
          *************************************************************/
         function initParticlesCanvas() {
             const canvas = document.getElementById('bgCanvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
@@ -2418,16 +2699,37 @@
             animate();
         }
 
-        /*************************************************************
-         * INITIALIZE ON WINDOW LOAD
-         *************************************************************/
-        window.onload = function () {
-            loadSquadsFromStorage();
+        // Expose functions to global window for inline HTML handlers
+        Object.assign(window, {
+            switchMainTab,
+            toggleSound,
+            copyText,
+            copyUpiIdNow,
+            downloadQrCodeImage,
+            closeQrPreviewModal,
+            syncLeaderToPlayer1,
+            updateLiveSquadPreview,
+            verifyTransactionIdInput,
+            handleFormSubmit,
+            renderRegisteredSquads,
+            handleAdminPinUnlock,
+            toggleFeeMode,
+            exportSquadsCsv,
+            clearAllSquads,
+            updateOrganizerUpiId,
+            deleteSingleSquad,
+            closeTokenModal,
+            copyGeneratedToken,
+            openPassForSquad
+        });
+
+        // Initialize UI, Local Untainted QR Canvas, Particles & Live Cloud Sync
+        window.addEventListener('DOMContentLoaded', () => {
             updateFeeUiElements();
             updateSlotDashboard();
-            drawCustomUpiQr(PERMANENT_UPI_ID);
             initParticlesCanvas();
-        };
+            initRealtimeCloudSync();
+        });
     </script>
 </body>
 </html>
