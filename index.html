@@ -759,7 +759,7 @@
                                     </label>
                                     <div class="relative">
                                         <i class="fa-brands fa-whatsapp absolute left-3.5 top-3.5 text-cyber-lime text-base"></i>
-                                        <input type="tel" id="whatsappNumber" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit WhatsApp Number" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono">
+                                        <input type="tel" id="whatsappNumber" required maxlength="15" placeholder="10-digit WhatsApp Number" class="cyber-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-mono">
                                     </div>
                                 </div>
                             </div>
@@ -935,6 +935,23 @@
                             </div>
                         </div>
                     </form>
+
+                    <!-- INSTANT LIVE BOOKING HISTORY FEED (UPDATES IMMEDIATELY ON SUBMIT) -->
+                    <div id="instantBookingHistoryBar" class="mt-6 pt-5 border-t border-white/10">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2 text-xs font-orbitron font-bold uppercase text-cyber-lime">
+                                <span class="w-2.5 h-2.5 rounded-full bg-cyber-lime animate-ping"></span>
+                                <span>Live Slot Booking History (<span id="miniHistoryCount">0</span>/36 Slots Booked)</span>
+                            </div>
+                            <a href="#registeredSquadsSection" class="text-[11px] font-mono text-cyber-cyan hover:underline flex items-center gap-1">
+                                <span>View Full Squad Roster</span>
+                                <i class="fa-solid fa-arrow-down"></i>
+                            </a>
+                        </div>
+                        <div id="instantBookingHistoryList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1233,6 +1250,27 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Admin Quick Add / Restore Squad Panel -->
+                    <div class="pt-4 border-t border-white/10 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-orbitron font-bold uppercase text-cyber-cyan">
+                                <i class="fa-solid fa-plus-circle mr-1.5"></i>Quick Add / Restore Previous Squad Slot:
+                            </span>
+                            <span class="text-[11px] font-mono text-slate-400">Instantly books the next open slot</span>
+                        </div>
+                        <form onsubmit="handleAdminQuickAddSquad(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+                            <input type="text" id="quickSquadName" required placeholder="Squad Name *" class="cyber-input px-3 py-2 rounded-xl text-xs font-orbitron uppercase">
+                            <input type="text" id="quickLeaderName" required placeholder="Leader Full Name *" class="cyber-input px-3 py-2 rounded-xl text-xs">
+                            <input type="tel" id="quickWhatsapp" required placeholder="WhatsApp No *" class="cyber-input px-3 py-2 rounded-xl text-xs font-mono">
+                            <input type="text" id="quickPlayers" placeholder="4 Players (comma separated)" class="cyber-input px-3 py-2 rounded-xl text-xs">
+                            <input type="text" id="quickTxnId" required placeholder="Transaction ID *" class="cyber-input px-3 py-2 rounded-xl text-xs font-mono uppercase">
+                            <button type="submit" class="py-2 px-3 rounded-xl bg-cyber-lime/25 hover:bg-cyber-lime/40 border border-cyber-lime text-cyber-lime font-orbitron font-bold text-xs uppercase transition-all flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Book Slot Now</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Registered Squads Full Management Table / Mobile Cards -->
@@ -1386,143 +1424,243 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 no-print">
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 no-print">
+                <button type="button" onclick="scrollToBookedHistoryFromModal()" class="py-3 px-4 rounded-xl bg-cyber-cyan/20 hover:bg-cyber-cyan/30 border border-cyber-cyan font-orbitron font-bold text-xs uppercase text-cyber-cyan flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-table-cells"></i>
+                    <span>See Booked Slot</span>
+                </button>
                 <button type="button" onclick="window.print()" class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 font-orbitron font-bold text-xs uppercase text-white flex items-center justify-center gap-2 transition-all">
                     <i class="fa-solid fa-print text-cyber-cyan"></i>
-                    <span>Print / Save PDF Pass</span>
+                    <span>Print / Save PDF</span>
                 </button>
                 <a id="modalWhatsappShareBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-3 px-4 rounded-xl bg-cyber-lime/20 hover:bg-cyber-lime/30 border border-cyber-lime font-orbitron font-bold text-xs uppercase text-cyber-lime flex items-center justify-center gap-2 transition-all">
                     <i class="fa-brands fa-whatsapp text-base"></i>
-                    <span>Send Token on WhatsApp</span>
+                    <span>Send on WhatsApp</span>
                 </a>
             </div>
         </div>
     </div>
 
     <!-- ================= QR DOWNLOAD / SAVE PREVIEW MODAL (FOR MOBILE WEBVIEW SUPPORT) ================= -->
-    <div id="qrPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4 overflow-y-auto no-print">
-        <div class="neon-card rounded-3xl max-w-sm w-full p-5 sm:p-6 border-2 border-cyber-cyan relative text-center space-y-4">
-            <button type="button" onclick="closeQrPreviewModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-xl bg-white/10 hover:bg-cyber-pink/30 text-slate-300 hover:text-white flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="space-y-1">
-                <span class="px-2.5 py-0.5 rounded-full bg-cyber-lime/20 border border-cyber-lime text-cyber-lime font-mono text-[10px] uppercase">
-                    <i class="fa-solid fa-circle-check mr-1"></i>QR Image Ready
-                </span>
-                <h3 class="font-orbitron font-black text-lg text-white uppercase">Save Paytm UPI QR Code</h3>
-                <p class="text-[11px] text-slate-300">
-                    Your QR download has started! On mobile, you can also <strong>Long-Press the QR image below</strong> and tap <strong>"Download / Save Image"</strong> to scan from Gallery.
-                </p>
-            </div>
-            <div class="bg-white p-2 rounded-2xl mx-auto max-w-[260px] shadow-xl">
-                <img id="downloadableQrPreviewImg" src="" alt="Paytm UPI QR Card" class="w-full h-auto rounded-xl">
-            </div>
-            <div class="grid grid-cols-1 gap-2 pt-1">
-                <a id="directQrDownloadAnchor" href="#" download="The_Glory_SKGI_2026_UPI_QR.png" class="py-3 px-4 rounded-xl bg-cyber-cyan/25 hover:bg-cyber-cyan/40 border border-cyber-cyan text-white font-orbitron font-bold text-xs uppercase flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-download text-cyber-cyan"></i>
-                    <span>Save PNG to Device</span>
-                </a>
-                <button type="button" onclick="closeQrPreviewModal()" class="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-mono text-slate-300">
-                    Close Window
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= JAVASCRIPT & REAL-TIME FIREBASE LOGIC ================= -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+    <!-- ================= JAVASCRIPT & REAL-TIME PERSISTENCE LOGIC ================= -->
+    <script>
         /*************************************************************
-         * 1. GLOBAL STATE & REAL-TIME CLOUD SYNC CONFIGURATION
+         * 1. GLOBAL STATE & MULTI-LAYER PERSISTENCE (ZERO-FAILURE)
          *************************************************************/
         const MAX_SLOTS = 36;
         const ORGANIZER_EMAIL = 'kushagrakashayp@gmail.com';
+        const IDB_NAME = 'TheGlorySKGI2026_DB';
+        const IDB_STORE = 'tournament_state';
         let PERMANENT_UPI_ID = '7081244266@ptyes';
         let currentEntryFee = 15; // Default ₹15 Trial Mode (Switchable in Admin Tab)
         let adminUnlocked = false;
         let soundEnabled = true;
         let lastGeneratedSquad = null;
+        let lastBookedSlotHighlight = null;
         let registeredSquads = [];
+        let deletedSlotTimestamps = {};
 
-        // Firebase state
+        // Cloud Firestore references (loaded asynchronously so UI never blocks)
         let db = null;
         let auth = null;
         let currentUser = null;
         let isCloudConnected = false;
+        let firestoreFns = null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'the-glory-skgi-2026';
         const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('glory_skgi_2026_live_channel') : null;
 
+        // Layer A: Synchronous Window.name Cache (Survives page refreshes even in strict mobile WebViews)
+        function loadFromWindowNameCache() {
+            try {
+                if (window.name && window.name.startsWith('GLORY_SKGI_2026::')) {
+                    const raw = window.name.replace('GLORY_SKGI_2026::', '');
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.squads)) {
+                        registeredSquads = parsed.squads;
+                    }
+                    if (parsed && parsed.fee) currentEntryFee = Number(parsed.fee);
+                    if (parsed && parsed.upiId) PERMANENT_UPI_ID = String(parsed.upiId);
+                }
+            } catch (e) {}
+        }
+
+        function saveToWindowNameCache() {
+            try {
+                const payload = {
+                    squads: registeredSquads,
+                    fee: currentEntryFee,
+                    upiId: PERMANENT_UPI_ID,
+                    updatedAt: Date.now()
+                };
+                window.name = 'GLORY_SKGI_2026::' + JSON.stringify(payload);
+            } catch (e) {}
+        }
+
+        // Layer B: IndexedDB Persistent Database (Survives tab close & browser restart)
+        function openIndexedDb() {
+            return new Promise((resolve, reject) => {
+                if (!window.indexedDB) return reject(new Error('IndexedDB unavailable'));
+                const req = window.indexedDB.open(IDB_NAME, 1);
+                req.onupgradeneeded = (e) => {
+                    const idb = e.target.result;
+                    if (!idb.objectStoreNames.contains(IDB_STORE)) {
+                        idb.createObjectStore(IDB_STORE);
+                    }
+                };
+                req.onsuccess = (e) => resolve(e.target.result);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function saveToIndexedDb() {
+            try {
+                const idb = await openIndexedDb();
+                const tx = idb.transaction(IDB_STORE, 'readwrite');
+                const store = tx.objectStore(IDB_STORE);
+                store.put({
+                    squads: registeredSquads,
+                    fee: currentEntryFee,
+                    upiId: PERMANENT_UPI_ID,
+                    updatedAt: Date.now()
+                }, 'master_state');
+            } catch (e) {}
+        }
+
+        async function loadFromIndexedDb() {
+            try {
+                const idb = await openIndexedDb();
+                return await new Promise((resolve) => {
+                    const tx = idb.transaction(IDB_STORE, 'readonly');
+                    const store = tx.objectStore(IDB_STORE);
+                    const req = store.get('master_state');
+                    req.onsuccess = () => resolve(req.result || null);
+                    req.onerror = () => resolve(null);
+                });
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Merge incoming squads with existing squads without ever losing local registrations
+        function mergeSquadLists(incomingList) {
+            if (!Array.isArray(incomingList)) return;
+            const bySlot = new Map();
+            registeredSquads.forEach(sq => {
+                if (sq && sq.slotNumber) {
+                    bySlot.set(Number(sq.slotNumber), sq);
+                }
+            });
+            incomingList.forEach(sq => {
+                if (sq && sq.slotNumber) {
+                    const slotNo = Number(sq.slotNumber);
+                    const deletedAt = deletedSlotTimestamps[slotNo] || 0;
+                    const sqTime = sq.timestamp ? new Date(sq.timestamp).getTime() : Date.now();
+                    if (sqTime >= deletedAt) {
+                        bySlot.set(slotNo, sq);
+                    }
+                }
+            });
+            registeredSquads = Array.from(bySlot.values()).sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
+        }
+
+        function persistAllLocalState() {
+            saveToWindowNameCache();
+            saveToIndexedDb();
+        }
+
         if (broadcastChannel) {
             broadcastChannel.onmessage = (ev) => {
-                if (ev.data && ev.data.type === 'SYNC_SQUADS' && !isCloudConnected) {
-                    registeredSquads = ev.data.squads || [];
+                if (!ev.data) return;
+                if (ev.data.type === 'SYNC_SQUADS') {
+                    if (ev.data.replaceAll) {
+                        registeredSquads = ev.data.squads || [];
+                    } else {
+                        mergeSquadLists(ev.data.squads || []);
+                    }
+                    persistAllLocalState();
                     updateSlotDashboard();
-                } else if (ev.data && ev.data.type === 'SYNC_SETTINGS' && !isCloudConnected) {
+                } else if (ev.data.type === 'SYNC_SETTINGS') {
                     if (ev.data.fee) currentEntryFee = Number(ev.data.fee);
                     if (ev.data.upiId) PERMANENT_UPI_ID = ev.data.upiId;
+                    persistAllLocalState();
                     updateFeeUiElements();
                     updateSlotDashboard();
                 }
             };
         }
 
+        // Layer C: Non-blocking Firebase Cloud Sync (Merges cloud data with local registrations)
         async function initRealtimeCloudSync() {
             try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    const app = initializeApp(firebaseConfig);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
+                const stored = await loadFromIndexedDb();
+                if (stored && Array.isArray(stored.squads) && stored.squads.length > 0) {
+                    mergeSquadLists(stored.squads);
+                    if (stored.fee) currentEntryFee = Number(stored.fee);
+                    if (stored.upiId) PERMANENT_UPI_ID = String(stored.upiId);
+                    saveToWindowNameCache();
+                    updateFeeUiElements();
+                    updateSlotDashboard();
+                }
 
-                    // RULE 3: Authenticate FIRST before attaching listeners
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    const [appMod, authMod, fsMod] = await Promise.all([
+                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"),
+                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"),
+                        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js")
+                    ]);
+                    firestoreFns = fsMod;
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = appMod.initializeApp(firebaseConfig);
+                    auth = authMod.getAuth(app);
+                    db = fsMod.getFirestore(app);
+
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
+                        await authMod.signInWithCustomToken(auth, __initial_auth_token);
                     } else {
-                        await signInAnonymously(auth);
+                        await authMod.signInAnonymously(auth);
                     }
 
-                    onAuthStateChanged(auth, (user) => {
+                    authMod.onAuthStateChanged(auth, (user) => {
                         currentUser = user;
                         if (user) {
                             isCloudConnected = true;
                             attachFirestoreListeners();
+                            // Push any locally registered squads up to Firestore so nothing is ever lost
+                            registeredSquads.forEach(sq => pushSingleSquadToFirestore(sq));
                         }
                     });
                 }
             } catch (err) {
-                console.warn('Using instant local session sync:', err);
+                console.warn('Local persistence active:', err);
             }
         }
 
         function attachFirestoreListeners() {
-            if (!db || !currentUser) return;
+            if (!db || !currentUser || !firestoreFns) return;
+            const { collection, onSnapshot } = firestoreFns;
 
-            // RULE 1 & RULE 2: Strict public path with simple collection() query
             const regColRef = collection(db, 'artifacts', appId, 'public', 'data', 'registrations');
             onSnapshot(
                 regColRef,
                 (snapshot) => {
-                    const list = [];
+                    const cloudList = [];
                     snapshot.forEach((docSnap) => {
                         const data = docSnap.data();
                         if (data && data.slotNumber) {
-                            list.push(data);
+                            cloudList.push(data);
                         }
                     });
-                    // Sort in JS memory by slotNumber ascending
-                    list.sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
-                    registeredSquads = list;
-                    updateSlotDashboard();
+                    if (cloudList.length > 0) {
+                        mergeSquadLists(cloudList);
+                        persistAllLocalState();
+                        updateSlotDashboard();
+                    }
                 },
                 (err) => {
-                    console.error('Firestore registrations listener error:', err);
+                    console.warn('Firestore listener warning:', err);
                 }
             );
 
-            // Listen to global tournament settings (Fee & UPI ID)
             const settingsColRef = collection(db, 'artifacts', appId, 'public', 'data', 'settings');
             onSnapshot(
                 settingsColRef,
@@ -1532,43 +1670,53 @@
                             const cfg = docSnap.data();
                             if (cfg.entryFee) currentEntryFee = Number(cfg.entryFee);
                             if (cfg.upiId) PERMANENT_UPI_ID = String(cfg.upiId);
+                            persistAllLocalState();
                             updateFeeUiElements();
                             updateSlotDashboard();
                         }
                     });
                 },
                 (err) => {
-                    console.error('Firestore settings listener error:', err);
+                    console.warn('Firestore settings warning:', err);
                 }
             );
         }
 
-        async function saveSquadGlobally(newSquad) {
-            // Update local state immediately so UI responds in 0ms
+        async function pushSingleSquadToFirestore(newSquad) {
+            if (!db || !currentUser || !firestoreFns) return;
+            try {
+                const { doc, setDoc } = firestoreFns;
+                const slotDocId = `slot_${String(newSquad.slotNumber).padStart(2, '0')}`;
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId);
+                await setDoc(docRef, {
+                    ...newSquad,
+                    membersJson: JSON.stringify(newSquad.members || [])
+                });
+            } catch (err) {
+                console.warn('Cloud sync deferred:', err);
+            }
+        }
+
+        function saveSquadGlobally(newSquad) {
+            // 1. IMMEDIATELY & SYNCHRONOUSLY update in-memory state + UI + local persistence (0ms delay)
+            lastBookedSlotHighlight = Number(newSquad.slotNumber);
             registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== Number(newSquad.slotNumber));
             registeredSquads.push(newSquad);
             registeredSquads.sort((a, b) => Number(a.slotNumber) - Number(b.slotNumber));
+
+            persistAllLocalState();
             updateSlotDashboard();
 
             if (broadcastChannel) {
                 broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads });
             }
 
-            if (db && currentUser) {
-                try {
-                    const slotDocId = `slot_${String(newSquad.slotNumber).padStart(2, '0')}`;
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId);
-                    await setDoc(docRef, {
-                        ...newSquad,
-                        membersJson: JSON.stringify(newSquad.members || [])
-                    });
-                } catch (err) {
-                    console.error('Error saving squad to cloud:', err);
-                }
-            }
+            // 2. Non-blocking cloud sync in background
+            pushSingleSquadToFirestore(newSquad);
         }
 
         async function saveSettingsGlobally() {
+            persistAllLocalState();
             if (broadcastChannel) {
                 broadcastChannel.postMessage({
                     type: 'SYNC_SETTINGS',
@@ -1576,17 +1724,16 @@
                     upiId: PERMANENT_UPI_ID
                 });
             }
-            if (db && currentUser) {
+            if (db && currentUser && firestoreFns) {
                 try {
+                    const { doc, setDoc } = firestoreFns;
                     const cfgRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
                     await setDoc(cfgRef, {
                         entryFee: currentEntryFee,
                         upiId: PERMANENT_UPI_ID,
                         updatedAt: new Date().toISOString()
                     });
-                } catch (err) {
-                    console.error('Error saving settings:', err);
-                }
+                } catch (err) {}
             }
         }
 
@@ -2196,23 +2343,128 @@
         }
 
         async function deleteSingleSquad(slotNumber) {
-            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== Number(slotNumber));
+            const num = Number(slotNumber);
+            deletedSlotTimestamps[num] = Date.now();
+            registeredSquads = registeredSquads.filter(s => Number(s.slotNumber) !== num);
+            persistAllLocalState();
             updateSlotDashboard();
             renderAdminDashboard();
 
             if (broadcastChannel) {
-                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads });
+                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: registeredSquads, replaceAll: true });
             }
 
-            if (db && currentUser) {
+            if (db && currentUser && firestoreFns) {
                 try {
-                    const slotDocId = `slot_${String(slotNumber).padStart(2, '0')}`;
+                    const { doc, deleteDoc } = firestoreFns;
+                    const slotDocId = `slot_${String(num).padStart(2, '0')}`;
                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'registrations', slotDocId));
                 } catch (err) {
-                    console.error('Error deleting slot from cloud:', err);
+                    console.warn('Error deleting slot from cloud:', err);
                 }
             }
-            showToast(`Slot #${String(slotNumber).padStart(2, '0')} freed globally!`, 'cyan');
+            showToast(`Slot #${String(num).padStart(2, '0')} freed globally!`, 'cyan');
+        }
+
+        function handleAdminQuickAddSquad(e) {
+            e.preventDefault();
+            if (registeredSquads.length >= MAX_SLOTS) {
+                showToast('All 36 slots are already full!', 'pink');
+                return;
+            }
+            const squadName = (document.getElementById('quickSquadName').value || '').trim().toUpperCase();
+            const leaderName = (document.getElementById('quickLeaderName').value || '').trim();
+            const rawPhone = (document.getElementById('quickWhatsapp').value || '').replace(/\D/g, '');
+            const whatsapp = rawPhone.length >= 10 ? rawPhone.slice(-10) : rawPhone;
+            const rawPlayers = (document.getElementById('quickPlayers').value || '').trim();
+            const txnId = (document.getElementById('quickTxnId').value || '').trim().toUpperCase();
+
+            const playerParts = rawPlayers
+                ? rawPlayers.split(',').map(s => s.trim()).filter(Boolean)
+                : [];
+            const members = [
+                playerParts[0] || `${leaderName} (Leader)`,
+                playerParts[1] || 'Squad Player 2',
+                playerParts[2] || 'Squad Player 3',
+                playerParts[3] || 'Squad Player 4'
+            ];
+
+            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
+            let assignedSlot = 1;
+            while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
+                assignedSlot++;
+            }
+
+            const slotPadded = String(assignedSlot).padStart(2, '0');
+            const randomPin = Math.floor(1000 + Math.random() * 9000);
+            const token = `GLORY26-SKGI-S${slotPadded}-${randomPin}`;
+
+            const newSquad = {
+                slotNumber: assignedSlot,
+                token: token,
+                squadName: squadName,
+                leaderName: leaderName,
+                email: ORGANIZER_EMAIL,
+                whatsapp: whatsapp || '7081244266',
+                members: members,
+                substitute: '',
+                branch: 'SKGI Sitapur / Verified Entry',
+                transactionId: txnId,
+                feePaid: currentEntryFee,
+                upiApp: PERMANENT_UPI_ID,
+                timestamp: new Date().toISOString()
+            };
+
+            playCyberSound('success');
+            saveSquadGlobally(newSquad);
+            e.target.reset();
+            showToast(`Slot #${slotPadded} booked for "${squadName}"!`, 'lime');
+        }
+
+        function renderInstantBookingHistoryBar() {
+            const countEl = document.getElementById('miniHistoryCount');
+            const listEl = document.getElementById('instantBookingHistoryList');
+            if (countEl) countEl.textContent = registeredSquads.length;
+            if (!listEl) return;
+
+            if (registeredSquads.length === 0) {
+                listEl.innerHTML = `
+                    <div class="col-span-full bg-[#06070d] border border-dashed border-white/15 rounded-xl p-3.5 text-center text-xs font-mono text-slate-400">
+                        No slots booked yet (0/36). Fill out the form above and click <strong class="text-cyber-lime">"Confirm Payment & Generate Squad Token"</strong> to book Slot #01!
+                    </div>
+                `;
+                return;
+            }
+
+            const recent = registeredSquads.slice().reverse();
+            listEl.innerHTML = recent.map(sq => {
+                const slotStr = `#${String(sq.slotNumber).padStart(2, '0')}`;
+                const timeStr = sq.timestamp ? new Date(sq.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) : 'Just now';
+                const isNew = Number(sq.slotNumber) === Number(lastBookedSlotHighlight);
+                return `
+                    <div onclick="openPassForSquadBySlot(${sq.slotNumber})" class="cursor-pointer bg-[#06070d] ${isNew ? 'border-2 border-cyber-lime shadow-[0_0_20px_rgba(0,255,136,0.3)]' : 'border border-cyber-pink/40'} hover:border-cyber-cyan rounded-xl p-3 flex items-center justify-between gap-2.5 transition-all">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div class="w-10 h-10 rounded-lg bg-cyber-pink/20 border border-cyber-pink flex flex-col items-center justify-center shrink-0">
+                                <span class="font-orbitron font-black text-xs text-white">${slotStr}</span>
+                                <span class="text-[8px] font-mono text-cyber-pink uppercase">BOOKED</span>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="font-orbitron font-bold text-xs text-white uppercase truncate">${escapeHtml(sq.squadName)}</div>
+                                <div class="text-[11px] text-slate-400 truncate">Leader: <span class="text-slate-200">${escapeHtml(sq.leaderName)}</span></div>
+                                <div class="text-[10px] font-mono text-cyber-lime truncate">${escapeHtml(sq.token)} • ${timeStr}</div>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 rounded bg-cyber-lime/15 border border-cyber-lime/40 text-cyber-lime font-mono text-[10px] shrink-0">
+                            Pass <i class="fa-solid fa-ticket ml-0.5"></i>
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openPassForSquadBySlot(slotNumber) {
+            const sq = registeredSquads.find(s => Number(s.slotNumber) === Number(slotNumber));
+            if (sq) openPassForSquad(sq);
         }
 
         function updateSlotDashboard() {
@@ -2244,7 +2496,7 @@
                     ? `ALL 36 SLOTS OPEN • BE THE 1ST SQUAD TO REGISTER!`
                     : availableCount <= 5
                         ? `CRITICAL! ONLY ${availableCount} SLOTS REMAINING!`
-                        : `LIVE SYNC ACTIVE • ${bookedCount} BOOKED / ${availableCount} SLOTS AVAILABLE`;
+                        : `LIVE AUTO-UPDATE ACTIVE • ${bookedCount} BOOKED / ${availableCount} SLOTS AVAILABLE`;
             } else {
                 liveSlotBadge.textContent = 'FULL';
                 document.getElementById('slotStatusText').textContent = 'ALL 36 SLOTS BOOKED • TOURNAMENT FULL';
@@ -2264,43 +2516,100 @@
                 submitBtn.innerHTML = `<i class="fa-solid fa-ticket text-lg"></i> <span>Confirm Payment & Generate Squad Token</span>`;
             }
 
+            renderInstantBookingHistoryBar();
             renderSlotMatrixGrid();
             renderRegisteredSquads();
             renderAdminDashboard();
         }
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        function renderSlotMatrixGrid() {
-            const grid = document.getElementById('slotMatrixGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
+            if (registeredSquads.length >= MAX_SLOTS) {
+                showToast('All 36 squad slots are already booked!', 'pink');
+                return;
+            }
 
-            for (let i = 1; i <= MAX_SLOTS; i++) {
-                const squad = registeredSquads.find(s => Number(s.slotNumber) === i);
-                const cell = document.createElement('button');
-                cell.type = 'button';
-                const slotLabel = `#${String(i).padStart(2, '0')}`;
+            const leaderName = document.getElementById('leaderName').value.trim();
+            const squadName = document.getElementById('squadName').value.trim().toUpperCase();
+            const email = document.getElementById('emailAddress').value.trim();
+            const rawPhone = document.getElementById('whatsappNumber').value.replace(/\D/g, '');
+            const whatsapp = rawPhone.length >= 10 ? rawPhone.slice(-10) : rawPhone;
+            const m1 = document.getElementById('member1').value.trim() || `${leaderName} (Leader)`;
+            const m2 = document.getElementById('member2').value.trim();
+            const m3 = document.getElementById('member3').value.trim();
+            const m4 = document.getElementById('member4').value.trim();
+            const substitute = document.getElementById('subMember').value.trim();
+            const branch = document.getElementById('collegeBranch').value.trim() || 'Open Entry Squad';
+            const transactionId = document.getElementById('upiTransactionId').value.trim().toUpperCase();
 
-                if (squad) {
-                    cell.className = 'p-2 rounded-xl bg-cyber-pink/25 border-2 border-cyber-pink text-center transition-all hover:scale-105 hover:bg-cyber-pink/35 group relative shadow-md shadow-cyber-pink/15';
-                    cell.title = `BOOKED — Slot ${slotLabel}: ${squad.squadName} (Leader: ${squad.leaderName})`;
-                    cell.innerHTML = `
-                        <div class="font-orbitron font-bold text-xs text-white">${slotLabel}</div>
-                        <div class="text-[9px] font-mono font-bold text-cyber-pink truncate">${escapeHtml(squad.squadName)}</div>
-                    `;
-                    cell.onclick = () => openPassForSquad(squad);
-                } else {
-                    cell.className = 'p-2 rounded-xl bg-cyber-lime/10 border border-cyber-lime/40 hover:border-cyber-lime text-center transition-all';
-                    cell.title = `Slot ${slotLabel} is AVAILABLE! Tap to register your squad.`;
-                    cell.innerHTML = `
-                        <div class="font-orbitron font-bold text-xs text-cyber-lime">${slotLabel}</div>
-                        <div class="text-[9px] font-mono text-cyber-lime/80">OPEN</div>
-                    `;
-                    cell.onclick = () => {
-                        document.getElementById('registerFormSection').scrollIntoView({ behavior: 'smooth' });
-                        document.getElementById('leaderName').focus();
-                    };
-                }
-                grid.appendChild(cell);
+            if (!leaderName || !squadName) {
+                showToast('Please enter Team Leader Name and Squad Name!', 'pink');
+                return;
+            }
+
+            if (whatsapp.length < 10) {
+                showToast('Please enter a valid 10-digit WhatsApp Number!', 'pink');
+                document.getElementById('whatsappNumber').focus();
+                return;
+            }
+
+            if (transactionId.length < 4) {
+                showToast('Please enter your UPI Transaction ID!', 'pink');
+                document.getElementById('upiTransactionId').focus();
+                return;
+            }
+
+            // Compute next available slot number (1..36)
+            const usedSlots = new Set(registeredSquads.map(s => Number(s.slotNumber)));
+            let assignedSlot = 1;
+            while (usedSlots.has(assignedSlot) && assignedSlot <= MAX_SLOTS) {
+                assignedSlot++;
+            }
+
+            const randomPin = Math.floor(1000 + Math.random() * 9000);
+            const slotPadded = String(assignedSlot).padStart(2, '0');
+            const token = `GLORY26-SKGI-S${slotPadded}-${randomPin}`;
+
+            const newSquad = {
+                slotNumber: assignedSlot,
+                token: token,
+                squadName: squadName,
+                leaderName: leaderName,
+                email: email,
+                whatsapp: whatsapp,
+                members: [m1, m2, m3, m4],
+                substitute: substitute,
+                branch: branch,
+                transactionId: transactionId,
+                feePaid: currentEntryFee,
+                upiApp: PERMANENT_UPI_ID,
+                timestamp: new Date().toISOString()
+            };
+
+            playCyberSound('success');
+
+            // 1. IMMEDIATELY & SYNCHRONOUSLY book slot, persist & update all UI sections
+            saveSquadGlobally(newSquad);
+
+            // 2. Reset form fields
+            document.getElementById('registrationForm').reset();
+            delete document.getElementById('member1').dataset.manuallyEdited;
+            updateLiveSquadPreview();
+            verifyTransactionIdInput();
+
+            showToast(`SLOT #${slotPadded} BOOKED! (${registeredSquads.length}/36 Filled, ${MAX_SLOTS - registeredSquads.length} Left)`, 'lime');
+            openPassForSquad(newSquad);
+
+            // 3. Non-blocking automatic email notification to kushagrakashayp@gmail.com
+            sendRegistrationEmailAutomatically(newSquad);
+        }
+
+        function scrollToBookedHistoryFromModal() {
+            closeTokenModal();
+            const historySection = document.getElementById('registeredSquadsSection');
+            if (historySection) {
+                historySection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -2594,15 +2903,18 @@
          * 10. ADMIN CONTROLS (CSV EXPORT & GLOBAL SLOT RESET)
          *************************************************************/
         async function clearAllSquads() {
-            const currentSlots = registeredSquads.map(s => s.slotNumber);
+            const currentSlots = registeredSquads.map(s => Number(s.slotNumber));
+            currentSlots.forEach(s => { deletedSlotTimestamps[s] = Date.now(); });
             registeredSquads = [];
+            persistAllLocalState();
             updateSlotDashboard();
 
             if (broadcastChannel) {
-                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: [] });
+                broadcastChannel.postMessage({ type: 'SYNC_SQUADS', squads: [], replaceAll: true });
             }
 
-            if (db && currentUser) {
+            if (db && currentUser && firestoreFns) {
+                const { doc, deleteDoc } = firestoreFns;
                 for (const slotNo of currentSlots) {
                     try {
                         const slotDocId = `slot_${String(slotNo).padStart(2, '0')}`;
@@ -2713,6 +3025,7 @@
             handleFormSubmit,
             renderRegisteredSquads,
             handleAdminPinUnlock,
+            handleAdminQuickAddSquad,
             toggleFeeMode,
             exportSquadsCsv,
             clearAllSquads,
@@ -2720,10 +3033,13 @@
             deleteSingleSquad,
             closeTokenModal,
             copyGeneratedToken,
-            openPassForSquad
+            openPassForSquad,
+            openPassForSquadBySlot,
+            scrollToBookedHistoryFromModal
         });
 
-        // Initialize UI, Local Untainted QR Canvas, Particles & Live Cloud Sync
+        // Hydrate cached registrations synchronously first, then render UI & connect cloud sync
+        loadFromWindowNameCache();
         window.addEventListener('DOMContentLoaded', () => {
             updateFeeUiElements();
             updateSlotDashboard();
